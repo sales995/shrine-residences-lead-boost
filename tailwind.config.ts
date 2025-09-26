@@ -41,11 +41,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Brand colors
-        "royal-blue": "hsl(var(--royal-blue))",
-        "gold-accent": "hsl(var(--gold-accent))",
-        "light-grey": "hsl(var(--light-grey))",
-        "dark-grey": "hsl(var(--dark-grey))",
+        // New Professional Brand colors
+        "primary-green": "hsl(var(--primary-green))",
+        "navy-blue": "hsl(var(--navy-blue))",
+        "accent-blue": "hsl(var(--accent-blue))",
+        "urgency-red": "hsl(var(--urgency-red))",
+        "neutral-bg": "hsl(var(--neutral-bg))",
+        "card-surface": "hsl(var(--card-surface))",
+        "text-dark": "hsl(var(--text-dark))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

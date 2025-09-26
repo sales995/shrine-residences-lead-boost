@@ -8,53 +8,57 @@
 
 @layer base {
   :root {
-    /* Brand Colors */
-    --royal-blue: 225 64% 33%;
-    --gold-accent: 51 100% 50%;
-    --white: 0 0% 100%;
-    --light-grey: 0 0% 96%;
-    --dark-grey: 0 0% 20%;
+    /* Brand Colors - New Professional Palette */
+    --primary-green: 134 61% 44%;        /* #28A745 */
+    --navy-blue: 217 86% 32%;            /* #0B3D91 */
+    --accent-blue: 218 79% 54%;          /* #2C7BE5 */
+    --urgency-red: 358 66% 47%;          /* #C62828 */
+    --neutral-bg: 220 17% 99%;           /* #FAFBFD */
+    --card-surface: 217 33% 97%;         /* #F6F8FB */
+    --text-dark: 218 67% 13%;            /* #112233 */
     
     /* Background & Text */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 20%;
+    --background: 220 17% 99%;
+    --foreground: 218 67% 13%;
 
     /* Card Components */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 20%;
+    --card: 217 33% 97%;
+    --card-foreground: 218 67% 13%;
 
-    /* Interactive Elements */
-    --primary: 225 64% 33%;
+    /* Interactive Elements - Primary Green for CTAs */
+    --primary: 134 61% 44%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 225 64% 28%;
+    --primary-hover: 134 61% 39%;
 
-    /* Secondary Colors */
-    --secondary: 51 100% 50%;
-    --secondary-foreground: 0 0% 20%;
-    --secondary-hover: 51 100% 45%;
+    /* Secondary - Navy Blue for Brand */
+    --secondary: 217 86% 32%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 217 86% 27%;
+
+    /* Accent - Blue for Links */
+    --accent: 218 79% 54%;
+    --accent-foreground: 0 0% 100%;
 
     /* Muted Elements */
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    /* Accent Colors */
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 20%;
+    --muted: 217 33% 97%;
+    --muted-foreground: 218 20% 50%;
 
     /* Form Elements */
-    --border: 0 0% 90%;
+    --border: 220 13% 91%;
     --input: 0 0% 100%;
-    --ring: 225 64% 33%;
+    --ring: 134 61% 44%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(225 64% 33%), hsl(225 64% 28%));
-    --gradient-secondary: linear-gradient(135deg, hsl(51 100% 50%), hsl(45 100% 45%));
-    --gradient-hero: linear-gradient(135deg, hsl(225 64% 33% / 0.9), hsl(225 64% 28% / 0.8));
+    --gradient-primary: linear-gradient(135deg, hsl(134 61% 44%), hsl(134 61% 39%));
+    --gradient-secondary: linear-gradient(135deg, hsl(217 86% 32%), hsl(217 86% 27%));
+    --gradient-hero: linear-gradient(180deg, hsl(217 86% 32% / 0.85), hsl(134 61% 44% / 0.15));
+    --gradient-urgency: linear-gradient(135deg, hsl(358 66% 47%), hsl(358 66% 42%));
 
     /* Shadows */
     --shadow-soft: 0 4px 6px hsl(0 0% 0% / 0.05);
     --shadow-medium: 0 10px 25px hsl(0 0% 0% / 0.1);
     --shadow-strong: 0 20px 40px hsl(0 0% 0% / 0.15);
+    --shadow-green-glow: 0 0 20px hsl(134 61% 44% / 0.3);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -140,14 +144,48 @@
     @apply bg-gradient-to-r from-secondary to-secondary-hover text-secondary-foreground px-8 py-4 rounded-lg font-semibold shadow-medium hover:shadow-strong transition-all duration-300 hover:scale-105;
   }
 
+  /* New Professional Button Variants */
+  .btn-virtual-tour {
+    @apply bg-gradient-to-r from-primary to-primary-hover text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0;
+  }
+
+  .btn-accent {
+    @apply bg-gradient-to-r from-accent to-accent text-white px-6 py-3 rounded-lg font-semibold shadow-medium hover:shadow-lg transition-all duration-300 hover:scale-105;
+  }
+
+  /* Urgency Badge */
+  .urgency-badge {
+    @apply bg-gradient-to-r from-urgency-red to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md animate-pulse;
+  }
+
+  /* Trust Badges */
+  .trust-badge {
+    @apply bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 flex items-center gap-2 shadow-soft;
+  }
+
+  /* Compact Lead Form */
+  .compact-form {
+    @apply bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20;
+  }
+
   /* Feature Cards */
   .feature-card {
     @apply bg-card rounded-xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105;
   }
 
+  /* Professional Feature Cards */
+  .pro-feature-card {
+    @apply bg-gradient-to-br from-card to-muted rounded-xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105 border border-accent/10;
+  }
+
   /* Offer Cards */
   .offer-card {
     @apply bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/20 rounded-xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105;
+  }
+
+  /* Sticky Bottom Bar */
+  .sticky-cta-bar {
+    @apply fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-4 shadow-strong z-40;
   }
 
   /* Floating WhatsApp Button */
