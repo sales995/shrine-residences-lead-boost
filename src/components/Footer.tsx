@@ -12,7 +12,7 @@ const Footer = () => {
           <p className="text-sm text-gray-300 leading-relaxed">
             <strong>Disclaimer:</strong> Images and dimensions are indicative and for representational purposes only. 
             Offers, prices, and specifications are subject to change without notice. Please contact our sales team at 
-            <a href="tel:9655355525" className="text-secondary hover:text-secondary-hover mx-1">9655355525</a> 
+            <a href="tel:+91 96553 55525" className="text-secondary hover:text-secondary-hover mx-1">+91 96553 55525</a> 
             for the latest updates, accurate pricing, and current availability. All information should be verified before making any purchase decisions.
           </p>
         </div>
@@ -62,8 +62,8 @@ const Footer = () => {
             <button className="hover:text-secondary transition-colors">Privacy Policy</button>
             <button className="hover:text-secondary transition-colors">Terms of Service</button>
             <button className="hover:text-secondary transition-colors">RERA Information</button>
-            <a href="tel:9655355525" className="hover:text-secondary transition-colors">
-              Contact: 9655355525
+            <a href="tel:=91 96553 55525" className="hover:text-secondary transition-colors">
+              Contact: +91 96553 55525
             </a>
           </div>
         </div>
