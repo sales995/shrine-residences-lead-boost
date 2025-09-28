@@ -5,6 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, User, MessageSquare, Send } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { useToast } from "@/hooks/use-toast";
+import { useApiCall } from "@/hooks/useApiCall";
+import { submitForm, APIError } from "@/utils/api";
+import ErrorMessage from "@/components/ui/error-message";
 
 const LeadFormSection = () => {
   const [formData, setFormData] = useState({
@@ -13,8 +16,8 @@ const LeadFormSection = () => {
     phone: "",
     message: ""
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { loading: isSubmitting, error: submitError, execute: submitFormData, reset: resetError } = useApiCall(submitForm);
 
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -31,12 +34,11 @@ const LeadFormSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    // Simulate form submission
+    resetError();
+
     try {
-      // Here you would integrate with your actual form handler
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await submitFormData(formData);
       
       toast({
         title: "Thank you for your interest!",
@@ -51,13 +53,8 @@ const LeadFormSection = () => {
         message: ""
       });
     } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: "Please try again or call us directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
+      // Error is handled by the useApiCall hook
+      console.error('Form submission failed:', error);
     }
   };
 
@@ -82,6 +79,14 @@ const LeadFormSection = () => {
                 <h3 className="text-2xl font-bold mb-6 text-foreground">Send us a message</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {submitError && (
+                    <ErrorMessage 
+                      error={submitError} 
+                      onRetry={() => handleSubmit({ preventDefault: () => {} } as React.FormEvent)}
+                      className="mb-4"
+                    />
+                  )}
+
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <Input

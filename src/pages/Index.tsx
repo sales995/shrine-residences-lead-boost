@@ -11,6 +11,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import StickyCTABar from "@/components/StickyCTABar";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import NetworkStatus from "@/components/NetworkStatus";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Index = () => {
@@ -54,6 +55,9 @@ const Index = () => {
       
       {/* Sticky Bottom CTA Bar */}
       <StickyCTABar />
+      
+      {/* Network Status Indicator */}
+      <NetworkStatus />
     </div>
   );
 };
