@@ -63,7 +63,7 @@ const ContactSection = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-start">
+                <!-- <div className="flex items-start">
                   <Mail className="w-6 h-6 text-secondary mr-4 mt-1" />
                   <div>
                     <p className="font-semibold">Email Us</p>
@@ -71,7 +71,7 @@ const ContactSection = () => {
                       info@shriramresidences.com
                     </a>
                   </div>
-                </div>
+                </div> -->
                 
                 <div className="flex items-start">
                   <MapPin className="w-6 h-6 text-secondary mr-4 mt-1" />
