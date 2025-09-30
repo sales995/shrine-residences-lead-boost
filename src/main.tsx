@@ -3,6 +3,8 @@ import App from "./App.tsx";
 import "./index.css";
 
 console.log("Main.tsx loading...");
+console.log("Env check: VITE_SUPABASE_URL present?", Boolean(import.meta.env?.VITE_SUPABASE_URL));
+console.log("Env check: VITE_SUPABASE_PUBLISHABLE_KEY present?", Boolean(import.meta.env?.VITE_SUPABASE_PUBLISHABLE_KEY));
 
 const rootElement = document.getElementById("root");
 console.log("Root element:", rootElement);
