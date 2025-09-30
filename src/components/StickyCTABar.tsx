@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Download, MessageCircle } from "lucide-react";
+import BrochureDownloadDialog from "./BrochureDownloadDialog";
 
 const StickyCTABar = () => {
+  const [brochureDialogOpen, setBrochureDialogOpen] = useState(false);
+
   const handleSiteVisit = () => {
     window.open("https://wa.me/919655355525?text=Hi! I'd like to schedule a site visit to Shriram Park 63 Perungalathur. Please confirm available time slots.", "_blank");
   };
 
   const handleBrochureDownload = () => {
-    const element = document.getElementById("lead-form-hero");
-    element?.scrollIntoView({ behavior: "smooth" });
+    setBrochureDialogOpen(true);
   };
 
   const handleWhatsApp = () => {
@@ -32,7 +35,7 @@ const StickyCTABar = () => {
             className="btn-accent text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-4 h-auto"
           >
             <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-            <span className="hidden xs:inline">Download</span><span className="xs:hidden">Get</span> Brochure
+            <span className="hidden xs:inline">Get</span><span className="xs:hidden">Get</span> Brochure & Floor Plan
           </Button>
           
           <Button 
@@ -44,6 +47,10 @@ const StickyCTABar = () => {
           </Button>
         </div>
       </div>
+      <BrochureDownloadDialog 
+        open={brochureDialogOpen} 
+        onOpenChange={setBrochureDialogOpen} 
+      />
     </div>
   );
 };
