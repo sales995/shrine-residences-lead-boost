@@ -29,7 +29,7 @@ const highlights = [
   },
   {
     icon: Users,
-    title: "5000+ Happy Families",
+    title: "1000+ Happy Families",
     description: "Join a thriving community of satisfied residents"
   },
   {
