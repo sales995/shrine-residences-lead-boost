@@ -45,7 +45,7 @@ const AboutSection = () => {
               <img
                 src={aboutImage}
                 alt="Shriram Park 63 Perungalathur location map showing connectivity to GST Road, Tambaram, and major transport hubs in Chennai"
-                className="rounded-2xl shadow-strong w-full h-96 object-cover"
+                className="rounded-2xl shadow-strong w-full h-64 md:h-80 lg:h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl"></div>
             </div>
@@ -53,12 +53,12 @@ const AboutSection = () => {
 
           {/* Content */}
           <div className={`slide-in-right ${inView ? "visible" : ""}`}>
-            <div className="mb-6">
-              <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
+            <div className="mb-4 md:mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6">
                 Shriram Park 63<br />
                 <span className="text-accent">Location Advantages</span>
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-6 md:mb-8">
                 Strategically located on GST Road in Perungalathur, Chennai, Shriram Park 63 offers unparalleled connectivity to all major business hubs, educational institutions, and entertainment zones. Experience the perfect balance of peaceful living and urban accessibility.
               </p>
             </div>

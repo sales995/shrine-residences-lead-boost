@@ -37,25 +37,25 @@ const CountdownTimer = () => {
   }, []);
 
   return (
-    <div className="flex gap-2 sm:gap-4 items-center justify-center">
-      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-3 py-2 rounded-lg min-w-[60px]">
-        <span className="text-2xl sm:text-3xl font-bold text-accent">{timeLeft.days}</span>
-        <span className="text-xs text-white uppercase">Days</span>
+    <div className="flex gap-1 sm:gap-2 md:gap-4 items-center justify-center">
+      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-2 rounded-lg min-w-[50px] sm:min-w-[60px]">
+        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-accent">{timeLeft.days}</span>
+        <span className="text-[10px] sm:text-xs text-white uppercase">Days</span>
       </div>
-      <span className="text-accent text-2xl font-bold">:</span>
-      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-3 py-2 rounded-lg min-w-[60px]">
-        <span className="text-2xl sm:text-3xl font-bold text-accent">{String(timeLeft.hours).padStart(2, '0')}</span>
-        <span className="text-xs text-white uppercase">Hours</span>
+      <span className="text-accent text-lg sm:text-2xl font-bold">:</span>
+      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-2 rounded-lg min-w-[50px] sm:min-w-[60px]">
+        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-accent">{String(timeLeft.hours).padStart(2, '0')}</span>
+        <span className="text-[10px] sm:text-xs text-white uppercase">Hours</span>
       </div>
-      <span className="text-accent text-2xl font-bold">:</span>
-      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-3 py-2 rounded-lg min-w-[60px]">
-        <span className="text-2xl sm:text-3xl font-bold text-accent">{String(timeLeft.minutes).padStart(2, '0')}</span>
-        <span className="text-xs text-white uppercase">Mins</span>
+      <span className="text-accent text-lg sm:text-2xl font-bold">:</span>
+      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-2 rounded-lg min-w-[50px] sm:min-w-[60px]">
+        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-accent">{String(timeLeft.minutes).padStart(2, '0')}</span>
+        <span className="text-[10px] sm:text-xs text-white uppercase">Mins</span>
       </div>
-      <span className="text-accent text-2xl font-bold">:</span>
-      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-3 py-2 rounded-lg min-w-[60px]">
-        <span className="text-2xl sm:text-3xl font-bold text-accent">{String(timeLeft.seconds).padStart(2, '0')}</span>
-        <span className="text-xs text-white uppercase">Secs</span>
+      <span className="text-accent text-lg sm:text-2xl font-bold">:</span>
+      <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-2 rounded-lg min-w-[50px] sm:min-w-[60px]">
+        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-accent">{String(timeLeft.seconds).padStart(2, '0')}</span>
+        <span className="text-[10px] sm:text-xs text-white uppercase">Secs</span>
       </div>
     </div>
   );
