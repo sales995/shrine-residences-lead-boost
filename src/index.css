@@ -8,12 +8,12 @@
 
 @layer base {
   :root {
-    /* Brand Colors - Shriram Park 63 CRO Optimized (Dark Navy + Bright Yellow) */
-    --primary: 220 60% 25%;              /* Dark Navy Blue */
-    --primary-hover: 220 60% 20%;        /* Darker Navy */
-    --primary-variant: 220 50% 35%;      /* Lighter Navy */
-    --accent: 45 100% 50%;               /* Bright Yellow/Gold */
-    --accent-hover: 45 95% 55%;          /* Lighter Gold */
+    /* Brand Colors - Shriram Park 63 (Light Blue/Teal + Golden Yellow) */
+    --primary: 186 65% 45%;              /* Light Blue/Teal */
+    --primary-hover: 186 65% 35%;        /* Darker Teal */
+    --primary-variant: 186 55% 55%;      /* Lighter Teal */
+    --accent: 43 90% 55%;                /* Golden Yellow/Mustard */
+    --accent-hover: 43 85% 60%;          /* Lighter Gold */
     --neutral-bg: 220 17% 99%;           /* #FAFBFD */
     --card-surface: 217 33% 97%;         /* #F6F8FB */
     --text-dark: 218 67% 13%;            /* #112233 */
@@ -29,13 +29,13 @@
     /* Interactive Elements - Yellow/Gold for CTAs */
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Navy for Brand */
-    --secondary: 220 60% 25%;
+    /* Secondary - Teal for Brand */
+    --secondary: 186 65% 45%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-hover: 220 60% 20%;
+    --secondary-hover: 186 65% 35%;
 
-    /* Accent - Bright Yellow */
-    --accent-foreground: 220 60% 25%;
+    /* Accent - Golden Yellow */
+    --accent-foreground: 0 0% 100%;
 
     /* Muted Elements */
     --muted: 217 33% 97%;
@@ -47,17 +47,17 @@
     --ring: 134 61% 44%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 60% 25%), hsl(220 50% 35%));
-    --gradient-accent: linear-gradient(135deg, hsl(45 100% 50%), hsl(45 95% 55%));
-    --gradient-hero: linear-gradient(135deg, rgba(23, 37, 64, 0.90), rgba(35, 55, 90, 0.85));
+    --gradient-primary: linear-gradient(135deg, hsl(186 65% 45%), hsl(186 55% 55%));
+    --gradient-accent: linear-gradient(135deg, hsl(43 90% 55%), hsl(43 85% 60%));
+    --gradient-hero: linear-gradient(135deg, rgba(30, 70, 80, 0.85), rgba(40, 85, 95, 0.80));
     --gradient-subtle: linear-gradient(180deg, hsl(220 17% 99%), hsl(217 33% 97%));
 
     /* Shadows */
     --shadow-soft: 0 4px 6px hsl(0 0% 0% / 0.05);
     --shadow-medium: 0 10px 25px hsl(0 0% 0% / 0.1);
     --shadow-strong: 0 20px 40px hsl(0 0% 0% / 0.15);
-    --shadow-glow: 0 0 40px hsl(45 100% 50% / 0.3);
-    --shadow-elegant: 0 10px 30px -10px hsl(220 60% 25% / 0.4);
+    --shadow-glow: 0 0 40px hsl(186 65% 45% / 0.3);
+    --shadow-elegant: 0 10px 30px -10px hsl(186 65% 45% / 0.4);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -137,12 +137,13 @@
   /* Hero Button Variants - CRO Optimized */
   .btn-hero-primary {
     background: hsl(var(--accent));
-    color: hsl(var(--primary));
+    color: white;
     @apply px-8 py-4 rounded-lg font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:brightness-110;
   }
   
   .btn-hero-secondary {
-    @apply border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300;
+    background: hsl(var(--primary));
+    @apply text-white px-8 py-4 rounded-lg font-semibold hover:brightness-90 transition-all duration-300;
   }
 
   /* Professional Button Variants */
@@ -160,8 +161,8 @@
   /* Urgency Badge - Yellow/Gold with Animation */
   .urgency-badge {
     background: hsl(var(--accent));
-    color: hsl(var(--primary));
-    @apply px-8 py-3 rounded-full text-base font-bold shadow-lg animate-pulse border-2 border-primary;
+    color: white;
+    @apply px-8 py-3 rounded-full text-base font-bold shadow-lg animate-pulse;
   }
 
   /* Trust Badges */
