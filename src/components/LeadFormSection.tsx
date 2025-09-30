@@ -204,22 +204,6 @@ const LeadFormSection = () => {
                     </a>
                   </div>
                 </div>
-
-                {/* Download Brochure */}
-                <div className="bg-secondary/10 rounded-2xl p-4 sm:p-6 md:p-8 border border-secondary/20">
-                  <h3 className="text-lg sm:text-xl font-bold mb-3 md:mb-4 text-foreground">Download Resources</h3>
-                  <div className="space-y-2 md:space-y-3">
-                    <button className="w-full bg-secondary text-secondary-foreground px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-secondary-hover transition-colors text-sm md:text-base">
-                      Download Brochure
-                    </button>
-                    <button className="w-full bg-primary text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-primary-hover transition-colors text-sm md:text-base">
-                      Download Floor Plans
-                    </button>
-                    <button className="w-full bg-white text-primary border border-primary px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors text-sm md:text-base">
-                      Price List
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
