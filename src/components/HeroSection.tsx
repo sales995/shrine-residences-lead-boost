@@ -6,6 +6,8 @@ import { useState } from "react";
 import heroImage from "@/assets/building-aerial-1.jpg";
 import CountdownTimer from "./CountdownTimer";
 import RERABadge from "./RERABadge";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const HeroSection = () => {
   console.log("HeroSection rendering...");
@@ -15,18 +17,48 @@ const HeroSection = () => {
     threshold: 0.1,
   });
 
+  const { toast } = useToast();
+  
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.name && (formData.phone || formData.email)) {
-      alert(`Thank you ${formData.name}! We'll send you the latest price list and exclusive offers within 15 minutes.`);
-      // Track lead capture
+    if (!formData.name || !formData.phone) return;
+    
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .insert({
+          name: formData.name.trim(),
+          phone: formData.phone.trim(),
+          email: formData.email.trim() || null,
+          message: null,
+          source: 'hero'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Thank you!",
+        description: `Thank you ${formData.name}! We'll send you the latest price list and exclusive offers within 15 minutes.`,
+      });
+      
       setFormData({ name: "", phone: "", email: "" });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit form. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -162,9 +194,10 @@ const HeroSection = () => {
 
                 <Button 
                   type="submit" 
+                  disabled={isSubmitting}
                   className="w-full btn-hero-primary text-lg md:text-xl py-5 md:py-7"
                 >
-                  Download Price List Now
+                  {isSubmitting ? "Submitting..." : "Download Price List Now"}
                 </Button>
 
                 <p className="text-xs text-center text-gray-500 mt-3 md:mt-4">

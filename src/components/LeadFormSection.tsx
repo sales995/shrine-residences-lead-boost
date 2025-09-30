@@ -5,9 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, User, MessageSquare, Send } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { useToast } from "@/hooks/use-toast";
-import { useApiCall } from "@/hooks/useApiCall";
-import { submitForm, APIError } from "@/utils/api";
-import ErrorMessage from "@/components/ui/error-message";
+import { supabase } from "@/integrations/supabase/client";
+
 const LeadFormSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,15 +14,10 @@ const LeadFormSection = () => {
     phone: "",
     message: ""
   });
-  const {
-    toast
-  } = useToast();
-  const {
-    loading: isSubmitting,
-    error: submitError,
-    execute: submitFormData,
-    reset: resetError
-  } = useApiCall(submitForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { toast } = useToast();
+  
   const {
     ref,
     inView
@@ -31,6 +25,7 @@ const LeadFormSection = () => {
     triggerOnce: true,
     threshold: 0.1
   });
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
       name,
@@ -41,11 +36,25 @@ const LeadFormSection = () => {
       [name]: value
     }));
   };
+  
+  const resetError = () => {};
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     resetError();
     try {
-      await submitFormData(formData);
+      // Save to database
+      const { error: dbError } = await supabase
+        .from('leads')
+        .insert({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          message: formData.message.trim() || null,
+          source: 'contact-form'
+        });
+
+      if (dbError) throw dbError;
+
       toast({
         title: "Thank you for your interest!",
         description: "Our team will contact you within 24 hours."
@@ -59,8 +68,12 @@ const LeadFormSection = () => {
         message: ""
       });
     } catch (error) {
-      // Error is handled by the useApiCall hook
       console.error('Form submission failed:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit form. Please try again.",
+        variant: "destructive"
+      });
     }
   };
   return <section id="lead-form" className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
@@ -83,10 +96,7 @@ const LeadFormSection = () => {
                 <h3 className="text-xl sm:text-2xl font-bold mb-4 md:mb-6 text-foreground">Send us a message</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-                  {submitError && <ErrorMessage error={submitError} onRetry={() => handleSubmit({
-                  preventDefault: () => {}
-                } as React.FormEvent)} className="mb-4" />}
-
+                  
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                     <Input type="text" name="name" placeholder="Your Full Name" value={formData.name} onChange={handleInputChange} className="pl-10 md:pl-12 h-10 md:h-12 text-sm md:text-base" required />
