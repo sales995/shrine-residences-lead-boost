@@ -37,10 +37,21 @@ const LeadFormSection = () => {
     }));
   };
   
-  const resetError = () => {};
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    resetError();
+    
+    // Validate Indian phone number format (10 digits starting with 6-9)
+    const phoneRegex = /^[6-9][0-9]{9}$/;
+    if (!phoneRegex.test(formData.phone.trim())) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setIsSubmitting(true);
     try {
       // Save to database
       const { error: dbError } = await supabase
@@ -53,7 +64,19 @@ const LeadFormSection = () => {
           source: 'contact-form'
         });
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        // Handle duplicate phone number
+        if (dbError.code === '23505' && dbError.message.includes('leads_phone_unique')) {
+          toast({
+            title: "Already Registered",
+            description: "This phone number has already been registered. Our team will contact you soon!",
+            variant: "destructive"
+          });
+          setIsSubmitting(false);
+          return;
+        }
+        throw dbError;
+      }
 
       toast({
         title: "Thank you for your interest!",
@@ -74,6 +97,8 @@ const LeadFormSection = () => {
         description: "Failed to submit form. Please try again.",
         variant: "destructive"
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return <section id="lead-form" className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
@@ -109,7 +134,20 @@ const LeadFormSection = () => {
 
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
-                    <Input type="tel" name="phone" placeholder="Your Phone Number" value={formData.phone} onChange={handleInputChange} className="pl-10 md:pl-12 h-10 md:h-12 text-sm md:text-base" required />
+                    <Input 
+                      type="tel" 
+                      name="phone" 
+                      placeholder="Phone Number (10 digits starting with 6-9)" 
+                      value={formData.phone} 
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setFormData(prev => ({ ...prev, phone: value }));
+                      }}
+                      className="pl-10 md:pl-12 h-10 md:h-12 text-sm md:text-base" 
+                      required 
+                      pattern="[6-9][0-9]{9}"
+                      title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9"
+                    />
                   </div>
 
                   <div className="relative">

@@ -30,6 +30,17 @@ const HeroSection = () => {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
     
+    // Validate Indian phone number format (10 digits starting with 6-9)
+    const phoneRegex = /^[6-9][0-9]{9}$/;
+    if (!phoneRegex.test(formData.phone.trim())) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     try {
       const { error } = await supabase
@@ -42,7 +53,18 @@ const HeroSection = () => {
           source: 'hero'
         });
 
-      if (error) throw error;
+      if (error) {
+        // Handle duplicate phone number
+        if (error.code === '23505' && error.message.includes('leads_phone_unique')) {
+          toast({
+            title: "Already Registered",
+            description: "This phone number has already been registered. Our team will contact you soon!",
+            variant: "destructive"
+          });
+          return;
+        }
+        throw error;
+      }
 
       toast({
         title: "Thank you!",
@@ -172,13 +194,13 @@ const HeroSection = () => {
                 <div>
                   <Input
                     type="tel"
-                    placeholder="Phone Number *"
+                    placeholder="Phone Number (10 digits starting with 6-9) *"
                     value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
                     className="w-full border-2 border-gray-300 focus:border-accent py-4 md:py-6 text-base md:text-lg"
                     required
-                    pattern="[0-9]{10}"
-                    title="Please enter a valid 10-digit phone number"
+                    pattern="[6-9][0-9]{9}"
+                    title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9"
                   />
                 </div>
 
