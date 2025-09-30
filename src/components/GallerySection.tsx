@@ -8,18 +8,21 @@ import gallery3 from "@/assets/gallery-3.jpg";
 const galleryImages = [
   {
     src: gallery1,
-    title: "Exterior View",
-    description: "Modern luxury residential complex with premium amenities"
+    title: "Shriram Park 63 Clubhouse",
+    description: "Premium clubhouse with modern amenities and social spaces at Shriram Park 63 Perungalathur",
+    alt: "Shriram Park 63 Perungalathur clubhouse interior with modern furniture and recreational facilities"
   },
   {
     src: gallery2,
-    title: "Interior Design",
-    description: "Spacious 3BHK apartment with contemporary furnishing"
+    title: "Swimming Pool & Games Room",
+    description: "Olympic-size swimming pool and indoor games facilities at Shriram Park 63",
+    alt: "Shriram Park 63 swimming pool and games room showing billiards table and leisure amenities"
   },
   {
     src: gallery3,
-    title: "Amenities",
-    description: "World-class facilities including pool and clubhouse"
+    title: "Shriram Park 63 Exterior",
+    description: "Expansive 57-acre township overlooking Vandalur Forest Reserve",
+    alt: "Shriram Park 63 exterior view of residential towers on GST Road Perungalathur with landscaped gardens"
   }
 ];
 
@@ -54,10 +57,10 @@ const GallerySection = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-              Project Gallery
+              Shriram Park 63 Amenities Gallery
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Take a virtual tour of Shriram Residences and discover the luxury that awaits you
+              Explore the premium amenities and world-class infrastructure at Shriram Park 63 Perungalathur
             </p>
           </div>
 
@@ -73,7 +76,7 @@ const GallerySection = () => {
                 >
                   <img
                     src={image.src}
-                    alt={image.title}
+                    alt={image.alt}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -127,7 +130,7 @@ const GallerySection = () => {
               >
                 <img
                   src={image.src}
-                  alt={image.title}
+                  alt={image.alt}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>

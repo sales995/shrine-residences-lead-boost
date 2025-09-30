@@ -3,15 +3,16 @@ import { Calendar, Download, MessageCircle } from "lucide-react";
 
 const StickyCTABar = () => {
   const handleSiteVisit = () => {
-    window.open("https://wa.me/9655355525?text=Hi! I'd like to schedule a site visit to Shriram Residences. Please confirm available time slots.", "_blank");
+    window.open("https://wa.me/919655355525?text=Hi! I'd like to schedule a site visit to Shriram Park 63 Perungalathur. Please confirm available time slots.", "_blank");
   };
 
   const handleBrochureDownload = () => {
-    alert("Brochure download initiated. Our team will also contact you within 24 hours for any queries.");
+    const element = document.getElementById("lead-form-hero");
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/9655355525?text=Hi! I'm interested in 3/4 BHK at Shriram Residences — please send brochure and pricing.", "_blank");
+    window.open("https://wa.me/919655355525?text=Hi! I'm interested in 2/3/4 BHK flats at Shriram Park 63 Perungalathur on GST Road. Please send the latest price list and brochure.", "_blank");
   };
 
   return (
@@ -36,7 +37,7 @@ const StickyCTABar = () => {
           
           <Button 
             onClick={handleWhatsApp}
-            className="bg-green-500 hover:bg-green-600 text-white text-sm py-2"
+            className="bg-green-600 hover:bg-green-700 text-white text-sm py-2 font-semibold"
           >
             <MessageCircle className="w-4 h-4 mr-1" />
             WhatsApp

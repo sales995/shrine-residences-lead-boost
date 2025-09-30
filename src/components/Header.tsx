@@ -12,71 +12,76 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-soft">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-primary shadow-soft">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <div className="text-2xl font-bold text-primary">
-              Shriram Residences
+            <div className="flex flex-col">
+              <div className="text-xl md:text-2xl font-bold text-white">
+                SHRIRAM PARK 63
+              </div>
+              <div className="text-xs text-accent">
+                Perungalathur, Chennai
+              </div>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6">
             <button
               onClick={() => scrollToSection("hero")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-white hover:text-accent transition-colors font-medium"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection("features")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-white hover:text-accent transition-colors font-medium"
+            >
+              Project Highlights
+            </button>
+            <button
+              onClick={() => scrollToSection("about")}
+              className="text-white hover:text-accent transition-colors font-medium"
+            >
+              Location Advantages
+            </button>
+            <button
+              onClick={() => scrollToSection("gallery")}
+              className="text-white hover:text-accent transition-colors font-medium"
             >
               Amenities
             </button>
             <button
-              onClick={() => scrollToSection("about")}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection("gallery")}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              Gallery
-            </button>
-            <button
               onClick={() => scrollToSection("contact")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-white hover:text-accent transition-colors font-medium"
             >
               Contact
             </button>
           </nav>
 
           {/* CTA Button & Phone */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <a 
               href="tel:+919655355525"
-              className="flex items-center text-primary hover:text-primary-hover transition-colors"
+              className="flex items-center text-accent hover:text-white transition-colors font-semibold"
             >
               <Phone className="w-4 h-4 mr-2" />
               +91 9655355525
             </a>
             <Button
-              onClick={() => scrollToSection("lead-form")}
+              onClick={() => scrollToSection("lead-form-hero")}
               className="btn-hero-primary"
             >
-              Enquire Now
+              Get Price List
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2"
+            className="lg:hidden p-2 text-white"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -84,50 +89,50 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t">
+          <div className="lg:hidden py-4 border-t border-accent/20">
             <nav className="flex flex-col space-y-4">
               <button
                 onClick={() => scrollToSection("hero")}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-white hover:text-accent transition-colors font-medium"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection("features")}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-white hover:text-accent transition-colors font-medium"
+              >
+                Project Highlights
+              </button>
+              <button
+                onClick={() => scrollToSection("about")}
+                className="text-left text-white hover:text-accent transition-colors font-medium"
+              >
+                Location Advantages
+              </button>
+              <button
+                onClick={() => scrollToSection("gallery")}
+                className="text-left text-white hover:text-accent transition-colors font-medium"
               >
                 Amenities
               </button>
               <button
-                onClick={() => scrollToSection("about")}
-                className="text-left text-foreground hover:text-primary transition-colors"
-              >
-                About
-              </button>
-              <button
-                onClick={() => scrollToSection("gallery")}
-                className="text-left text-foreground hover:text-primary transition-colors"
-              >
-                Gallery
-              </button>
-              <button
                 onClick={() => scrollToSection("contact")}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-white hover:text-accent transition-colors font-medium"
               >
                 Contact
               </button>
               <a 
                 href="tel:+919655355525"
-                className="flex items-center text-primary hover:text-primary-hover transition-colors"
+                className="flex items-center text-accent hover:text-white transition-colors font-semibold"
               >
                 <Phone className="w-4 h-4 mr-2" />
                 +91 9655355525
               </a>
               <Button
-                onClick={() => scrollToSection("lead-form")}
+                onClick={() => scrollToSection("lead-form-hero")}
                 className="btn-hero-primary w-full"
               >
-                Enquire Now
+                Get Price List
               </Button>
             </nav>
           </div>

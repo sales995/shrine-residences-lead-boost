@@ -1,8 +1,8 @@
 import { MessageCircle } from "lucide-react";
 
 const WhatsAppFloat = () => {
-  const whatsappNumber = "9655355525";
-  const message = "Hi! I'm interested in Shriram Residences. Can you please provide more information?";
+  const whatsappNumber = "919655355525";
+  const message = "Hi! I'm interested in Shriram Park 63 Perungalathur. Can you please share the latest price list and floor plans for 2/3/4 BHK flats?";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   return (

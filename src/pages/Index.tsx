@@ -17,17 +17,71 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const Index = () => {
   useScrollAnimation();
 
-  // Update page title and meta description for SEO
+  // Update page title, meta description, and Schema markup for SEO
   useEffect(() => {
-    document.title = "Luxury Homes on GST Road | Shriram Residences — 3 & 4 BHK | Virtual Tours for NRIs";
+    document.title = "Shriram Park 63 Perungalathur - 2/3/4 BHK Flats on GST Road. Limited Offers";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(
         "content", 
-        "Discover premium 3 & 4 BHK homes on GST Main Road. RERA approved, IT-corridor connectivity, bank tie-ups & NRI-friendly virtual tours. Book yours now."
+        "Shriram Park 63 Perungalathur - Luxury 2, 3 & 4 BHK Flats on GST Road. Limited Ready-to-Move Inventory. RERA Approved. Get Latest Price List & Exclusive Offers."
       );
     }
+
+    // Add Schema Markup for Real Estate Project
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "RealEstateProject",
+      "name": "Shriram Park 63",
+      "description": "Premium residential township offering 2, 3 & 4 BHK flats in Perungalathur, Chennai. 57-acre township with 40+ amenities overlooking Vandalur Forest Reserve.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "GST Road",
+        "addressLocality": "Perungalathur",
+        "addressRegion": "Tamil Nadu",
+        "postalCode": "600063",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "12.9103",
+        "longitude": "80.0897"
+      },
+      "telephone": "+91-9655355525",
+      "priceRange": "₹1.46 Cr onwards",
+      "amenityFeature": [
+        "Clubhouse",
+        "Swimming Pool",
+        "Gymnasium",
+        "Library",
+        "Mini Theatre",
+        "Games Room",
+        "Yoga/Meditation Room",
+        "Convenience Store",
+        "Multipurpose Hall"
+      ],
+      "numberOfBedrooms": "2, 3, 4",
+      "floorSize": {
+        "@type": "QuantitativeValue",
+        "value": "57",
+        "unitCode": "ACR"
+      },
+      "additionalProperty": {
+        "@type": "PropertyValue",
+        "name": "RERA Number",
+        "value": "TN/01/Building/0072/2018"
+      }
+    };
+
+    const scriptTag = document.createElement('script');
+    scriptTag.type = 'application/ld+json';
+    scriptTag.text = JSON.stringify(schema);
+    document.head.appendChild(scriptTag);
+
+    return () => {
+      document.head.removeChild(scriptTag);
+    };
   }, []);
 
   return (
