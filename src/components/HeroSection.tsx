@@ -176,7 +176,7 @@ const HeroSection = () => {
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <p className="text-2xl font-bold text-primary">5000+</p>
+                    <p className="text-2xl font-bold text-primary">1000+</p>
                     <p className="text-xs text-gray-600">Happy Families</p>
                   </div>
                   <div>
