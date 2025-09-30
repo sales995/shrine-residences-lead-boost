@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Phone, Download } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
-import heroImage from "@/assets/hero-bg.jpg";
+import heroImage from "@/assets/building-aerial-1.jpg";
 import CountdownTimer from "./CountdownTimer";
 import RERABadge from "./RERABadge";
 
@@ -50,7 +50,7 @@ const HeroSection = () => {
       <div className="absolute top-20 left-0 right-0 z-20 bg-accent py-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-            <h2 className="text-primary font-bold text-lg md:text-xl text-center">
+            <h2 className="text-white font-bold text-lg md:text-xl text-center">
               🔥 Exclusive Offer Ending Soon: GST Waiver & 90% Bank Loan Approved
             </h2>
             <CountdownTimer />

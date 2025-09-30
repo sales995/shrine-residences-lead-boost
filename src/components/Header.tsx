@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import shriramLogo from "@/assets/shriram-logo.png";
+import park63Logo from "@/assets/park63-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,12 +17,12 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <div className="flex flex-col">
-              <div className="text-xl md:text-2xl font-bold text-primary">
-                SHRIRAM PARK 63
-              </div>
+          {/* Logos & Branding */}
+          <div className="flex items-center space-x-3">
+            <img src={shriramLogo} alt="Shriram Properties Logo" className="h-10 md:h-12" />
+            <div className="hidden sm:block w-px h-10 bg-border"></div>
+            <img src={park63Logo} alt="Park 63 Logo" className="h-10 md:h-12" />
+            <div className="hidden md:flex flex-col ml-2">
               <div className="text-xs text-muted-foreground">
                 Perungalathur, Chennai
               </div>

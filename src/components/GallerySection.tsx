@@ -1,28 +1,42 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import gallery1 from "@/assets/gallery-1.jpg";
-import gallery2 from "@/assets/gallery-2.jpg";
-import gallery3 from "@/assets/gallery-3.jpg";
+import buildingAerial1 from "@/assets/building-aerial-1.jpg";
+import buildingAerial2 from "@/assets/building-aerial-2.jpg";
+import buildingForestView from "@/assets/building-forest-view.jpg";
+import buildingEvening from "@/assets/building-evening.jpg";
+import amenitiesPlayground from "@/assets/amenities-playground.jpg";
 
 const galleryImages = [
   {
-    src: gallery1,
-    title: "Shriram Park 63 Clubhouse",
-    description: "Premium clubhouse with modern amenities and social spaces at Shriram Park 63 Perungalathur",
-    alt: "Shriram Park 63 Perungalathur clubhouse interior with modern furniture and recreational facilities"
+    src: buildingAerial1,
+    title: "Shriram Park 63 Aerial View",
+    description: "Premium residential towers with solar panels on GST Road, Perungalathur",
+    alt: "Shriram Park 63 Perungalathur aerial view showing residential towers with solar panels and amenities"
   },
   {
-    src: gallery2,
-    title: "Swimming Pool & Games Room",
-    description: "Olympic-size swimming pool and indoor games facilities at Shriram Park 63",
-    alt: "Shriram Park 63 swimming pool and games room showing billiards table and leisure amenities"
+    src: buildingAerial2,
+    title: "Township & Sports Facilities",
+    description: "57-acre integrated township with tennis and badminton courts",
+    alt: "Shriram Park 63 aerial view showcasing sports facilities including tennis courts and residential towers"
   },
   {
-    src: gallery3,
-    title: "Shriram Park 63 Exterior",
-    description: "Expansive 57-acre township overlooking Vandalur Forest Reserve",
-    alt: "Shriram Park 63 exterior view of residential towers on GST Road Perungalathur with landscaped gardens"
+    src: buildingForestView,
+    title: "Vandalur Forest Reserve View",
+    description: "Apartments overlooking 1350-acre Vandalur Forest Reserve",
+    alt: "Shriram Park 63 residential towers with stunning view of Vandalur Forest Reserve from balconies"
+  },
+  {
+    src: buildingEvening,
+    title: "GST Road Connectivity",
+    description: "Prime location on GST Road with excellent connectivity",
+    alt: "Shriram Park 63 evening view showing location on GST Road Perungalathur with highway connectivity"
+  },
+  {
+    src: amenitiesPlayground,
+    title: "Children's Play Area & Landscaping",
+    description: "Dedicated children's play area with colorful equipment and landscaped gardens",
+    alt: "Shriram Park 63 children's play area with slides, swings and landscaped gardens"
   }
 ];
 
@@ -119,7 +133,7 @@ const GallerySection = () => {
           </div>
 
           {/* Gallery Grid - Thumbnails */}
-          <div className="mt-12 grid grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <div className="mt-12 grid grid-cols-3 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
             {galleryImages.map((image, index) => (
               <button
                 key={index}
