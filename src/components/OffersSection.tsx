@@ -13,7 +13,7 @@ const offers = [
     icon: Banknote,
     title: "Easy Bank Loan Approval",
     description: "Pre-approved loans from all major banks with hassle-free processing",
-    highlight: "100% Financing",
+    highlight: "Easy Financing",
     bgColor: "from-secondary/10 to-secondary/5"
   }
 ];
