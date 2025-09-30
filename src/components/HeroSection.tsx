@@ -8,6 +8,8 @@ import CountdownTimer from "./CountdownTimer";
 import RERABadge from "./RERABadge";
 
 const HeroSection = () => {
+  console.log("HeroSection rendering...");
+  
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
