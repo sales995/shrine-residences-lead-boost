@@ -65,7 +65,7 @@ const HeroSection = () => {
           <div className={`text-white fade-in ${inView ? "visible" : ""}`}>
             {/* H1 - SEO Optimized */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              Shriram Park 63 Perungalathur: Luxury 3 BHK Flats on GST Road
+              Shriram Park 63 Perungalathur: Luxury 3 BHK <span className="text-2xl md:text-3xl lg:text-4xl">(1725-1970 Sq.ft)</span> Flats on GST Road
             </h1>
             
             <p className="text-xl md:text-2xl mb-6 text-accent font-bold">
