@@ -22,30 +22,15 @@ const ContactSection = () => {
               
               {/* Social Media */}
               <div className="flex space-x-4">
-                <a
-                  href="https://facebook.com/yourpage"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                >
+                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
                   <Facebook className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://instagram.com/yourpage"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors"
-                >
+                </div>
+                <div className="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
                   <Instagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://linkedin.com/company/yourpage"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors"
-                >
+                </div>
+                <div className="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
                   <Linkedin className="w-5 h-5" />
-                </a>
+                </div>
               </div>
             </div>
 

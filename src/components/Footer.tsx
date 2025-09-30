@@ -29,30 +29,15 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex items-center space-x-4">
             <span className="text-sm text-gray-400 mr-2">Follow us:</span>
-            <a
-              href="https://facebook.com/yourpage"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-            >
+            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
               <Facebook className="w-4 h-4" />
-            </a>
-            <a
-              href="https://instagram.com/yourpage"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors"
-            >
+            </div>
+            <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
               <Instagram className="w-4 h-4" />
-            </a>
-            <a
-              href="https://linkedin.com/company/yourpage"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors"
-            >
+            </div>
+            <div className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
               <Linkedin className="w-4 h-4" />
-            </a>
+            </div>
           </div>
         </div>
 
