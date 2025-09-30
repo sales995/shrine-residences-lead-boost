@@ -194,7 +194,7 @@ const HeroSection = () => {
                 <div>
                   <Input
                     type="tel"
-                    placeholder="Phone Number (10 digits starting with 6-9) *"
+                    placeholder="Phone Number *"
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
                     className="w-full border-2 border-gray-300 focus:border-accent py-4 md:py-6 text-base md:text-lg"

@@ -137,7 +137,7 @@ const LeadFormSection = () => {
                     <Input 
                       type="tel" 
                       name="phone" 
-                      placeholder="Phone Number (10 digits starting with 6-9)" 
+                      placeholder="Phone Number" 
                       value={formData.phone} 
                       onChange={(e) => {
                         const value = e.target.value.replace(/\D/g, '').slice(0, 10);

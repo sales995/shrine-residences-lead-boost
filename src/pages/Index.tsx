@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import StickyCTABar from "@/components/StickyCTABar";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import NetworkStatus from "@/components/NetworkStatus";
+import { OfferPopup } from "@/components/OfferPopup";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Index = () => {
@@ -112,6 +113,9 @@ const Index = () => {
       
       {/* Network Status Indicator */}
       <NetworkStatus />
+      
+      {/* Offer Popup */}
+      <OfferPopup />
     </div>
   );
 };
