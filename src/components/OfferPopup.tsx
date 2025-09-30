@@ -116,10 +116,6 @@ export const OfferPopup = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
                 <span className="text-accent font-bold">✓</span>
-                <span className="font-semibold">GST Waiver Worth ₹2 Lakhs</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-accent font-bold">✓</span>
                 <span className="font-semibold">Free Home Loan Consultation</span>
               </li>
               <li className="flex items-center gap-2">
