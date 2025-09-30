@@ -8,7 +8,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useApiCall } from "@/hooks/useApiCall";
 import { submitForm, APIError } from "@/utils/api";
 import ErrorMessage from "@/components/ui/error-message";
-
 const LeadFormSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,33 +15,40 @@ const LeadFormSection = () => {
     phone: "",
     message: ""
   });
-  const { toast } = useToast();
-  const { loading: isSubmitting, error: submitError, execute: submitFormData, reset: resetError } = useApiCall(submitForm);
-
-  const { ref, inView } = useInView({
+  const {
+    toast
+  } = useToast();
+  const {
+    loading: isSubmitting,
+    error: submitError,
+    execute: submitFormData,
+    reset: resetError
+  } = useApiCall(submitForm);
+  const {
+    ref,
+    inView
+  } = useInView({
     triggerOnce: true,
-    threshold: 0.1,
+    threshold: 0.1
   });
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+    const {
+      name,
+      value
+    } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     resetError();
-
     try {
       await submitFormData(formData);
-      
       toast({
         title: "Thank you for your interest!",
-        description: "Our team will contact you within 24 hours.",
+        description: "Our team will contact you within 24 hours."
       });
 
       // Reset form
@@ -57,9 +63,7 @@ const LeadFormSection = () => {
       console.error('Form submission failed:', error);
     }
   };
-
-  return (
-    <section id="lead-form" className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
+  return <section id="lead-form" className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
       <div className="container mx-auto px-4">
         <div ref={ref} className={`fade-in ${inView ? "visible" : ""}`}>
           {/* Section Header */}
@@ -79,80 +83,38 @@ const LeadFormSection = () => {
                 <h3 className="text-2xl font-bold mb-6 text-foreground">Send us a message</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {submitError && (
-                    <ErrorMessage 
-                      error={submitError} 
-                      onRetry={() => handleSubmit({ preventDefault: () => {} } as React.FormEvent)}
-                      className="mb-4"
-                    />
-                  )}
+                  {submitError && <ErrorMessage error={submitError} onRetry={() => handleSubmit({
+                  preventDefault: () => {}
+                } as React.FormEvent)} className="mb-4" />}
 
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <Input
-                      type="text"
-                      name="name"
-                      placeholder="Your Full Name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="pl-12 h-12"
-                      required
-                    />
+                    <Input type="text" name="name" placeholder="Your Full Name" value={formData.name} onChange={handleInputChange} className="pl-12 h-12" required />
                   </div>
 
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Your Email Address"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="pl-12 h-12"
-                      required
-                    />
+                    <Input type="email" name="email" placeholder="Your Email Address" value={formData.email} onChange={handleInputChange} className="pl-12 h-12" required />
                   </div>
 
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <Input
-                      type="tel"
-                      name="phone"
-                      placeholder="Your Phone Number"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="pl-12 h-12"
-                      required
-                    />
+                    <Input type="tel" name="phone" placeholder="Your Phone Number" value={formData.phone} onChange={handleInputChange} className="pl-12 h-12" required />
                   </div>
 
                   <div className="relative">
                     <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-muted-foreground" />
-                    <Textarea
-                      name="message"
-                      placeholder="Your Message (Optional)"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      className="pl-12 min-h-[120px] resize-none"
-                    />
+                    <Textarea name="message" placeholder="Your Message (Optional)" value={formData.message} onChange={handleInputChange} className="pl-12 min-h-[120px] resize-none" />
                   </div>
 
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full btn-hero-primary h-12"
-                  >
-                    {isSubmitting ? (
-                      <>
+                  <Button type="submit" disabled={isSubmitting} className="w-full btn-hero-primary h-12">
+                    {isSubmitting ? <>
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                         Sending...
-                      </>
-                    ) : (
-                      <>
+                      </> : <>
                         <Send className="mr-2 w-5 h-5" />
                         Send Message
-                      </>
-                    )}
+                      </>}
                   </Button>
                 </form>
               </div>
@@ -170,21 +132,11 @@ const LeadFormSection = () => {
                       <Phone className="w-6 h-6 text-primary mr-4" />
                       <div>
                         <p className="font-semibold">Call Us</p>
-                        <a href="tel:9655355525" className="text-primary hover:text-primary-hover text-lg">
-                          9655355525
-                        </a>
+                        <a href="tel:9655355525" className="text-primary hover:text-primary-hover text-lg">+91 9655355525</a>
                       </div>
                     </div>
                     
-                    <div className="flex items-center">
-                      <Mail className="w-6 h-6 text-primary mr-4" />
-                      <div>
-                        <p className="font-semibold">Email Us</p>
-                        <a href="mailto:info@shriramresidences.com" className="text-primary hover:text-primary-hover">
-                          info@shriramresidences.com
-                        </a>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
 
@@ -196,18 +148,10 @@ const LeadFormSection = () => {
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <a
-                      href="tel:9655355525"
-                      className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
-                    >
+                    <a href="tel:9655355525" className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">
                       Call Now
                     </a>
-                    <a
-                      href="https://wa.me/9655355525"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors text-center"
-                    >
+                    <a href="https://wa.me/9655355525" target="_blank" rel="noopener noreferrer" className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors text-center">
                       WhatsApp
                     </a>
                   </div>
@@ -233,8 +177,6 @@ const LeadFormSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default LeadFormSection;
