@@ -59,7 +59,7 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 relative z-10 pt-24 md:pt-32 pb-8 md:pb-16">
+      <div className="container mx-auto px-4 relative z-10 pt-32 sm:pt-36 md:pt-32 pb-8 md:pb-16">
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center">
           {/* Left: Main Content */}
           <div className={`text-white fade-in ${inView ? "visible" : ""}`}>

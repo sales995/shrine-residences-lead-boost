@@ -17,29 +17,29 @@ const StickyCTABar = () => {
 
   return (
     <div className="sticky-cta-bar">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-3 gap-2">
+      <div className="container mx-auto px-2 sm:px-4">
+        <div className="grid grid-cols-3 gap-1 sm:gap-2">
           <Button 
             onClick={handleSiteVisit}
-            className="btn-virtual-tour text-sm py-2"
+            className="btn-virtual-tour text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-4 h-auto"
           >
-            <Calendar className="w-4 h-4 mr-1" />
-            Book Site Visit
+            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+            <span className="hidden xs:inline">Book </span>Visit
           </Button>
           
           <Button 
             onClick={handleBrochureDownload}
-            className="btn-accent text-sm py-2"
+            className="btn-accent text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-4 h-auto"
           >
-            <Download className="w-4 h-4 mr-1" />
-            Download Brochure
+            <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+            <span className="hidden xs:inline">Download</span><span className="xs:hidden">Get</span> Brochure
           </Button>
           
           <Button 
             onClick={handleWhatsApp}
-            className="bg-green-600 hover:bg-green-700 text-white text-sm py-2 font-semibold"
+            className="bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-4 font-semibold h-auto"
           >
-            <MessageCircle className="w-4 h-4 mr-1" />
+            <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
             WhatsApp
           </Button>
         </div>

@@ -192,12 +192,12 @@
 
   /* Sticky Bottom Bar */
   .sticky-cta-bar {
-    @apply fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-4 shadow-strong z-40;
+    @apply fixed bottom-0 left-0 right-0 bg-white backdrop-blur-md border-t border-gray-200 py-2 sm:py-3 md:py-4 px-2 sm:px-4 shadow-strong z-50;
   }
 
   /* Floating WhatsApp Button */
   .whatsapp-float {
-    @apply fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-strong hover:shadow-xl transition-all duration-300 hover:scale-110 animate-bounce z-50;
+    @apply fixed bottom-20 right-4 sm:right-6 bg-green-500 text-white p-3 sm:p-4 rounded-full shadow-strong hover:shadow-xl transition-all duration-300 hover:scale-110 z-40;
   }
 
   /* Animation Classes */
