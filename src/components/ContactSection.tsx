@@ -78,9 +78,9 @@ const ContactSection = () => {
                   <div>
                     <p className="font-semibold">Visit Us</p>
                     <p className="text-gray-300">
-                      Shriram Residences<br />
-                      Prime Location, City Center<br />
-                      PIN: 560001
+                      Shriram Residencies<br />
+                      No.16 GST Road, Opp. Perungalathur Railway Station<br />
+                      New Perungalathur, Chennai-63
                     </p>
                   </div>
                 </div>
