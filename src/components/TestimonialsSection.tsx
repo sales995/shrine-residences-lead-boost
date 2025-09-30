@@ -76,7 +76,7 @@ const TestimonialsSection = () => {
             <div className="bg-white rounded-2xl p-8 max-w-4xl mx-auto shadow-soft">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                  <div className="text-4xl font-bold text-primary mb-2">500+</div>
+                  <div className="text-4xl font-bold text-primary mb-2">1000+</div>
                   <p className="text-muted-foreground">Happy Families</p>
                 </div>
                 <div>
