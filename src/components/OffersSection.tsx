@@ -101,10 +101,10 @@ const OffersSection = () => {
                   Claim Offer Now
                 </button>
                 <a
-                  href="tel:9655355525"
+                  href="tel:+919655355525"
                   className="btn-hero-secondary"
                 >
-                  Call 9655355525
+                  Call +91 9655355525
                 </a>
               </div>
             </div>
