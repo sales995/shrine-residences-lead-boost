@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Download, MessageCircle } from "lucide-react";
 import BrochureDownloadDialog from "./BrochureDownloadDialog";
+import SiteVisitDialog from "./SiteVisitDialog";
 
 const StickyCTABar = () => {
   const [brochureDialogOpen, setBrochureDialogOpen] = useState(false);
+  const [siteVisitDialogOpen, setSiteVisitDialogOpen] = useState(false);
 
   const handleSiteVisit = () => {
-    window.open("https://wa.me/919655355525?text=Hi! I'd like to schedule a site visit to Shriram Park 63 Perungalathur. Please confirm available time slots.", "_blank");
+    setSiteVisitDialogOpen(true);
   };
 
   const handleBrochureDownload = () => {
@@ -50,6 +52,10 @@ const StickyCTABar = () => {
       <BrochureDownloadDialog 
         open={brochureDialogOpen} 
         onOpenChange={setBrochureDialogOpen} 
+      />
+      <SiteVisitDialog 
+        open={siteVisitDialogOpen} 
+        onOpenChange={setSiteVisitDialogOpen} 
       />
     </div>
   );
