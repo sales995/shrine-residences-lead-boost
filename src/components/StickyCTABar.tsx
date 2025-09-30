@@ -29,7 +29,7 @@ const StickyCTABar = () => {
             className="btn-virtual-tour text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-4 h-auto"
           >
             <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-            <span className="hidden xs:inline">Schedule </span>Visit
+            Schedule Visit
           </Button>
           
           <Button 
