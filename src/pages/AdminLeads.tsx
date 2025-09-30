@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Download, RefreshCw, Calendar, Phone, Mail, MessageSquare } from "lucide-react";
+import { Download, RefreshCw, Calendar, Phone, Mail, MessageSquare, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +22,8 @@ const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const fetchLeads = async () => {
     setLoading(true);
@@ -104,17 +108,33 @@ const AdminLeads = () => {
     return <Badge variant={config.variant}>{config.label}</Badge>;
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/auth');
+  };
+
   return (
     <div className="min-h-screen bg-neutral-bg py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-            Lead Management
-          </h1>
-          <p className="text-muted-foreground">
-            View and download all contact form submissions
-          </p>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+                Lead Management
+              </h1>
+              <p className="text-muted-foreground">
+                View and download all contact form submissions
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Signed in as: {user?.email}
+              </p>
+            </div>
+            <Button variant="outline" onClick={handleSignOut}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
 
         {/* Actions */}
