@@ -97,12 +97,15 @@ export const OfferPopup = () => {
       <DialogContent className="sm:max-w-lg p-0 overflow-hidden border-2 border-primary/20 max-h-[95vh] overflow-y-auto">
         <div className="flex flex-col">
           {/* Offer Image */}
-          <div className="w-full bg-white">
+          <div className="w-full bg-white relative">
             <img 
               src={offerImage} 
               alt="Ayudha Pooja Special Offer" 
               className="w-full h-auto object-cover"
             />
+            <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg text-sm font-semibold text-center max-w-[200px]">
+              To avail Ayudha Pooja Offer fill the form below
+            </div>
           </div>
           
           {/* Form Section */}
