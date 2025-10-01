@@ -94,32 +94,32 @@ export const OfferPopup = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-2xl p-0 overflow-hidden border-0">
+      <DialogContent className="sm:max-w-xl p-0 overflow-hidden border-2 border-accent/20 max-h-[90vh] overflow-y-auto">
         {/* Offer Image */}
         <div className="relative w-full">
           <img 
             src={offerImage} 
             alt="Ayudha Pooja Special Offer" 
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-contain max-h-[50vh]"
           />
         </div>
         
-        <div className="p-6 bg-white">
-          <DialogHeader className="mb-4">
-            <DialogTitle className="text-2xl font-bold text-center text-foreground">
-              Register Now to Avail This Offer!
+        <div className="p-4 sm:p-6 bg-white">
+          <DialogHeader className="mb-3">
+            <DialogTitle className="text-lg sm:text-xl font-bold text-center text-foreground">
+              📋 Register Now to Avail This Offer!
             </DialogTitle>
           </DialogHeader>
         
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-2.5">
             <div>
               <Input
                 type="text"
                 placeholder="Your Full Name *"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="h-11 text-base border-2 border-gray-300 focus:border-primary"
+                className="h-10 text-sm border-2 border-gray-300 focus:border-primary"
                 required
               />
             </div>
@@ -131,7 +131,7 @@ export const OfferPopup = () => {
                 value={formData.phone}
                 onChange={handlePhoneChange}
                 maxLength={10}
-                className="h-11 text-base border-2 border-gray-300 focus:border-primary"
+                className="h-10 text-sm border-2 border-gray-300 focus:border-primary"
                 required
                 pattern="[6-9][0-9]{9}"
               />
@@ -143,20 +143,20 @@ export const OfferPopup = () => {
                 placeholder="Email Address (Optional)"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="h-11 text-base border-2 border-gray-300 focus:border-primary"
+                className="h-10 text-sm border-2 border-gray-300 focus:border-primary"
               />
             </div>
 
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full h-12 text-lg font-bold bg-primary hover:bg-primary-hover text-white shadow-lg"
+              className="w-full h-11 text-base font-bold bg-primary hover:bg-primary-hover text-white shadow-lg"
             >
-              {isSubmitting ? "Submitting..." : "Register Now"}
+              {isSubmitting ? "Submitting..." : "🎉 Register & Claim Offer"}
             </Button>
 
-            <p className="text-xs text-center text-muted-foreground">
-              🎉 Offer valid till 5th October, 2025
+            <p className="text-xs text-center text-muted-foreground mt-2">
+              ⏰ Offer valid till 5th October, 2025
             </p>
           </form>
         </div>
