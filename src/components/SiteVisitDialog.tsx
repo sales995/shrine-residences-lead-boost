@@ -3,10 +3,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, MessageSquare, X } from "lucide-react";
+import { Calendar as CalendarIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { trackSiteVisitRequest } from "@/utils/tracking";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface SiteVisitDialogProps {
   open: boolean;
@@ -56,10 +55,6 @@ const SiteVisitDialog = ({ open, onOpenChange }: SiteVisitDialogProps) => {
     const day = date.getDay();
     return day === 0 || day === 6; // Sunday or Saturday
   };
-
-  const previewMessage = selectedDate && selectedTime 
-    ? `Hi! I would like to schedule a site visit to Shriram Park 63 Perungalathur on ${format(selectedDate, "EEEE, MMMM do, yyyy")} at ${selectedTime}. Please confirm the appointment.`
-    : "";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -126,17 +121,6 @@ const SiteVisitDialog = ({ open, onOpenChange }: SiteVisitDialogProps) => {
                 ))}
               </div>
             </div>
-          )}
-
-          {/* Message Preview */}
-          {previewMessage && (
-            <Alert className="bg-muted/50">
-              <MessageSquare className="h-4 w-4" />
-              <AlertDescription className="text-xs mt-1">
-                <strong>Message to be sent:</strong>
-                <p className="mt-1 italic">{previewMessage}</p>
-              </AlertDescription>
-            </Alert>
           )}
 
           {/* Submit Button */}
