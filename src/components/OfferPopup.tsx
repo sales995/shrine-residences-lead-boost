@@ -108,7 +108,7 @@ export const OfferPopup = () => {
           {/* Form Section */}
           <div className="w-full bg-gradient-to-b from-white to-gray-50 p-6">
             <h3 className="text-xl font-bold text-center text-foreground mb-4">
-              📋 Register Now to Avail This Offer!
+              To avail Ayudha Pooja Offer fill the form below
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-3 max-w-md mx-auto">
