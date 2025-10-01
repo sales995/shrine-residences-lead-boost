@@ -33,6 +33,22 @@ const CountdownTimer = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-  return;
+  
+  return (
+    <div className="flex gap-2 md:gap-4 text-white font-bold text-xs md:text-sm">
+      <div className="bg-white/20 px-2 md:px-3 py-1 rounded">
+        <span className="text-accent">{timeLeft.days}</span> Days
+      </div>
+      <div className="bg-white/20 px-2 md:px-3 py-1 rounded">
+        <span className="text-accent">{timeLeft.hours}</span> Hours
+      </div>
+      <div className="bg-white/20 px-2 md:px-3 py-1 rounded">
+        <span className="text-accent">{timeLeft.minutes}</span> Min
+      </div>
+      <div className="bg-white/20 px-2 md:px-3 py-1 rounded">
+        <span className="text-accent">{timeLeft.seconds}</span> Sec
+      </div>
+    </div>
+  );
 };
 export default CountdownTimer;

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, MessageSquare, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { trackSiteVisitRequest } from "@/utils/tracking";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface SiteVisitDialogProps {
   open: boolean;
@@ -56,16 +57,29 @@ const SiteVisitDialog = ({ open, onOpenChange }: SiteVisitDialogProps) => {
     return day === 0 || day === 6; // Sunday or Saturday
   };
 
+  const previewMessage = selectedDate && selectedTime 
+    ? `Hi! I would like to schedule a site visit to Shriram Park 63 Perungalathur on ${format(selectedDate, "EEEE, MMMM do, yyyy")} at ${selectedTime}. Please confirm the appointment.`
+    : "";
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[550px]">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100"
+          onClick={() => onOpenChange(false)}
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </Button>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">
             Schedule Your Site Visit
           </DialogTitle>
-          <p className="text-sm text-muted-foreground text-center mt-2">
+          <DialogDescription className="text-sm text-muted-foreground text-center mt-2">
             Select your preferred date and time slot
-          </p>
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 mt-4">
@@ -114,19 +128,35 @@ const SiteVisitDialog = ({ open, onOpenChange }: SiteVisitDialogProps) => {
             </div>
           )}
 
-          {/* Confirm Button */}
+          {/* Message Preview */}
+          {previewMessage && (
+            <Alert className="bg-muted/50">
+              <MessageSquare className="h-4 w-4" />
+              <AlertDescription className="text-xs mt-1">
+                <strong>Message to be sent:</strong>
+                <p className="mt-1 italic">{previewMessage}</p>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* Submit Button */}
           <Button
             onClick={handleConfirm}
             disabled={!selectedDate || !selectedTime}
             className="w-full btn-virtual-tour"
             size="lg"
           >
-            Confirm Visit on WhatsApp
+            Submit & Send via WhatsApp
           </Button>
 
-          <p className="text-xs text-muted-foreground text-center">
-            Note: Weekend visits are not available. Our team will confirm your appointment via WhatsApp.
-          </p>
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground text-center">
+              Note: Weekend visits are not available. Our team will confirm your appointment via WhatsApp.
+            </p>
+            <p className="text-xs text-muted-foreground text-center font-medium">
+              Multiple visits can be scheduled at the same time by different users.
+            </p>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
