@@ -94,71 +94,65 @@ export const OfferPopup = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-xl p-0 overflow-hidden border-2 border-accent/20 max-h-[90vh] overflow-y-auto">
-        {/* Offer Image */}
-        <div className="relative w-full">
-          <img 
-            src={offerImage} 
-            alt="Ayudha Pooja Special Offer" 
-            className="w-full h-auto object-contain max-h-[50vh]"
-          />
-        </div>
-        
-        <div className="p-4 sm:p-6 bg-white">
-          <DialogHeader className="mb-3">
-            <DialogTitle className="text-lg sm:text-xl font-bold text-center text-foreground">
+      <DialogContent className="sm:max-w-lg p-0 overflow-hidden border-2 border-primary/20 max-h-[95vh] overflow-y-auto">
+        <div className="flex flex-col">
+          {/* Offer Image */}
+          <div className="w-full bg-white">
+            <img 
+              src={offerImage} 
+              alt="Ayudha Pooja Special Offer" 
+              className="w-full h-auto object-cover"
+            />
+          </div>
+          
+          {/* Form Section */}
+          <div className="w-full bg-gradient-to-b from-white to-gray-50 p-6">
+            <h3 className="text-xl font-bold text-center text-foreground mb-4">
               📋 Register Now to Avail This Offer!
-            </DialogTitle>
-          </DialogHeader>
-        
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-2.5">
-            <div>
+            </h3>
+            
+            <form onSubmit={handleSubmit} className="space-y-3 max-w-md mx-auto">
               <Input
                 type="text"
                 placeholder="Your Full Name *"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="h-10 text-sm border-2 border-gray-300 focus:border-primary"
+                className="h-11 text-base border-2 border-gray-300 focus:border-primary bg-white"
                 required
               />
-            </div>
 
-            <div>
               <Input
                 type="tel"
                 placeholder="Phone Number *"
                 value={formData.phone}
                 onChange={handlePhoneChange}
                 maxLength={10}
-                className="h-10 text-sm border-2 border-gray-300 focus:border-primary"
+                className="h-11 text-base border-2 border-gray-300 focus:border-primary bg-white"
                 required
                 pattern="[6-9][0-9]{9}"
               />
-            </div>
 
-            <div>
               <Input
                 type="email"
                 placeholder="Email Address (Optional)"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="h-10 text-sm border-2 border-gray-300 focus:border-primary"
+                className="h-11 text-base border-2 border-gray-300 focus:border-primary bg-white"
               />
-            </div>
 
-            <Button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="w-full h-11 text-base font-bold bg-primary hover:bg-primary-hover text-white shadow-lg"
-            >
-              {isSubmitting ? "Submitting..." : "🎉 Register & Claim Offer"}
-            </Button>
+              <Button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full h-12 text-lg font-bold bg-primary hover:bg-primary-hover text-white shadow-lg transition-all"
+              >
+                {isSubmitting ? "Submitting..." : "🎉 Register & Claim Offer"}
+              </Button>
 
-            <p className="text-xs text-center text-muted-foreground mt-2">
-              ⏰ Offer valid till 5th October, 2025
-            </p>
-          </form>
+              <p className="text-xs text-center text-muted-foreground pt-1">
+                ⏰ Offer valid till 5th October, 2025
+              </p>
+            </form>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
