@@ -39,7 +39,7 @@ const highlights = [
   },
   {
     icon: Sparkles,
-    title: "3 BED Homes at ₹1.62 CR*",
+    title: "3 BED Homes at ₹1.48 CR*",
     description: "Competitive pricing with bank loan approval support"
   }
 ];

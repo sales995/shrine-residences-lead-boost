@@ -50,7 +50,7 @@ const Index = () => {
         "longitude": "80.0897"
       },
       "telephone": "+91-9655355525",
-      "priceRange": "₹1.46 Cr onwards",
+      "priceRange": "₹1.48 Cr onwards",
       "amenityFeature": [
         "Clubhouse",
         "Swimming Pool",

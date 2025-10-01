@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Gift, Sparkles, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import offerImage from "@/assets/ayudha-pooja-offer.jpeg";
 
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,7 @@ export const OfferPopup = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -93,42 +94,23 @@ export const OfferPopup = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-lg bg-gradient-to-br from-primary/5 via-white to-accent/5 border-2 border-accent/20">
-        <DialogHeader>
-          <div className="flex items-center justify-center mb-2">
-            <div className="relative">
-              <Gift className="w-16 h-16 text-accent animate-bounce" />
-              <Sparkles className="w-6 h-6 text-primary absolute -top-1 -right-1 animate-pulse" />
-            </div>
-          </div>
-          <DialogTitle className="text-3xl font-bold text-center bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            🎁 Exclusive Limited Time Offer!
-          </DialogTitle>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-2xl p-0 overflow-hidden border-0">
+        {/* Offer Image */}
+        <div className="relative w-full">
+          <img 
+            src={offerImage} 
+            alt="Ayudha Pooja Special Offer" 
+            className="w-full h-auto object-cover"
+          />
+        </div>
         
-        <div className="space-y-4 mt-4">
-          {/* Offer Highlights */}
-          <div className="bg-accent/10 rounded-lg p-4 border border-accent/30">
-            <div className="flex items-center gap-2 mb-2">
-              <Clock className="w-5 h-5 text-accent animate-pulse" />
-              <h3 className="font-bold text-lg text-foreground">Get Instant Access To:</h3>
-            </div>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2">
-                <span className="text-accent font-bold">✓</span>
-                <span className="font-semibold">Free Home Loan Consultation</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-accent font-bold">✓</span>
-                <span className="font-semibold">Priority Site Visit Booking</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-accent font-bold">✓</span>
-                <span className="font-semibold">Exclusive Price List & Floor Plans</span>
-              </li>
-            </ul>
-          </div>
-
+        <div className="p-6 bg-white">
+          <DialogHeader className="mb-4">
+            <DialogTitle className="text-2xl font-bold text-center text-foreground">
+              Register Now to Avail This Offer!
+            </DialogTitle>
+          </DialogHeader>
+        
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
@@ -137,7 +119,7 @@ export const OfferPopup = () => {
                 placeholder="Your Full Name *"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="h-12 text-base border-2 border-gray-300 focus:border-accent"
+                className="h-11 text-base border-2 border-gray-300 focus:border-primary"
                 required
               />
             </div>
@@ -149,7 +131,7 @@ export const OfferPopup = () => {
                 value={formData.phone}
                 onChange={handlePhoneChange}
                 maxLength={10}
-                className="h-12 text-base border-2 border-gray-300 focus:border-accent"
+                className="h-11 text-base border-2 border-gray-300 focus:border-primary"
                 required
                 pattern="[6-9][0-9]{9}"
               />
@@ -161,20 +143,20 @@ export const OfferPopup = () => {
                 placeholder="Email Address (Optional)"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="h-12 text-base border-2 border-gray-300 focus:border-accent"
+                className="h-11 text-base border-2 border-gray-300 focus:border-primary"
               />
             </div>
 
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full h-12 text-lg font-bold bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-white shadow-lg"
+              className="w-full h-12 text-lg font-bold bg-primary hover:bg-primary-hover text-white shadow-lg"
             >
-              {isSubmitting ? "Claiming Offer..." : "🎉 Claim Your Exclusive Offer Now!"}
+              {isSubmitting ? "Submitting..." : "Register Now"}
             </Button>
 
             <p className="text-xs text-center text-muted-foreground">
-              ⏰ Limited slots available. Only 5 offers left today!
+              🎉 Offer valid till 5th October, 2025
             </p>
           </form>
         </div>
