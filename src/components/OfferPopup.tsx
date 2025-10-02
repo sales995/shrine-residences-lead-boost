@@ -18,10 +18,16 @@ export const OfferPopup = () => {
     toast
   } = useToast();
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 5000);
-    return () => clearTimeout(timer);
+    // Check if popup was already shown in this session
+    const hasShownPopup = sessionStorage.getItem('offerPopupShown');
+    
+    if (!hasShownPopup) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        sessionStorage.setItem('offerPopupShown', 'true');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
   }, []);
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 10);
