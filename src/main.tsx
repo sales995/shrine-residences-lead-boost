@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-
+import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
 
 console.log("Main.tsx loading...");
@@ -29,7 +29,11 @@ if (rootElement) {
       }
 
       const { default: App } = await import("./App.tsx");
-      root.render(<App />);
+      root.render(
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      );
       console.log("React app rendered successfully");
     } catch (error) {
       console.error("Error rendering app:", error);

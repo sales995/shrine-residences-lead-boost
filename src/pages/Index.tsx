@@ -14,6 +14,8 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import NetworkStatus from "@/components/NetworkStatus";
 import { OfferPopup } from "@/components/OfferPopup";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import SEOHead from "@/components/SEOHead";
+import FAQBlock from "@/components/FAQBlock";
 
 const Index = () => {
   useScrollAnimation();
@@ -86,37 +88,46 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Fixed Header */}
-      <Header />
+    <>
+      <SEOHead 
+        path="/" 
+        title="Shriram Park 63 Perungalathur - 2/3/4 BHK Flats on GST Road. Limited Offers"
+        description="Shriram Park 63 Perungalathur - Luxury 2, 3 & 4 BHK Flats on GST Road. Limited Ready-to-Move Inventory. RERA Approved. Get Latest Price List & Exclusive Offers."
+      />
       
-      {/* Main Sections */}
-      <main>
-        <HeroSection />
-        <FeaturesSection />
-        <AboutSection />
-        <OffersSection />
-        <GallerySection />
-        <TestimonialsSection />
-        <LeadFormSection />
-        <ContactSection />
-      </main>
-      
-      {/* Footer */}
-      <Footer />
-      
-      {/* Floating WhatsApp Button */}
-      <WhatsAppFloat />
-      
-      {/* Sticky Bottom CTA Bar */}
-      <StickyCTABar />
-      
-      {/* Network Status Indicator */}
-      <NetworkStatus />
-      
-      {/* Offer Popup */}
-      <OfferPopup />
-    </div>
+      <div className="min-h-screen bg-background">
+        {/* Fixed Header */}
+        <Header />
+        
+        {/* Main Sections */}
+        <main>
+          <HeroSection />
+          <FeaturesSection />
+          <AboutSection />
+          <OffersSection />
+          <GallerySection />
+          <TestimonialsSection />
+          <FAQBlock />
+          <LeadFormSection />
+          <ContactSection />
+        </main>
+        
+        {/* Footer */}
+        <Footer />
+        
+        {/* Floating WhatsApp Button */}
+        <WhatsAppFloat />
+        
+        {/* Sticky Bottom CTA Bar */}
+        <StickyCTABar />
+        
+        {/* Network Status Indicator */}
+        <NetworkStatus />
+        
+        {/* Offer Popup */}
+        <OfferPopup />
+      </div>
+    </>
   );
 };
 
