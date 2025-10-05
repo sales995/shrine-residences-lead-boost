@@ -53,29 +53,49 @@ const LeadFormSection = () => {
     
     setIsSubmitting(true);
     try {
-      // Save to database
-      const { error: dbError } = await supabase
-        .from('leads')
-        .insert({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          message: formData.message.trim() || null,
-          source: 'contact-form'
+      const { data, error } = await supabase
+        .functions.invoke('submit-lead', {
+          body: {
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            message: formData.message.trim() || null,
+            source: 'contact-form',
+          },
         });
 
-      if (dbError) {
-        // Handle duplicate phone number
-        if (dbError.code === '23505' && dbError.message.includes('leads_phone_unique')) {
+      if (error) {
+        const msg = (error as any)?.message || '';
+        const status = (error as any)?.status;
+        if (status === 429 || msg.toLowerCase().includes('too many')) {
           toast({
-            title: "Already Registered",
-            description: "This phone number has already been registered. Our team will contact you soon!",
-            variant: "destructive"
+            title: 'Slow down',
+            description: 'Too many submissions. Please try again later.',
+            variant: 'destructive',
           });
           setIsSubmitting(false);
           return;
         }
-        throw dbError;
+        if (msg.toLowerCase().includes('captcha')) {
+          toast({
+            title: 'Verification failed',
+            description: 'Please complete the CAPTCHA and try again.',
+            variant: 'destructive',
+          });
+          setIsSubmitting(false);
+          return;
+        }
+        throw error as any;
+      }
+
+      if ((data as any)?.duplicate) {
+        toast({
+          title: 'Already Registered',
+          description: 'This phone number has already been registered. Our team will contact you soon!',
+        });
+        setIsSubmitting(false);
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        return;
       }
 
       toast({

@@ -43,27 +43,46 @@ const HeroSection = () => {
     
     setIsSubmitting(true);
     try {
-      const { error } = await supabase
-        .from('leads')
-        .insert({
-          name: formData.name.trim(),
-          phone: formData.phone.trim(),
-          email: formData.email.trim() || null,
-          message: null,
-          source: 'hero'
+      const { data, error } = await supabase
+        .functions.invoke('submit-lead', {
+          body: {
+            name: formData.name.trim(),
+            phone: formData.phone.trim(),
+            email: formData.email.trim() || null,
+            message: null,
+            source: 'hero',
+          },
         });
 
       if (error) {
-        // Handle duplicate phone number
-        if (error.code === '23505' && error.message.includes('leads_phone_unique')) {
+        const msg = (error as any)?.message || '';
+        const status = (error as any)?.status;
+        if (status === 429 || msg.toLowerCase().includes('too many')) {
           toast({
-            title: "Already Registered",
-            description: "This phone number has already been registered. Our team will contact you soon!",
-            variant: "destructive"
+            title: 'Slow down',
+            description: 'Too many submissions. Please try again later.',
+            variant: 'destructive',
+          });
+          return;
+        }
+        if (msg.toLowerCase().includes('captcha')) {
+          toast({
+            title: 'Verification failed',
+            description: 'Please complete the CAPTCHA and try again.',
+            variant: 'destructive',
           });
           return;
         }
         throw error;
+      }
+
+      if ((data as any)?.duplicate) {
+        toast({
+          title: 'Already Registered',
+          description: 'This phone number has already been registered. Our team will contact you soon!',
+        });
+        setFormData({ name: '', phone: '', email: '' });
+        return;
       }
 
       toast({

@@ -65,15 +65,31 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
       }
 
       if (!existingLead) {
-        const { error } = await supabase.from("leads").insert({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email || null,
-          message: "Brochure & Floor Plan Download Request",
-          source: "brochure_download",
+        const { data, error } = await supabase.functions.invoke('submit-lead', {
+          body: {
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email || null,
+            message: 'Brochure & Floor Plan Download Request',
+            source: 'brochure_download',
+          },
         });
 
-        if (error) throw error;
+        if (error) {
+          const msg = (error as any)?.message || '';
+          const status = (error as any)?.status;
+          if (status === 429 || msg.toLowerCase().includes('too many')) {
+            toast({ title: 'Slow down', description: 'Too many submissions. Please try again later.', variant: 'destructive' });
+            setIsSubmitting(false);
+            return;
+          }
+          if (msg.toLowerCase().includes('captcha')) {
+            toast({ title: 'Verification failed', description: 'Please complete the CAPTCHA and try again.', variant: 'destructive' });
+            setIsSubmitting(false);
+            return;
+          }
+          throw error as any;
+        }
 
         toast({
           title: "Success!",
