@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      lead_access_log: {
+        Row: {
+          action: string
+          created_at: string | null
+          id: string
+          lead_id: string | null
+          metadata: Json | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          id?: string
+          lead_id?: string | null
+          metadata?: Json | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          id?: string
+          lead_id?: string | null
+          metadata?: Json | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
@@ -68,6 +95,33 @@ export type Database = {
         }
         Relationships: []
       }
+      submission_rate_limit: {
+        Row: {
+          created_at: string | null
+          first_submission_at: string | null
+          id: string
+          identifier: string
+          last_submission_at: string | null
+          submission_count: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          first_submission_at?: string | null
+          id?: string
+          identifier: string
+          last_submission_at?: string | null
+          submission_count?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          first_submission_at?: string | null
+          id?: string
+          identifier?: string
+          last_submission_at?: string | null
+          submission_count?: number | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -94,6 +148,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_old_rate_limits: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
