@@ -8,20 +8,13 @@ const globP = promisify(glob);
 const SITE_URL = "https://shriramproperties-park63.in";
 
 async function generate() {
-  const pages = await globP("src/pages/**/*.tsx", { 
-    ignore: ["**/_*", "**/*.test.tsx"] 
-  });
-  
+  const pages = await globP("src/pages/**/*.tsx", { ignore: ["**/_*", "**/*.test.tsx"] });
   const smStream = new SitemapStream({ hostname: SITE_URL });
 
   for (const file of pages) {
-    let route = file
-      .replace(/^src\/pages/, "")
-      .replace(/index\.tsx$/, "")
-      .replace(/\.tsx$/, "");
-    
+    let route = file.replace(/^src\/pages/, "").replace(/index\.tsx$/, "").replace(/\.tsx$/, "");
     if (!route) route = "/";
-    
+    // compute lastmod from file mtime if possible
     let lastmod;
     try {
       const stats = fs.statSync(path.resolve(file));
@@ -29,7 +22,6 @@ async function generate() {
     } catch (e) {
       lastmod = new Date().toISOString();
     }
-    
     smStream.write({
       url: route,
       changefreq: "weekly",
@@ -40,10 +32,7 @@ async function generate() {
 
   smStream.end();
   const data = await streamToPromise(smStream);
-  fs.writeFileSync(
-    path.resolve(__dirname, "public", "sitemap.xml"), 
-    data.toString()
-  );
+  fs.writeFileSync(path.resolve(__dirname, "public", "sitemap.xml"), data.toString());
   console.log("✅ sitemap.xml generated at /public/sitemap.xml");
 }
 
