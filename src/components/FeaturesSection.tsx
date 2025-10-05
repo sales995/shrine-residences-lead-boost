@@ -75,7 +75,9 @@ const FeaturesSection = () => {
                 <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-4 mx-auto">
                   <highlight.icon className="w-8 h-8 text-accent" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-center text-primary">{highlight.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-center text-primary">
+                  {highlight.title}
+                </h3>
                 <p className="text-muted-foreground text-center text-sm leading-relaxed">
                   {highlight.description}
                 </p>
@@ -98,6 +100,7 @@ const FeaturesSection = () => {
                   element?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="btn-hero-primary text-lg"
+                aria-label="Get latest price list for Shriram Park 63 flats"
               >
                 Get Latest Price List Now
               </button>

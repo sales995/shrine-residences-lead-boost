@@ -20,79 +20,61 @@ import FAQBlock from "@/components/FAQBlock";
 const Index = () => {
   useScrollAnimation();
 
-  // Update page title, meta description, and Schema markup for SEO
-  useEffect(() => {
-    document.title = "Shriram Park 63 Perungalathur - 2/3/4 BHK Flats on GST Road. Limited Offers";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        "content", 
-        "Shriram Park 63 Perungalathur - Luxury 2, 3 & 4 BHK Flats on GST Road. Limited Ready-to-Move Inventory. RERA Approved. Get Latest Price List & Exclusive Offers."
-      );
-    }
-
-    // Add Schema Markup for Real Estate Project
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "RealEstateProject",
-      "name": "Shriram Park 63",
-      "description": "Premium residential township offering 2, 3 & 4 BHK flats in Perungalathur, Chennai. 57-acre township with 40+ amenities overlooking Vandalur Forest Reserve.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "GST Road",
-        "addressLocality": "Perungalathur",
-        "addressRegion": "Tamil Nadu",
-        "postalCode": "600063",
-        "addressCountry": "IN"
+  // FAQPage Schema for SEO
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is the RERA number of Shriram Park 63?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Shriram Park 63 is RERA approved with registration number TN/01/Building/0072/2018."
+        }
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "12.9103",
-        "longitude": "80.0897"
+      {
+        "@type": "Question",
+        name: "How far is Shriram Park 63 from Chennai Airport?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Shriram Park 63 is located approximately 11.8 km from Chennai International Airport, easily accessible via GST Road."
+        }
       },
-      "telephone": "+91-9655355525",
-      "priceRange": "₹1.48 Cr onwards",
-      "amenityFeature": [
-        "Clubhouse",
-        "Swimming Pool",
-        "Gymnasium",
-        "Library",
-        "Mini Theatre",
-        "Games Room",
-        "Yoga/Meditation Room",
-        "Convenience Store",
-        "Multipurpose Hall"
-      ],
-      "numberOfBedrooms": "2, 3, 4",
-      "floorSize": {
-        "@type": "QuantitativeValue",
-        "value": "57",
-        "unitCode": "ACR"
+      {
+        "@type": "Question",
+        name: "What amenities are offered at Shriram Park 63?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Shriram Park 63 offers 40+ world-class amenities including clubhouse, swimming pool, gymnasium, library, mini theatre, tennis courts, badminton courts, children's play area, landscaped gardens, and 24/7 security."
+        }
       },
-      "additionalProperty": {
-        "@type": "PropertyValue",
-        "name": "RERA Number",
-        "value": "TN/01/Building/0072/2018"
+      {
+        "@type": "Question",
+        name: "What is the size of 3 BHK flats at Shriram Park 63?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The 3 BHK flats at Shriram Park 63 Perungalathur range from 1725 to 1970 square feet, offering spacious and comfortable living spaces."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Is bank loan available for Shriram Park 63?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, Shriram Park 63 has 90% bank loan approval from leading banks and financial institutions, making it easier for buyers to purchase their dream home."
+        }
       }
-    };
-
-    const scriptTag = document.createElement('script');
-    scriptTag.type = 'application/ld+json';
-    scriptTag.text = JSON.stringify(schema);
-    document.head.appendChild(scriptTag);
-
-    return () => {
-      document.head.removeChild(scriptTag);
-    };
-  }, []);
+    ]
+  };
 
   return (
     <>
       <SEOHead 
         path="/" 
-        title="Shriram Park 63 Perungalathur - 2/3/4 BHK Flats on GST Road. Limited Offers"
-        description="Shriram Park 63 Perungalathur - Luxury 2, 3 & 4 BHK Flats on GST Road. Limited Ready-to-Move Inventory. RERA Approved. Get Latest Price List & Exclusive Offers."
+        title="Shriram Park 63 | 3 BHK Flats on GST Road, Perungalathur, Chennai"
+        description="Discover premium 3 BHK flats at Shriram Park 63, Perungalathur – a 57-acre integrated township by Shriram Properties on GST Main Road, Chennai. RERA approved, modern amenities, and excellent connectivity."
+        additionalSchema={faqSchema}
       />
       
       <div className="min-h-screen bg-background">

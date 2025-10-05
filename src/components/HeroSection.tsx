@@ -136,48 +136,50 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center">
           {/* Left: Main Content */}
           <div className={`text-white fade-in ${inView ? "visible" : ""}`}>
-            {/* H1 - SEO Optimized */}
+            {/* H1 - SEO Optimized - Only H1 on page */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight">
-              Shriram Park 63 Perungalathur: Luxury 3 BHK <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">(1725-1970 Sq.ft)</span> Flats on GST Road
+              Shriram Park 63 – 3 BHK Flats on GST Road, Perungalathur, Chennai
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl mb-4 md:mb-6 text-accent font-bold">
-              Limited Ready-to-Move Inventory Remaining
+              Premium 3 BHK Apartments (1725-1970 Sq.ft) – Limited Ready-to-Move Inventory
             </p>
 
-            <div className="space-y-2 md:space-y-4 mb-6 md:mb-8">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <p className="text-sm sm:text-base md:text-lg">57-Acre Premium Township</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <p className="text-sm sm:text-base md:text-lg">Overlooking 1350-Acre Vandalur Forest Reserve</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <p className="text-sm sm:text-base md:text-lg">40+ State-of-the-Art Amenities</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <p className="text-sm sm:text-base md:text-lg">Fully Furnished Move-in Ready Homes Available</p>
-              </div>
-            </div>
+            <ul className="space-y-2 md:space-y-4 mb-6 md:mb-8">
+              <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
+                <span className="text-sm sm:text-base md:text-lg">57-Acre Premium Township with 40+ Modern Amenities</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
+                <span className="text-sm sm:text-base md:text-lg">Overlooking 1350-Acre Vandalur Forest Reserve</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
+                <span className="text-sm sm:text-base md:text-lg">Prime Location on GST Road, Perungalathur</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
+                <span className="text-sm sm:text-base md:text-lg">RERA Approved – TN/01/Building/0072/2018</span>
+              </li>
+            </ul>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8">
               <Button
                 onClick={handleCallNow}
                 className="btn-hero-primary text-base md:text-lg w-full sm:w-auto"
+                aria-label="Call Shriram Park 63 sales team at +91 9655355525"
               >
-                <Phone className="mr-2 w-4 h-4 md:w-5 md:h-5" />
+                <Phone className="mr-2 w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
                 <span className="truncate">Call: +91 9655355525</span>
               </Button>
               <Button
                 onClick={() => document.getElementById('lead-form-hero')?.scrollIntoView({ behavior: 'smooth' })}
                 className="btn-hero-secondary text-base md:text-lg w-full sm:w-auto"
+                aria-label="Download Shriram Park 63 price list and floor plans"
               >
-                <Download className="mr-2 w-4 h-4 md:w-5 md:h-5" />
+                <Download className="mr-2 w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
                 Get Price List
               </Button>
             </div>
@@ -191,12 +193,12 @@ const HeroSection = () => {
           {/* Right: Lead Form */}
           <div className={`fade-in ${inView ? "visible" : ""}`}>
             <div id="lead-form-hero" className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8">
-              <div className="mb-4 md:mb-6 text-center">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
+              <header className="mb-4 md:mb-6 text-center">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
                   Download Latest Price & Exclusive Offer
-                </h3>
+                </h2>
                 <p className="text-sm md:text-base text-gray-600">Fill the form below to get instant access</p>
-              </div>
+              </header>
 
               <form onSubmit={handleFormSubmit} className="space-y-3 md:space-y-4">
                 <div>
@@ -237,6 +239,7 @@ const HeroSection = () => {
                   type="submit" 
                   disabled={isSubmitting}
                   className="w-full btn-hero-primary text-lg md:text-xl py-5 md:py-7"
+                  aria-label="Submit form to download Shriram Park 63 price list"
                 >
                   {isSubmitting ? "Submitting..." : "Download Price List Now"}
                 </Button>

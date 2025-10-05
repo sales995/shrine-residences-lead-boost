@@ -91,6 +91,7 @@ const GallerySection = () => {
                   <img
                     src={image.src}
                     alt={image.alt}
+                    loading={index > 0 ? "lazy" : "eager"}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -108,14 +109,16 @@ const GallerySection = () => {
             <button
               onClick={goToPrevious}
               className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors"
+              aria-label="Previous gallery image"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-6 h-6" aria-hidden="true" />
             </button>
             <button
               onClick={goToNext}
               className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors"
+              aria-label="Next gallery image"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-6 h-6" aria-hidden="true" />
             </button>
 
             {/* Dots Indicator */}
@@ -127,6 +130,8 @@ const GallerySection = () => {
                   className={`w-3 h-3 rounded-full transition-colors ${
                     index === currentIndex ? "bg-primary" : "bg-gray-300"
                   }`}
+                  aria-label={`View gallery image ${index + 1}`}
+                  aria-current={index === currentIndex ? "true" : "false"}
                 />
               ))}
             </div>
@@ -141,10 +146,12 @@ const GallerySection = () => {
                 className={`relative h-24 md:h-32 rounded-lg overflow-hidden hover:scale-105 transition-transform ${
                   index === currentIndex ? "ring-4 ring-primary" : ""
                 }`}
+                aria-label={`View ${image.title}`}
               >
                 <img
                   src={image.src}
                   alt={image.alt}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>
