@@ -5,7 +5,7 @@ import { promisify } from "util";
 import glob from "glob";
 
 const globP = promisify(glob);
-const SITE_URL = "https://shriramproperties-park63.in";
+const SITE_URL = "https://www.shriramproperties-park63.in";
 
 async function generate() {
   const pages = await globP("src/pages/**/*.tsx", { ignore: ["**/_*", "**/*.test.tsx"] });

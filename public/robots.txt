@@ -4,4 +4,4 @@ Disallow: /dashboard/
 Disallow: /api/
 Disallow: /auth
 
-Sitemap: https://shriramproperties-park63.in/sitemap.xml
+Sitemap: https://www.shriramproperties-park63.in/sitemap.xml
