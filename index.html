@@ -76,5 +76,29 @@
     
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Form Finder Debug Script -->
+    <script>
+      (function(){
+        const forms = document.querySelectorAll('form');
+        console.group('[Form Finder]');
+        if (!forms.length) { console.warn('No <form> found'); return; }
+        forms.forEach((f, i) => {
+          const info = {
+            index: i,
+            id: f.id || '(no id)',
+            classes: f.className || '(no classes)',
+            action: f.getAttribute('action') || '(no action)',
+            inputs: Array.from(f.querySelectorAll('input, textarea, select')).map(el => ({
+              type: el.type || el.tagName,
+              name: el.name || '(no name)',
+              id: el.id || '(no id)'
+            }))
+          };
+          console.log(info);
+        });
+        console.groupEnd();
+      })();
+    </script>
   </body>
 </html>
