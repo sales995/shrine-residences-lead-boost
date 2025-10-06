@@ -147,10 +147,10 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center">
           {/* Left: Main Content */}
           <div className={`text-white fade-in ${inView ? "visible" : ""}`}>
-            {/* H1 - SEO Optimized - Only H1 on page */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight">
+            {/* Heading - main title */}
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight">
               Shriram Park 63 – 3 BHK Flats on GST Road, Perungalathur, Chennai
-            </h1>
+            </h2>
             
             <p className="text-lg sm:text-xl md:text-2xl mb-4 md:mb-6 text-accent font-bold">
               Premium 3 BHK Apartments (1725-1970 Sq.ft) – Limited Ready-to-Move Inventory
