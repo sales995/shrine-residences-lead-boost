@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "./OptimizedImage";
 import shriramLogo from "@/assets/shriram-logo.png";
 import park63Logo from "@/assets/park63-logo.png";
 
@@ -19,9 +20,25 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logos & Branding */}
           <div className="flex items-center space-x-3">
-            <img src={shriramLogo} alt="Shriram Properties Logo" className="h-10 md:h-12" />
+            <OptimizedImage 
+              src={shriramLogo} 
+              alt="Shriram Properties Logo" 
+              className="h-10 md:h-12 w-auto"
+              priority={true}
+              width={120}
+              height={48}
+              objectFit="contain"
+            />
             <div className="hidden sm:block w-px h-10 bg-border"></div>
-            <img src={park63Logo} alt="Park 63 Logo" className="h-10 md:h-12" />
+            <OptimizedImage 
+              src={park63Logo} 
+              alt="Park 63 Logo" 
+              className="h-10 md:h-12 w-auto"
+              priority={true}
+              width={120}
+              height={48}
+              objectFit="contain"
+            />
             <div className="hidden md:flex flex-col ml-2">
               <div className="text-xs text-muted-foreground">
                 Perungalathur, Chennai

@@ -112,15 +112,26 @@ const HeroSection = () => {
       id="hero"
       ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
-      style={{
-        backgroundImage: `var(--gradient-hero), url(${heroImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
     >
+      {/* Optimized Background Image with Preload */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={heroImage}
+          alt="Shriram Park 63 premium residential towers aerial view"
+          className="w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
+          width={1920}
+          height={1080}
+        />
+        <div 
+          className="absolute inset-0"
+          style={{ background: 'var(--gradient-hero)' }}
+        />
+      </div>
       {/* Urgency Strip with Countdown */}
-      <div className="absolute top-20 left-0 right-0 z-20 bg-accent py-2 md:py-4">
+      <div className="absolute top-20 left-0 right-0 z-20 bg-accent py-2 md:py-4" style={{ zIndex: 20 }}>
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <h2 className="text-white font-bold text-sm md:text-lg lg:text-xl text-center px-2">

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Gift, Sparkles, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { OptimizedImage } from "./OptimizedImage";
 import offerImage from "@/assets/ayudha-pooja-offer.jpeg";
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -106,7 +107,13 @@ export const OfferPopup = () => {
         <div className="flex flex-col">
           {/* Offer Image */}
           <div className="w-full bg-white relative">
-            <img src={offerImage} alt="Ayudha Pooja Special Offer" className="w-full h-auto object-cover" />
+            <OptimizedImage
+              src={offerImage}
+              alt="Ayudha Pooja Special Offer - Limited Time Discounts on 3 BHK Flats"
+              width={600}
+              height={400}
+              className="w-full h-auto"
+            />
             <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg text-sm font-semibold text-center max-w-[200px]">
               To avail Ayudha Pooja Offer fill the form below
             </div>

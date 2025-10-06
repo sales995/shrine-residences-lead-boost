@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+import { OptimizedImage } from "./OptimizedImage";
 import buildingAerial1 from "@/assets/building-aerial-1.jpg";
 import buildingAerial2 from "@/assets/building-aerial-2.jpg";
 import buildingForestView from "@/assets/building-forest-view.jpg";
@@ -85,14 +86,16 @@ const GallerySection = () => {
                 <div
                   key={index}
                   className={`absolute inset-0 transition-all duration-500 ease-in-out ${
-                    index === currentIndex ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
+                  index === currentIndex ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
                   }`}
                 >
-                  <img
+                  <OptimizedImage
                     src={image.src}
                     alt={image.alt}
-                    loading={index > 0 ? "lazy" : "eager"}
-                    className="w-full h-full object-cover"
+                    priority={index === 0}
+                    width={1200}
+                    height={600}
+                    className="w-full h-full"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                   
@@ -148,11 +151,12 @@ const GallerySection = () => {
                 }`}
                 aria-label={`View ${image.title}`}
               >
-                <img
+                <OptimizedImage
                   src={image.src}
                   alt={image.alt}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
+                  width={300}
+                  height={200}
+                  className="w-full h-full"
                 />
                 <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>
               </button>
