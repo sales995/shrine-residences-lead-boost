@@ -2,8 +2,6 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import prerender from "vite-plugin-prerender";
-import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -16,18 +14,7 @@ export default defineConfig(({ mode }) => {
         'Cache-Control': 'public, max-age=31536000',
       },
     },
-    plugins: [
-      react(), 
-      mode === "development" && componentTagger(),
-      mode === "production" && prerender({
-        staticDir: resolve(__dirname, 'dist'),
-        routes: ['/'],
-        renderer: {
-          renderAfterDocumentEvent: 'app-ready',
-          headless: true,
-        },
-      }),
-    ].filter(Boolean),
+    plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
