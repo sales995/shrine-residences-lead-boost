@@ -32,6 +32,10 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    // Pre-render configuration for SEO
+    ssr: {
+      noExternal: ['react-helmet-async'],
+    },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom'],
       force: true,

@@ -6,23 +6,6 @@
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   
-  # Dynamic rendering for crawlers (Rendertron)
-  # Detect common bots
-  SetEnvIfNoCase User-Agent "baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest\/0\.|pinterestbot|slackbot|vkShare|W3C_Validator|whatsapp|TelegramBot|Discordbot|Applebot|Googlebot|bingbot|DuckDuckBot" is_bot=1
-  
-  # Skip static asset requests
-  RewriteCond %{REQUEST_URI} !\.(js|css|xml|less|png|jpg|jpeg|gif|pdf|doc|txt|ico|rss|zip|mp3|rar|exe|wmv|avi|ppt|mpg|mpeg|tif|wav|mov|psd|ai|xls|mp4|m4a|swf|dat|dmg|iso|flv|m4v|ttf|woff|woff2|svg)$ [NC]
-  
-  # If bot or _escaped_fragment_ query, serve pre-rendered HTML from Rendertron
-  RewriteCond %{ENV:is_bot} 1 [OR]
-  RewriteCond %{QUERY_STRING} _escaped_fragment_
-  <IfModule mod_proxy.c>
-    RewriteRule ^(.*)$ https://render-tron.appspot.com/render/https://%{HTTP_HOST}/$1 [L,P]
-  </IfModule>
-  <IfModule !mod_proxy.c>
-    RewriteRule ^(.*)$ https://render-tron.appspot.com/render/https://%{HTTP_HOST}/$1 [R=307,L]
-  </IfModule>
-  
   # Handle SPA routing - redirect all requests to index.html
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
