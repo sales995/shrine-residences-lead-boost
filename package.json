@@ -8,7 +8,18 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postbuild": "react-snap"
+  },
+  "reactSnap": {
+    "inlineCss": true,
+    "minifyHtml": {
+      "collapseWhitespace": true,
+      "removeComments": true
+    },
+    "crawl": true,
+    "include": ["/", "/auth", "/admin/leads"],
+    "skipThirdPartyRequests": true
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
