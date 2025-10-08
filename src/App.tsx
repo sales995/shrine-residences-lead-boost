@@ -1,16 +1,18 @@
+import React, { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "@/contexts/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import AdminLeads from "./pages/AdminLeads";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ErrorBoundary from "./components/ErrorBoundary";
+
+// Lazy-load components that depend on client-only APIs to avoid SSR import issues
+const Auth = lazy(() => import("./pages/Auth"));
+const AdminLeads = lazy(() => import("./pages/AdminLeads"));
+const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 
 const queryClient = new QueryClient();
 
@@ -20,10 +22,10 @@ const App = () => {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
@@ -41,8 +43,8 @@ const App = () => {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </TooltipProvider>
-        </AuthProvider>
+          </Suspense>
+        </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );

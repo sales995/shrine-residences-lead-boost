@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { AuthProvider } from "@/contexts/AuthContext";
 import App from "./App.tsx";
 import "./index.css";
 
@@ -14,9 +15,11 @@ if (!rootElement) {
 const app = (
   <React.StrictMode>
     <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
     </HelmetProvider>
   </React.StrictMode>
 );

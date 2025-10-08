@@ -2,11 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Wifi, WifiOff } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
+const isNavigatorOnline = () => {
+  if (typeof navigator === 'undefined') return true; // Assume online during SSR
+  return navigator.onLine;
+};
+
 const NetworkStatus: React.FC = () => {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState<boolean>(isNavigatorOnline());
   const [showOfflineMessage, setShowOfflineMessage] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return; // Guard for SSR
+
     const handleOnline = () => {
       setIsOnline(true);
       setShowOfflineMessage(false);
