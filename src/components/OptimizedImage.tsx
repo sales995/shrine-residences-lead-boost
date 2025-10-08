@@ -45,9 +45,7 @@ export const OptimizedImage = ({
           alt={alt}
           width={width}
           height={height}
-          loading={priority ? "eager" : "lazy"}
-          decoding={priority ? "sync" : "async"}
-          fetchPriority={priority ? "high" : "auto"}
+          // fetchPriority prop omitted for broader TS/React compatibility
           onLoad={() => setIsLoaded(true)}
           className={`w-full h-full transition-opacity duration-300 ${
             isLoaded ? "opacity-100" : "opacity-0"
