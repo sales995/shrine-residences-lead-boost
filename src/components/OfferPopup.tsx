@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Gift, Sparkles, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { OptimizedImage } from "./OptimizedImage";
 import offerImage from "@/assets/ayudha-pooja-offer.jpeg";
 export const OfferPopup = () => {
@@ -52,6 +51,7 @@ export const OfferPopup = () => {
     }
     setIsSubmitting(true);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase.functions.invoke('submit-lead', {
         body: {
           name: formData.name.trim(),

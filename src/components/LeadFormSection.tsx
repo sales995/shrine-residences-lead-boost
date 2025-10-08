@@ -5,7 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, User, MessageSquare, Send } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 const LeadFormSection = () => {
   const [formData, setFormData] = useState({
@@ -53,6 +52,7 @@ const LeadFormSection = () => {
     
     setIsSubmitting(true);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .functions.invoke('submit-lead', {
           body: {

@@ -6,7 +6,6 @@ import { useState } from "react";
 import heroImage from "@/assets/building-aerial-1.jpg";
 import CountdownTimer from "./CountdownTimer";
 import RERABadge from "./RERABadge";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const HeroSection = () => {
@@ -43,6 +42,7 @@ const HeroSection = () => {
     
     setIsSubmitting(true);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .functions.invoke('submit-lead', {
           body: {
