@@ -1,6 +1,4 @@
 import React, { Suspense, lazy } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -14,6 +12,10 @@ const Auth = lazy(() => import("./pages/Auth"));
 const AdminLeads = lazy(() => import("./pages/AdminLeads"));
 const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 
+// Lazy-load toasters to avoid SSR importing issues
+const ShadToaster = lazy(() => import("@/components/ui/toaster").then(m => ({ default: m.Toaster })));
+const SonnerToaster = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -24,8 +26,16 @@ const App = () => {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          {isBrowser && <Toaster />}
-          {isBrowser && <Sonner />}
+          {isBrowser && (
+            <Suspense fallback={null}>
+              <ShadToaster />
+            </Suspense>
+          )}
+          {isBrowser && (
+            <Suspense fallback={null}>
+              <SonnerToaster />
+            </Suspense>
+          )}
           <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
