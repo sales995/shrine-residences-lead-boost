@@ -16,11 +16,22 @@ const routesToPrerender = [
 
 ;(async () => {
   for (const url of routesToPrerender) {
-    const appHtml = render(url);
-    const html = template.replace(`<!--app-html-->`, appHtml)
+    const { appHtml, headTags } = render(url);
+    let html = template
+      .replace(`<!--app-html-->`, appHtml)
+      .replace(`<!--app-helmet-->`, headTags);
 
-    const filePath = `dist${url === '/' ? '/index' : url}.html`
-    fs.writeFileSync(toAbsolute(filePath), html)
+    // Create nested directory structure for proper routing
+    const filePath = url === '/' 
+      ? toAbsolute('dist/index.html')
+      : toAbsolute(`dist${url}/index.html`);
+    
+    const fileDir = path.dirname(filePath);
+    if (!fs.existsSync(fileDir)) {
+      fs.mkdirSync(fileDir, { recursive: true });
+    }
+
+    fs.writeFileSync(filePath, html)
     console.log('pre-rendered:', filePath)
   }
 })()

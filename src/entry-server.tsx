@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 
 export function render(url: string) {
-  const helmetContext = {};
+  const helmetContext = {} as any;
   
   const html = ReactDOMServer.renderToString(
     <HelmetProvider context={helmetContext}>
@@ -14,5 +14,16 @@ export function render(url: string) {
     </HelmetProvider>
   );
   
-  return html;
+  // Extract Helmet head tags for SSR
+  const { helmet } = helmetContext;
+  const headTags = helmet
+    ? [
+        helmet.title?.toString() || '',
+        helmet.meta?.toString() || '',
+        helmet.link?.toString() || '',
+        helmet.script?.toString() || '',
+      ].filter(Boolean).join('\n')
+    : '';
+  
+  return { appHtml: html, headTags };
 }

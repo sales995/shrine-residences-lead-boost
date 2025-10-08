@@ -9,7 +9,7 @@ type Props = {
   additionalSchema?: any;
 };
 
-const SITE_URL = "https://shriramproperties-park63.in";
+const SITE_URL = "https://www.shriramproperties-park63.in";
 const DEFAULT_IMAGE = "/assets/og-image.jpg";
 
 export default function SEOHead({
