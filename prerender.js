@@ -16,22 +16,36 @@ const routesToPrerender = [
 
 ;(async () => {
   for (const url of routesToPrerender) {
-    const { appHtml, headTags } = render(url);
-    let html = template
-      .replace(`<!--app-html-->`, appHtml)
-      .replace(`<!--app-helmet-->`, headTags);
+    try {
+      const { appHtml, headTags } = render(url);
+      let html = template
+        .replace(`<!--app-html-->`, appHtml)
+        .replace(`<!--app-helmet-->`, headTags);
 
-    // Create nested directory structure for proper routing
-    const filePath = url === '/' 
-      ? toAbsolute('dist/index.html')
-      : toAbsolute(`dist${url}/index.html`);
-    
-    const fileDir = path.dirname(filePath);
-    if (!fs.existsSync(fileDir)) {
-      fs.mkdirSync(fileDir, { recursive: true });
+      // Create nested directory structure for proper routing
+      const filePath = url === '/'
+        ? toAbsolute('dist/index.html')
+        : toAbsolute(`dist${url}/index.html`);
+      
+      const fileDir = path.dirname(filePath);
+      if (!fs.existsSync(fileDir)) {
+        fs.mkdirSync(fileDir, { recursive: true });
+      }
+
+      fs.writeFileSync(filePath, html)
+      console.log('pre-rendered:', filePath)
+    } catch (err) {
+      console.error(`SSR render failed for ${url}:`, err);
+      // Fallback: write the unrendered template so build never fails
+      const filePath = url === '/'
+        ? toAbsolute('dist/index.html')
+        : toAbsolute(`dist${url}/index.html`);
+      const fileDir = path.dirname(filePath);
+      if (!fs.existsSync(fileDir)) {
+        fs.mkdirSync(fileDir, { recursive: true });
+      }
+      fs.writeFileSync(filePath, template);
+      console.log('wrote fallback (CSR) for:', filePath)
     }
-
-    fs.writeFileSync(filePath, html)
-    console.log('pre-rendered:', filePath)
   }
 })()
