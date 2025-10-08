@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+// Supabase client is dynamically imported to avoid SSR issues
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -20,6 +20,7 @@ const Auth = () => {
     setLoading(true);
 
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
           email,
