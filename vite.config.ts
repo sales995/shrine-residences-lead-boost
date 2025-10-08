@@ -10,9 +10,6 @@ export default defineConfig(({ mode }) => {
     server: {
       host: "::",
       port: 8080,
-      headers: {
-        'Cache-Control': 'public, max-age=31536000',
-      },
     },
     plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
     resolve: {
@@ -21,8 +18,9 @@ export default defineConfig(({ mode }) => {
         // Ensure a single React instance to avoid "dispatcher is null" hook errors
         react: path.resolve(__dirname, "./node_modules/react"),
         "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
+        "react/jsx-runtime": path.resolve(__dirname, "./node_modules/react/jsx-runtime.js"),
       },
-      dedupe: ["react", "react-dom"],
+      dedupe: ["react", "react-dom", "react/jsx-runtime"],
     },
     build: {
       target: 'es2015',
@@ -41,7 +39,7 @@ export default defineConfig(({ mode }) => {
       noExternal: ['react-helmet-async'],
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-router-dom'],
+      include: ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom'],
       force: true,
     },
     define: {
