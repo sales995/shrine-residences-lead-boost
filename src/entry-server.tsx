@@ -1,29 +1,7 @@
-import ReactDOMServer from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
-import { HelmetProvider } from 'react-helmet-async';
-import App from './App';
-
-export function render(url: string) {
-  const helmetContext = {} as any;
-  
-  const html = ReactDOMServer.renderToString(
-    <HelmetProvider context={helmetContext}>
-      <StaticRouter location={url}>
-        <App />
-      </StaticRouter>
-    </HelmetProvider>
-  );
-  
-  // Extract Helmet head tags for SSR
-  const { helmet } = helmetContext;
-  const headTags = helmet
-    ? [
-        helmet.title?.toString() || '',
-        helmet.meta?.toString() || '',
-        helmet.link?.toString() || '',
-        helmet.script?.toString() || '',
-      ].filter(Boolean).join('\n')
-    : '';
-  
-  return { appHtml: html, headTags };
+// Minimal SSR entry to avoid server-side rendering issues during build
+export function render(_url: string) {
+  // Return empty strings so prerender writes the CSR template.
+  // This prevents SSR from importing components that rely on browser-only APIs.
+  return { appHtml: '', headTags: '' };
 }
+
