@@ -8,11 +8,10 @@ const toAbsolute = (p) => path.resolve(__dirname, p)
 const template = fs.readFileSync(toAbsolute('dist/index.html'), 'utf-8')
 const { render } = await import('./dist/server/entry-server.js')
 
-// Routes to pre-render for SEO
+// Routes to pre-render for SEO (excluding /auth to avoid SSR issues with Supabase client)
 const routesToPrerender = [
   '/',
   '/privacy-policy',
-  '/auth',
 ]
 
 ;(async () => {
