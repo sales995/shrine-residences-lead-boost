@@ -28,24 +28,8 @@ export default function FAQBlock() {
     }
   ];
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  };
-
   return (
     <section className="max-w-5xl mx-auto my-16 px-4 sm:px-6 lg:px-8">
-      <script type="application/ld+json">
-        {JSON.stringify(faqSchema)}
-      </script>
       
       <h2 className="text-3xl font-bold mb-8 text-foreground">
         Frequently Asked Questions – Shriram Park 63

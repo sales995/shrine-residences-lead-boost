@@ -125,7 +125,6 @@ const HeroSection = () => {
             alt="Shriram Park 63 premium residential towers aerial view"
             className="w-full h-full object-cover"
             loading="eager"
-            fetchPriority="high"
             decoding="sync"
             width={1920}
             height={1080}
