@@ -34,9 +34,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    // Pre-render configuration for SEO
+    // SSR configuration for static site generation
     ssr: {
-      noExternal: ['react-helmet-async'],
+      noExternal: ['react-helmet-async', 'react-router-dom'],
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom'],
