@@ -34,11 +34,6 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    // SSR configuration for static site generation
-    ssr: {
-      noExternal: ['react-helmet-async', 'react-router-dom'],
-      external: ['@supabase/supabase-js', 'next-themes', 'sonner']
-    },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom'],
       force: true,
