@@ -18,13 +18,14 @@ const queryClient = new QueryClient();
 
 const App = () => {
   console.log("App component rendering...");
+  const isBrowser = typeof window !== 'undefined';
   
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
+          {isBrowser && <Toaster />}
+          {isBrowser && <Sonner />}
           <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
