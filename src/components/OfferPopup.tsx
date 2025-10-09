@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Gift, Sparkles, Clock } from "lucide-react";
@@ -104,6 +104,10 @@ export const OfferPopup = () => {
   };
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-lg p-0 overflow-hidden border-2 border-primary/20 max-h-[95vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="sr-only">Ayudha Pooja Exclusive Offer</DialogTitle>
+          <DialogDescription className="sr-only">Fill the form to claim the limited-time offer.</DialogDescription>
+        </DialogHeader>
         <div className="flex flex-col">
           {/* Offer Image */}
           <div className="w-full bg-white relative">
