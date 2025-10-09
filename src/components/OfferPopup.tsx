@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Gift, Sparkles, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { OptimizedImage } from "./OptimizedImage";
-import offerImage from "@/assets/ayudha-pooja-offer.jpeg";
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -112,7 +111,7 @@ export const OfferPopup = () => {
           {/* Offer Image */}
           <div className="w-full bg-white relative">
             <OptimizedImage
-              src={offerImage}
+              src="/assets/ayudha-pooja-offer.jpeg"
               alt="Ayudha Pooja Special Offer - Limited Time Discounts on 3 BHK Flats"
               width={600}
               height={400}

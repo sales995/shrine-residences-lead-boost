@@ -2,39 +2,34 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { OptimizedImage } from "./OptimizedImage";
-import buildingAerial1 from "@/assets/building-aerial-1.jpg";
-import buildingAerial2 from "@/assets/building-aerial-2.jpg";
-import buildingForestView from "@/assets/building-forest-view.jpg";
-import buildingEvening from "@/assets/building-evening.jpg";
-import amenitiesPlayground from "@/assets/amenities-playground.jpg";
 
 const galleryImages = [
   {
-    src: buildingAerial1,
+    src: "/assets/building-aerial-1.jpg",
     title: "Shriram Park 63 Aerial View",
     description: "Premium residential towers with solar panels on GST Road, Perungalathur",
     alt: "Shriram Park 63 Perungalathur aerial view showing residential towers with solar panels and amenities"
   },
   {
-    src: buildingAerial2,
+    src: "/assets/building-aerial-2.jpg",
     title: "Township & Sports Facilities",
     description: "57-acre integrated township with tennis and badminton courts",
     alt: "Shriram Park 63 aerial view showcasing sports facilities including tennis courts and residential towers"
   },
   {
-    src: buildingForestView,
+    src: "/assets/building-forest-view.jpg",
     title: "Vandalur Forest Reserve View",
     description: "Apartments overlooking 1350-acre Vandalur Forest Reserve",
     alt: "Shriram Park 63 residential towers with stunning view of Vandalur Forest Reserve from balconies"
   },
   {
-    src: buildingEvening,
+    src: "/assets/building-evening.jpg",
     title: "GST Road Connectivity",
     description: "Prime location on GST Road with excellent connectivity",
     alt: "Shriram Park 63 evening view showing location on GST Road Perungalathur with highway connectivity"
   },
   {
-    src: amenitiesPlayground,
+    src: "/assets/amenities-playground.jpg",
     title: "Children's Play Area & Landscaping",
     description: "Dedicated children's play area with colorful equipment and landscaped gardens",
     alt: "Shriram Park 63 children's play area with slides, swings and landscaped gardens"

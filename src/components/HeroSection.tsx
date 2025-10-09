@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Phone, Download } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
-import heroImage from "@/assets/building-aerial-1.jpg";
 import CountdownTimer from "./CountdownTimer";
 import RERABadge from "./RERABadge";
 import { useToast } from "@/hooks/use-toast";
@@ -115,21 +114,14 @@ const HeroSection = () => {
     >
       {/* Optimized Background Image with Preload */}
       <div className="absolute inset-0 z-0">
-        <picture>
-          <source 
-            srcSet={heroImage.replace(/\.(jpg|jpeg|png)$/i, '.webp')} 
-            type="image/webp"
-          />
-          <img
-            src={heroImage}
-            alt="Shriram Park 63 premium residential towers aerial view"
-            className="w-full h-full object-cover"
-            loading="eager"
-            decoding="sync"
-            width={1920}
-            height={1080}
-          />
-        </picture>
+        <img
+          src="/assets/building-aerial-1.jpg"
+          alt="Shriram Park 63 premium residential towers aerial view"
+          className="w-full h-full object-cover"
+          loading="eager"
+          width={1920}
+          height={1080}
+        />
         <div 
           className="absolute inset-0"
           style={{ background: 'var(--gradient-hero)' }}

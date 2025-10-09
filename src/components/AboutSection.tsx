@@ -1,7 +1,6 @@
 import { MapPin, Plane, Train, Bus, Building2 } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { OptimizedImage } from "./OptimizedImage";
-import aboutImage from "@/assets/about-connectivity.jpg";
 
 const connectivity = [
   {
@@ -44,7 +43,7 @@ const AboutSection = () => {
           <div className={`slide-in-left ${inView ? "visible" : ""}`}>
             <div className="relative rounded-2xl shadow-strong overflow-hidden h-64 md:h-80 lg:h-96">
               <OptimizedImage
-                src={aboutImage}
+                src="/assets/about-connectivity.jpg"
                 alt="Shriram Park 63 Perungalathur location map showing connectivity to GST Road, Tambaram, and major transport hubs in Chennai"
                 width={600}
                 height={400}

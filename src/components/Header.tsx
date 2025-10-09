@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "./OptimizedImage";
-import shriramLogo from "@/assets/shriram-logo.png";
-import park63Logo from "@/assets/park63-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +19,7 @@ const Header = () => {
           {/* Logos & Branding */}
           <div className="flex items-center space-x-3">
             <OptimizedImage 
-              src={shriramLogo} 
+              src="/assets/shriram-logo.png" 
               alt="Shriram Properties Logo" 
               className="h-10 md:h-12 w-auto"
               priority={true}
@@ -31,7 +29,7 @@ const Header = () => {
             />
             <div className="hidden sm:block w-px h-10 bg-border"></div>
             <OptimizedImage 
-              src={park63Logo} 
+              src="/assets/park63-logo.png" 
               alt="Park 63 Logo" 
               className="h-10 md:h-12 w-auto"
               priority={true}
