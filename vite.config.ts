@@ -1,31 +1,17 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-// Optional dev plugin (loaded dynamically in dev to avoid build failures)
-// import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(async ({ mode }) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-
-  const plugins = [react()];
-  if (mode === 'development') {
-    try {
-      const { componentTagger } = await import('lovable-tagger');
-      const tagger = componentTagger();
-      if (Array.isArray(tagger)) plugins.push(...tagger);
-      else if (tagger) plugins.push(tagger as any);
-    } catch {
-      // lovable-tagger is optional; skip if not installed in CI/publish
-    }
-  }
 
   return {
     server: {
       host: "::",
       port: 8080,
     },
-    plugins,
+    plugins: [react()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
