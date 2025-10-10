@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Gift, Sparkles, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { OptimizedImage } from "./OptimizedImage";
+import { supabase } from "@/integrations/supabase/client";
+import offerImage from "@/assets/ayudha-pooja-offer.jpeg";
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -50,7 +51,6 @@ export const OfferPopup = () => {
     }
     setIsSubmitting(true);
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase.functions.invoke('submit-lead', {
         body: {
           name: formData.name.trim(),
@@ -103,20 +103,10 @@ export const OfferPopup = () => {
   };
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-lg p-0 overflow-hidden border-2 border-primary/20 max-h-[95vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="sr-only">Ayudha Pooja Exclusive Offer</DialogTitle>
-          <DialogDescription className="sr-only">Fill the form to claim the limited-time offer.</DialogDescription>
-        </DialogHeader>
         <div className="flex flex-col">
           {/* Offer Image */}
           <div className="w-full bg-white relative">
-            <OptimizedImage
-              src="/assets/ayudha-pooja-offer.jpeg"
-              alt="Ayudha Pooja Special Offer - Limited Time Discounts on 3 BHK Flats"
-              width={600}
-              height={400}
-              className="w-full h-auto"
-            />
+            <img src={offerImage} alt="Ayudha Pooja Special Offer" className="w-full h-auto object-cover" />
             <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg text-sm font-semibold text-center max-w-[200px]">
               To avail Ayudha Pooja Offer fill the form below
             </div>

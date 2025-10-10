@@ -1,35 +1,39 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import { OptimizedImage } from "./OptimizedImage";
+import buildingAerial1 from "@/assets/building-aerial-1.jpg";
+import buildingAerial2 from "@/assets/building-aerial-2.jpg";
+import buildingForestView from "@/assets/building-forest-view.jpg";
+import buildingEvening from "@/assets/building-evening.jpg";
+import amenitiesPlayground from "@/assets/amenities-playground.jpg";
 
 const galleryImages = [
   {
-    src: "/assets/building-aerial-1.jpg",
+    src: buildingAerial1,
     title: "Shriram Park 63 Aerial View",
     description: "Premium residential towers with solar panels on GST Road, Perungalathur",
     alt: "Shriram Park 63 Perungalathur aerial view showing residential towers with solar panels and amenities"
   },
   {
-    src: "/assets/building-aerial-2.jpg",
+    src: buildingAerial2,
     title: "Township & Sports Facilities",
     description: "57-acre integrated township with tennis and badminton courts",
     alt: "Shriram Park 63 aerial view showcasing sports facilities including tennis courts and residential towers"
   },
   {
-    src: "/assets/building-forest-view.jpg",
+    src: buildingForestView,
     title: "Vandalur Forest Reserve View",
     description: "Apartments overlooking 1350-acre Vandalur Forest Reserve",
     alt: "Shriram Park 63 residential towers with stunning view of Vandalur Forest Reserve from balconies"
   },
   {
-    src: "/assets/building-evening.jpg",
+    src: buildingEvening,
     title: "GST Road Connectivity",
     description: "Prime location on GST Road with excellent connectivity",
     alt: "Shriram Park 63 evening view showing location on GST Road Perungalathur with highway connectivity"
   },
   {
-    src: "/assets/amenities-playground.jpg",
+    src: amenitiesPlayground,
     title: "Children's Play Area & Landscaping",
     description: "Dedicated children's play area with colorful equipment and landscaped gardens",
     alt: "Shriram Park 63 children's play area with slides, swings and landscaped gardens"
@@ -81,16 +85,14 @@ const GallerySection = () => {
                 <div
                   key={index}
                   className={`absolute inset-0 transition-all duration-500 ease-in-out ${
-                  index === currentIndex ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
+                    index === currentIndex ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
                   }`}
                 >
-                  <OptimizedImage
+                  <img
                     src={image.src}
                     alt={image.alt}
-                    priority={index === 0}
-                    width={1200}
-                    height={600}
-                    className="w-full h-full"
+                    loading={index > 0 ? "lazy" : "eager"}
+                    className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                   
@@ -146,12 +148,11 @@ const GallerySection = () => {
                 }`}
                 aria-label={`View ${image.title}`}
               >
-                <OptimizedImage
+                <img
                   src={image.src}
                   alt={image.alt}
-                  width={300}
-                  height={200}
-                  className="w-full h-full"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors"></div>
               </button>

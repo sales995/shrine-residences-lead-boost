@@ -1,7 +1,48 @@
+# Allow all major search & AI crawlers
 User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Disallow sensitive/system paths
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
-Disallow: /auth
+Disallow: /server-status
 
-Sitemap: https://www.shriramproperties-park63.in/sitemap.xml
+# Sitemap
+Sitemap: https://shriramproperties-park63.in/sitemap.xml

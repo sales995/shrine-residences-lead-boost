@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { User, Session } from '@supabase/supabase-js';
-// Supabase client is dynamically imported in the browser to avoid SSR issues
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AuthContextType {
   user: User | null;
@@ -37,60 +37,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let unsubscribe: (() => void) | undefined;
-    let mounted = true;
-
-    (async () => {
-      try {
-        const { supabase } = await import("@/integrations/supabase/client");
-
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-          if (!mounted) return;
-          setSession(session);
-          setUser(session?.user ?? null);
-
-          // Check admin status when session changes
-          if (session?.user) {
-            setTimeout(() => {
-              checkAdminStatus(session.user!.id);
-            }, 0);
-          } else {
-            setIsAdmin(false);
-          }
-
-          setLoading(false);
-        });
-
-        unsubscribe = () => subscription.unsubscribe();
-
-        // Check for existing session
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!mounted) return;
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-
+        
+        // Check admin status when session changes
         if (session?.user) {
           setTimeout(() => {
-            checkAdminStatus(session.user!.id);
+            checkAdminStatus(session.user.id);
           }, 0);
+        } else {
+          setIsAdmin(false);
         }
-
-        setLoading(false);
-      } catch (e) {
-        console.error('Auth initialization failed:', e);
+        
         setLoading(false);
       }
-    })();
+    );
 
-    return () => {
-      mounted = false;
-      if (unsubscribe) unsubscribe();
-    };
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        setTimeout(() => {
+          checkAdminStatus(session.user.id);
+        }, 0);
+      }
+      
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const checkAdminStatus = async (userId: string) => {
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
@@ -113,7 +97,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -127,7 +110,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
       const redirectUrl = `${window.location.origin}/admin/leads`;
       const { error } = await supabase.auth.signUp({
         email,
@@ -147,7 +129,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = async () => {
-    const { supabase } = await import("@/integrations/supabase/client");
     await supabase.auth.signOut();
     setUser(null);
     setSession(null);
