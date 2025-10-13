@@ -4,7 +4,7 @@
 
 /* Shriram Residences Design System - All colors MUST be HSL */
 
-/* Font loaded in HTML with font-display: swap for better performance */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {

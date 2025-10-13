@@ -5,28 +5,19 @@ import { promisify } from "util";
 import glob from "glob";
 
 const globP = promisify(glob);
-const SITE_URL = "https://shriramproperties-park63.in";
+const SITE_URL = "https://www.shriramproperties-park63.in";
 
 async function generate() {
-  const pages = await globP("src/pages/**/*.tsx", { ignore: ["**/_*", "**/*.test.tsx"] });
+  // Explicit routes to include in sitemap
+  const routes = ['/', '/privacy-policy'];
   const smStream = new SitemapStream({ hostname: SITE_URL });
 
-  for (const file of pages) {
-    let route = file.replace(/^src\/pages/, "").replace(/index\.tsx$/, "").replace(/\.tsx$/, "");
-    if (!route) route = "/";
-    // compute lastmod from file mtime if possible
-    let lastmod;
-    try {
-      const stats = fs.statSync(path.resolve(file));
-      lastmod = stats.mtime.toISOString();
-    } catch (e) {
-      lastmod = new Date().toISOString();
-    }
+  for (const route of routes) {
     smStream.write({
       url: route,
       changefreq: "weekly",
       priority: route === "/" ? 1.0 : 0.8,
-      lastmod
+      lastmod: new Date().toISOString()
     });
   }
 

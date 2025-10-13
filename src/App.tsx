@@ -1,50 +1,61 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import React, { Suspense, lazy } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/contexts/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
-import LandingPage from "./pages/LandingPage";
-import Auth from "./pages/Auth";
-import AdminLeads from "./pages/AdminLeads";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ErrorBoundary from "./components/ErrorBoundary";
+
+// Lazy-load components that depend on client-only APIs to avoid SSR import issues
+const Auth = lazy(() => import("./pages/Auth"));
+const AdminLeads = lazy(() => import("./pages/AdminLeads"));
+const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
+
+// Lazy-load toasters to avoid SSR importing issues
+const ShadToaster = lazy(() => import("@/components/ui/toaster").then(m => ({ default: m.Toaster })));
+const SonnerToaster = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
 
 const queryClient = new QueryClient();
 
 const App = () => {
   console.log("App component rendering...");
+  const isBrowser = typeof window !== 'undefined';
   
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                {/* Performance-optimized landing page for Google Ads */}
-                <Route path="/" element={<LandingPage />} />
-                {/* Full site with all sections */}
-                <Route path="/full" element={<Index />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route 
-                  path="/admin/leads" 
-                  element={
-                    <ProtectedRoute requireAdmin>
-                      <AdminLeads />
-                    </ProtectedRoute>
-                  } 
-                />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </AuthProvider>
+        <TooltipProvider>
+          {isBrowser && (
+            <Suspense fallback={null}>
+              <ShadToaster />
+            </Suspense>
+          )}
+          {isBrowser && (
+            <Suspense fallback={null}>
+              <SonnerToaster />
+            </Suspense>
+          )}
+          <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/feed" element={<Navigate to="/" replace />} />
+              <Route path="/feed/" element={<Navigate to="/" replace />} />
+              <Route 
+                path="/admin/leads" 
+                element={
+                  <ProtectedRoute requireAdmin>
+                    <AdminLeads />
+                  </ProtectedRoute>
+                } 
+              />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );

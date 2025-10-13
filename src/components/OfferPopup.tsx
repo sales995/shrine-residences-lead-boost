@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Gift, Sparkles, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { OptimizedImage } from "./OptimizedImage";
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -50,6 +50,7 @@ export const OfferPopup = () => {
     }
     setIsSubmitting(true);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase.functions.invoke('submit-lead', {
         body: {
           name: formData.name.trim(),
@@ -102,36 +103,27 @@ export const OfferPopup = () => {
   };
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-lg p-0 overflow-hidden border-2 border-primary/20 max-h-[95vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="sr-only">Ayudha Pooja Exclusive Offer</DialogTitle>
+          <DialogDescription className="sr-only">Fill the form to claim the limited-time offer.</DialogDescription>
+        </DialogHeader>
         <div className="flex flex-col">
-          {/* Header Section */}
-          <div className="w-full bg-gradient-to-br from-primary to-primary-hover text-white p-8 text-center">
-            <div className="flex justify-center mb-4">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
-                <Gift className="w-12 h-12" />
-              </div>
+          {/* Offer Image */}
+          <div className="w-full bg-white relative">
+            <OptimizedImage
+              src="/assets/ayudha-pooja-offer.jpeg"
+              alt="Ayudha Pooja Special Offer - Limited Time Discounts on 3 BHK Flats"
+              width={600}
+              height={400}
+              className="w-full h-auto"
+            />
+            <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg text-sm font-semibold text-center max-w-[200px]">
+              To avail Ayudha Pooja Offer fill the form below
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">
-              Exclusive Limited Time Offer
-            </h2>
-            <p className="text-white/90 text-sm md:text-base">
-              Register now and get instant access to special pricing & benefits!
-            </p>
           </div>
           
           {/* Form Section */}
           <div className="w-full bg-gradient-to-b from-white to-gray-50 p-6">
-            <div className="text-center mb-4">
-              <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                <Sparkles className="w-5 h-5" />
-                <span className="font-semibold">Limited Time Benefits</span>
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>✓ GST Waiver Available</li>
-                <li>✓ 90% Bank Loan Approval</li>
-                <li>✓ Exclusive Price List Access</li>
-              </ul>
-            </div>
             
             
             <form onSubmit={handleSubmit} className="space-y-3 max-w-md mx-auto">
@@ -148,11 +140,11 @@ export const OfferPopup = () => {
             })} className="h-11 text-base border-2 border-gray-300 focus:border-primary bg-white" />
 
               <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-bold bg-primary hover:bg-primary-hover text-white shadow-lg transition-all">
-                {isSubmitting ? "Submitting..." : "Get Exclusive Offers Now"}
+                {isSubmitting ? "Submitting..." : "🎉 Register & Claim Offer"}
               </Button>
 
               <p className="text-xs text-center text-muted-foreground pt-1">
-                Register now to unlock special pricing and benefits
+                ⏰ Offer valid till 5th October, 2025
               </p>
             </form>
           </div>

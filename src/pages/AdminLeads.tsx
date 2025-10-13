@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+// Supabase client is dynamically imported to avoid SSR issues
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Download, RefreshCw, Calendar, Phone, Mail, MessageSquare, LogOut } from "lucide-react";
@@ -28,6 +28,7 @@ const AdminLeads = () => {
   const fetchLeads = async () => {
     setLoading(true);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from('leads')
         .select('*')

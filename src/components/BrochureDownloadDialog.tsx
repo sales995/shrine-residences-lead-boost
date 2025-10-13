@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Download } from "lucide-react";
 import { trackBrochureDownload } from "@/utils/tracking";
@@ -51,6 +50,9 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
     setIsSubmitting(true);
 
     try {
+      // Dynamic import to avoid SSR issues
+      const { supabase } = await import("@/integrations/supabase/client");
+      
       const { data: existingLead } = await supabase
         .from("leads")
         .select("phone")

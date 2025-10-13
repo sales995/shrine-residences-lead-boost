@@ -3,10 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Phone, Download } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
-import heroImage from "@/assets/building-aerial-1.jpg";
 import CountdownTimer from "./CountdownTimer";
 import RERABadge from "./RERABadge";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const HeroSection = () => {
@@ -43,6 +41,7 @@ const HeroSection = () => {
     
     setIsSubmitting(true);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .functions.invoke('submit-lead', {
           body: {
@@ -112,15 +111,24 @@ const HeroSection = () => {
       id="hero"
       ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
-      style={{
-        backgroundImage: `var(--gradient-hero), url(${heroImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
     >
+      {/* Optimized Background Image with Preload */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/assets/building-aerial-1.jpg"
+          alt="Shriram Park 63 premium residential towers aerial view"
+          className="w-full h-full object-cover"
+          loading="eager"
+          width={1920}
+          height={1080}
+        />
+        <div 
+          className="absolute inset-0"
+          style={{ background: 'var(--gradient-hero)' }}
+        />
+      </div>
       {/* Urgency Strip with Countdown */}
-      <div className="absolute top-20 left-0 right-0 z-20 bg-accent py-2 md:py-4">
+      <div className="absolute top-20 left-0 right-0 z-20 bg-accent py-2 md:py-4" style={{ zIndex: 20 }}>
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <h2 className="text-white font-bold text-sm md:text-lg lg:text-xl text-center px-2">
@@ -136,7 +144,7 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center">
           {/* Left: Main Content */}
           <div className={`text-white fade-in ${inView ? "visible" : ""}`}>
-            {/* H1 - SEO Optimized - Only H1 on page */}
+            {/* Heading - main title */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight">
               Shriram Park 63 – 3 BHK Flats on GST Road, Perungalathur, Chennai
             </h1>
