@@ -18,24 +18,18 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logos & Branding */}
           <div className="flex items-center space-x-3">
-            <OptimizedImage 
+            <img 
               src="/assets/shriram-logo.png" 
               alt="Shriram Properties Logo" 
-              className="h-10 md:h-12 w-auto"
-              priority={true}
-              width={120}
-              height={48}
-              objectFit="contain"
+              className="h-10 md:h-12 w-auto object-contain"
+              loading="eager"
             />
             <div className="hidden sm:block w-px h-10 bg-border"></div>
-            <OptimizedImage 
+            <img 
               src="/assets/park63-logo.png" 
               alt="Park 63 Logo" 
-              className="h-10 md:h-12 w-auto"
-              priority={true}
-              width={120}
-              height={48}
-              objectFit="contain"
+              className="h-10 md:h-12 w-auto object-contain"
+              loading="eager"
             />
             <div className="hidden md:flex flex-col ml-2">
               <div className="text-xs text-muted-foreground">

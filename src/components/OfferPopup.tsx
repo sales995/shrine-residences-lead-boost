@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Gift, Sparkles, Clock } from "lucide-react";
+import { Gift, Sparkles, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { OptimizedImage } from "./OptimizedImage";
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -103,51 +102,71 @@ export const OfferPopup = () => {
   };
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-lg p-0 overflow-hidden border-2 border-primary/20 max-h-[95vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="sr-only">Ayudha Pooja Exclusive Offer</DialogTitle>
-          <DialogDescription className="sr-only">Fill the form to claim the limited-time offer.</DialogDescription>
+        <DialogHeader className="sr-only">
+          <DialogTitle>Exclusive Limited Time Offer</DialogTitle>
+          <DialogDescription>Fill the form to unlock exclusive offers on Shriram Park 63 flats.</DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col">
-          {/* Offer Image */}
-          <div className="w-full bg-white relative">
-            <OptimizedImage
-              src="/assets/ayudha-pooja-offer.jpeg"
-              alt="Ayudha Pooja Special Offer - Limited Time Discounts on 3 BHK Flats"
-              width={600}
-              height={400}
-              className="w-full h-auto"
-            />
-            <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg text-sm font-semibold text-center max-w-[200px]">
-              To avail Ayudha Pooja Offer fill the form below
-            </div>
+        
+        <div className="bg-gradient-to-br from-primary via-primary-variant to-accent p-8 text-white text-center">
+          <div className="flex items-center justify-center mb-4">
+            <Gift className="w-12 h-12 mr-3" />
+            <h2 className="text-3xl font-bold">Exclusive Offer</h2>
+          </div>
+          <p className="text-xl mb-4">Get Additional Benefits on Your Dream Home</p>
+          
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-4">
+            <ul className="space-y-3 text-left">
+              <li className="flex items-start">
+                <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0 mt-0.5 text-accent" />
+                <span className="text-sm">GST Waiver on Select Units</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0 mt-0.5 text-accent" />
+                <span className="text-sm">90% Bank Loan Pre-Approval</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0 mt-0.5 text-accent" />
+                <span className="text-sm">Free Site Visit & Virtual Tour</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0 mt-0.5 text-accent" />
+                <span className="text-sm">Instant Price List & Floor Plans</span>
+              </li>
+            </ul>
           </div>
           
-          {/* Form Section */}
-          <div className="w-full bg-gradient-to-b from-white to-gray-50 p-6">
-            
-            
-            <form onSubmit={handleSubmit} className="space-y-3 max-w-md mx-auto">
-              <Input type="text" placeholder="Your Full Name *" value={formData.name} onChange={e => setFormData({
+          <div className="flex items-center justify-center text-sm">
+            <Sparkles className="w-4 h-4 mr-2" />
+            <span>Limited period offer - Register now!</span>
+          </div>
+        </div>
+        
+        <div className="p-6 bg-white">
+          <h3 className="text-xl font-bold text-center text-primary mb-4">
+            Register to Unlock Exclusive Offers
+          </h3>
+          
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <Input type="text" placeholder="Your Full Name *" value={formData.name} onChange={e => setFormData({
               ...formData,
               name: e.target.value
-            })} className="h-11 text-base border-2 border-gray-300 focus:border-primary bg-white" required />
+            })} className="h-11 text-base border-2 border-gray-300 focus:border-primary" required />
 
-              <Input type="tel" placeholder="Phone Number *" value={formData.phone} onChange={handlePhoneChange} maxLength={10} className="h-11 text-base border-2 border-gray-300 focus:border-primary bg-white" required pattern="[6-9][0-9]{9}" />
+            <Input type="tel" placeholder="Phone Number *" value={formData.phone} onChange={handlePhoneChange} maxLength={10} className="h-11 text-base border-2 border-gray-300 focus:border-primary" required pattern="[6-9][0-9]{9}" />
 
-              <Input type="email" placeholder="Email Address (Optional)" value={formData.email} onChange={e => setFormData({
+            <Input type="email" placeholder="Email Address (Optional)" value={formData.email} onChange={e => setFormData({
               ...formData,
               email: e.target.value
-            })} className="h-11 text-base border-2 border-gray-300 focus:border-primary bg-white" />
+            })} className="h-11 text-base border-2 border-gray-300 focus:border-primary" />
 
-              <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-bold bg-primary hover:bg-primary-hover text-white shadow-lg transition-all">
-                {isSubmitting ? "Submitting..." : "🎉 Register & Claim Offer"}
-              </Button>
+            <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-lg font-bold bg-primary hover:bg-primary-hover text-white shadow-lg transition-all">
+              {isSubmitting ? "Submitting..." : "Get Exclusive Offers Now"}
+            </Button>
 
-              <p className="text-xs text-center text-muted-foreground pt-1">
-                ⏰ Offer valid till 5th October, 2025
-              </p>
-            </form>
-          </div>
+            <p className="text-xs text-center text-muted-foreground pt-1">
+              By submitting, you agree to receive updates from Shriram Properties
+            </p>
+          </form>
         </div>
       </DialogContent>
     </Dialog>;

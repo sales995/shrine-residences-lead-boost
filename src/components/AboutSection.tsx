@@ -42,12 +42,11 @@ const AboutSection = () => {
           {/* Image */}
           <div className={`slide-in-left ${inView ? "visible" : ""}`}>
             <div className="relative rounded-2xl shadow-strong overflow-hidden h-64 md:h-80 lg:h-96">
-              <OptimizedImage
+              <img
                 src="/assets/about-connectivity.jpg"
                 alt="Shriram Park 63 Perungalathur location map showing connectivity to GST Road, Tambaram, and major transport hubs in Chennai"
-                width={600}
-                height={400}
-                className="w-full h-full"
+                className="w-full h-full object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             </div>
