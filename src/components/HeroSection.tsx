@@ -8,7 +8,7 @@ import RERABadge from "./RERABadge";
 import { useToast } from "@/hooks/use-toast";
 
 const HeroSection = () => {
-  console.log("HeroSection rendering...");
+  
   
   const { ref, inView } = useInView({
     triggerOnce: true,

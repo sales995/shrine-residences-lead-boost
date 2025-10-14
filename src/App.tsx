@@ -19,7 +19,7 @@ const SonnerToaster = lazy(() => import("@/components/ui/sonner").then(m => ({ d
 const queryClient = new QueryClient();
 
 const App = () => {
-  console.log("App component rendering...");
+  
   const isBrowser = typeof window !== 'undefined';
   
   return (
