@@ -1,6 +1,6 @@
 import { MapPin, Plane, Train, Bus, Building2 } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import { OptimizedImage } from "./OptimizedImage";
+
 
 const connectivity = [
   {
