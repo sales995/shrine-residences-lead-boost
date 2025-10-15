@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
     name: 'dev-mock-api',
     apply: 'serve',
     configureServer(server) {
-      server.middlewares.use('/api/submit-form', (req, res) => {
+      server.middlewares.use('/api/submit-lead', (req, res) => {
         if (req.method !== 'POST') {
           res.statusCode = 405;
           res.end('Method Not Allowed');
@@ -20,7 +20,23 @@ export default defineConfig(({ mode }) => {
         let body = '';
         req.on('data', (chunk) => { body += chunk; });
         req.on('end', () => {
-          try { JSON.parse(body || '{}'); } catch {}
+          let parsed: any = {};
+          try { parsed = JSON.parse(body || '{}'); } catch {}
+          const now = new Date().toISOString();
+          // Simulate LOVABLE DB insert by validating payload shape
+          const payload = {
+            name: String(parsed?.name || '').trim(),
+            phone: String(parsed?.phone || '').trim(),
+            email: parsed?.email ? String(parsed.email).trim() : null,
+            source: String(parsed?.source || 'contact-form'),
+            created_at: now,
+          };
+          if (!payload.name || !payload.phone) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: 'Invalid payload' }));
+            return;
+          }
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify({ success: true }));
         });

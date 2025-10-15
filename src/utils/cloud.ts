@@ -12,7 +12,7 @@ export async function cloudInvoke(name: string, body: any): Promise<any> {
     throw new Error(`Unknown function: ${name}`);
   }
 
-  const res = await fetch('/api/submit-form', {
+  const res = await fetch('/api/submit-lead', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
