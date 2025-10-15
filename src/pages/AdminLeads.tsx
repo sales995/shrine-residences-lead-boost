@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// Supabase client is dynamically imported to avoid SSR issues
+// Admin data is fetched through stubbed client or API as configured
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Download, RefreshCw, Calendar, Phone, Mail, MessageSquare, LogOut } from "lucide-react";

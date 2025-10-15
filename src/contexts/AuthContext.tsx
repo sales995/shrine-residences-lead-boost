@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { User, Session } from '@supabase/supabase-js';
+// Minimal user/session types to avoid Supabase SDK dependency
+type User = { id: string; email?: string | null };
+type Session = { user: User } | null;
 // Supabase client is dynamically imported in the browser to avoid SSR issues
 
 interface AuthContextType {

@@ -31,10 +31,7 @@ export default defineConfig(({ mode }) => {
       cssCodeSplit: true,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-            'ui-vendor': ['lucide-react', 'framer-motion'],
-          },
+          // manualChunks removed to avoid build issues
         },
       },
     },
@@ -42,10 +39,6 @@ export default defineConfig(({ mode }) => {
       include: ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom'],
       force: true,
     },
-    define: {
-      'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://dywmajqqvsmbatwadqop.supabase.co'),
-      'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d21hanFxdnNtYmF0d2FkcW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxOTkxNjYsImV4cCI6MjA3NDc3NTE2Nn0.cOXX2J9NUmNWNvDR_OnoTXuN_kywx-EXd6NP3nFu6Zc'),
-      'import.meta.env.VITE_SUPABASE_PROJECT_ID': JSON.stringify('dywmajqqvsmbatwadqop'),
-    },
+    // Removed Supabase env var injection; Lovable Cloud backend only
   };
 });

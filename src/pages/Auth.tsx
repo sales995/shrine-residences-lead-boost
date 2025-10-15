@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Supabase client is dynamically imported to avoid SSR issues
+// Auth handled via stubbed supabase client (Lovable Cloud backend)
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
