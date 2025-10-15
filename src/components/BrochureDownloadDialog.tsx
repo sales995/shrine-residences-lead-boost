@@ -17,6 +17,7 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
     name: "",
     phone: "",
     email: "",
+    hp: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -58,6 +59,7 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
         email: formData.email || null,
         message: 'Brochure & Floor Plan Download Request',
         source: 'brochure_download',
+        hp: formData.hp || "",
       });
 
       if ((data as any)?.error) {
@@ -120,6 +122,8 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+          {/* Honeypot (hidden) */}
+          <input type="text" name="hp" value={formData.hp} onChange={(e) => setFormData(prev => ({ ...prev, hp: e.target.value }))} className="hidden" autoComplete="off" tabIndex={-1} aria-hidden="true" />
           <div className="space-y-2">
             <Label htmlFor="name">Name *</Label>
             <Input

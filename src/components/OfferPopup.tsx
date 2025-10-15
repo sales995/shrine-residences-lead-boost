@@ -9,7 +9,8 @@ export const OfferPopup = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    email: ""
+    email: "",
+    hp: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -56,6 +57,7 @@ export const OfferPopup = () => {
         email: formData.email.trim() || null,
         message: null,
         source: 'popup',
+        hp: formData.hp || "",
       });
       if ((data as any)?.error) {
         const msg = (data as any)?.error || '';
@@ -145,6 +147,8 @@ export const OfferPopup = () => {
           </h3>
           
           <form onSubmit={handleSubmit} className="space-y-3">
+            {/* Honeypot (hidden) */}
+            <input type="text" name="hp" value={formData.hp} onChange={e => setFormData({ ...formData, hp: e.target.value })} className="hidden" autoComplete="off" tabIndex={-1} aria-hidden="true" />
             <Input type="text" placeholder="Your Full Name *" value={formData.name} onChange={e => setFormData({
               ...formData,
               name: e.target.value

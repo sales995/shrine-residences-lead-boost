@@ -11,7 +11,8 @@ const LeadFormSection = () => {
     name: "",
     email: "",
     phone: "",
-    message: ""
+    message: "",
+    hp: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -59,12 +60,22 @@ const LeadFormSection = () => {
         phone: formData.phone.trim(),
         message: formData.message.trim() || null,
         source: 'contact-form',
+        hp: formData.hp || "",
       });
 
+      if ((data as any)?.rate_limited) {
+        toast({
+          title: 'Slow down',
+          description: 'Too many submissions. Please try again later.',
+          variant: 'destructive',
+        });
+        setIsSubmitting(false);
+        return;
+      }
       if ((data as any)?.error) {
         const msg = (data as any)?.error || '';
         const status = (data as any)?.status;
-        if (status === 429 || msg.toLowerCase().includes('too many')) {
+        if (status === 429 || msg.toLowerCase().includes('too many') || msg.toLowerCase().includes('rate')) {
           toast({
             title: 'Slow down',
             description: 'Too many submissions. Please try again later.',
@@ -91,7 +102,7 @@ const LeadFormSection = () => {
           description: 'This phone number has already been registered. Our team will contact you soon!',
         });
         setIsSubmitting(false);
-        setFormData({ name: '', email: '', phone: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '', hp: '' });
         return;
       }
 
@@ -105,7 +116,8 @@ const LeadFormSection = () => {
         name: "",
         email: "",
         phone: "",
-        message: ""
+        message: "",
+        hp: "",
       });
     } catch (error) {
       console.error('Form submission failed:', error);
@@ -138,6 +150,8 @@ const LeadFormSection = () => {
                 <h3 className="text-xl sm:text-2xl font-bold mb-4 md:mb-6 text-foreground">Send us a message</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+                  {/* Honeypot (hidden) */}
+                  <input type="text" name="hp" value={formData.hp} onChange={handleInputChange} className="hidden" autoComplete="off" tabIndex={-1} aria-hidden="true" />
                   
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />

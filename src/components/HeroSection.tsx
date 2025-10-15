@@ -20,7 +20,8 @@ const HeroSection = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    email: ""
+    email: "",
+    hp: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -48,12 +49,22 @@ const HeroSection = () => {
         email: formData.email.trim() || null,
         message: null,
         source: 'hero',
+        hp: formData.hp || "",
       });
+
+      if ((data as any)?.rate_limited) {
+        toast({
+          title: 'Slow down',
+          description: 'Too many submissions. Please try again later.',
+          variant: 'destructive',
+        });
+        return;
+      }
 
       if ((data as any)?.error) {
         const msg = (data as any)?.error || '';
         const status = (data as any)?.status;
-        if (status === 429 || msg.toLowerCase().includes('too many')) {
+        if (status === 429 || msg.toLowerCase().includes('too many') || msg.toLowerCase().includes('rate')) {
           toast({
             title: 'Slow down',
             description: 'Too many submissions. Please try again later.',
@@ -206,6 +217,8 @@ const HeroSection = () => {
               </header>
 
               <form onSubmit={handleFormSubmit} className="space-y-3 md:space-y-4">
+                {/* Honeypot (hidden) */}
+                <input type="text" name="hp" value={formData.hp} onChange={(e) => setFormData({...formData, hp: e.target.value})} className="hidden" autoComplete="off" tabIndex={-1} aria-hidden="true" />
                 <div>
                   <Input
                     type="text"
