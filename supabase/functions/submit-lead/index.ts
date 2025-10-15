@@ -1,110 +1,65 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-
-// Lovable Cloud DB helper (injected at runtime)
-// deno-lint-ignore no-explicit-any
-declare const DB: {
-  select: (table: string, query: Record<string, any>) => Promise<any[]>;
-  insert: (table: string, values: Record<string, any>) => Promise<void>;
-};
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
-
-function isValidEmail(email?: string | null): boolean {
-  if (!email) return true;
-  const trimmed = email.trim();
-  if (!trimmed) return true;
-  if (trimmed.length > 255) return false;
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(trimmed);
-}
+import { db } from "@/utils/cloud";
 
 serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
-
   try {
     if (req.method !== "POST") {
-      return new Response(JSON.stringify({ success: false, error: "Method not allowed" }), { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ success: false, error: "Method not allowed" }), { status: 405 });
     }
 
     const raw = await req.json();
-
-    // Honeypot
-    if (raw?.hp && String(raw.hp).trim() !== "") {
-      console.warn("Honeypot triggered");
-      return new Response(JSON.stringify({ success: false, error: "Spam blocked" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    // Basic anti-bot honeypot
+    if (raw.hp && raw.hp.trim() !== "") {
+      return new Response(JSON.stringify({ success: false, error: "Spam detected" }), { status: 400 });
     }
 
-    const name = (raw?.name || "").trim();
-    const phoneRaw = (raw?.phone || "").trim();
-    const phoneDigits = phoneRaw.replace(/\D/g, "");
-    const email = raw?.email ? String(raw.email).trim() : null;
-    const message = raw?.message ? String(raw.message).trim() : null;
-    const source = (raw?.source || "website").trim();
+    const name = (raw.name || "").trim();
+    const phone = (raw.phone || "").replace(/\D/g, "");
+    const email = raw.email?.trim() || null;
+    const message = raw.message?.trim() || null;
+    const source = raw.source?.trim() || "website";
 
-    if (!name || name.length > 200) {
-      return new Response(JSON.stringify({ success: false, error: "Invalid name" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-    }
-    if (!/^[6-9]\d{9}$/.test(phoneDigits)) {
-      return new Response(JSON.stringify({ success: false, error: "Invalid phone" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-    }
-    if (!isValidEmail(email)) {
-      return new Response(JSON.stringify({ success: false, error: "Invalid email" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    // Validation
+    if (!name || !/^[6-9]\d{9}$/.test(phone)) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid input" }), { status: 400 });
     }
 
-    // Rate limit: 3 per hour per phone
+    // Rate limit: only allow 3 submissions/hour per phone
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-    try {
-      const recent = await DB.select("leads", { phone: phoneDigits, created_at: { $gt: oneHourAgo } });
-      if (Array.isArray(recent) && recent.length >= 3) {
-        return new Response(JSON.stringify({ success: false, rate_limited: true, error: "Rate limit exceeded" }), { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-      }
-    } catch (_e) {
-      // If select unsupported, continue without rate limit
+    const recent = await db.from("leads").select("*").gt("created_at", oneHourAgo).eq("phone", phone);
+
+    if (Array.isArray(recent?.data) && recent.data.length >= 3) {
+      return new Response(JSON.stringify({ success: false, rate_limited: true, error: "Too many submissions" }), { status: 429 });
     }
 
-    // Duplicate last 30 days by phone (+email if provided)
+    // Duplicate check (30 days)
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-    try {
-      const dupQuery: Record<string, unknown> = { phone: phoneDigits, created_at: { $gt: thirtyDaysAgo } };
-      if (email) dupQuery.email = email;
-      const dup = await DB.select("leads", dupQuery);
-      if (Array.isArray(dup) && dup.length > 0) {
-        return new Response(JSON.stringify({ success: false, duplicate: true }), { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-      }
-    } catch (_e) {
-      // If select unsupported, rely on DB unique index or proceed
+    const dup = await db.from("leads").select("*").gt("created_at", thirtyDaysAgo).eq("phone", phone);
+    if (dup?.data?.length > 0) {
+      return new Response(JSON.stringify({ success: false, duplicate: true }), { status: 200 });
     }
 
     const created_at = new Date().toISOString();
-    await DB.insert("leads", { name, phone: phoneDigits, email, message, source, created_at });
 
-    // Optional CRM webhook
-    try {
-      const CRM_URL = Deno.env.get("CRM_WEBHOOK_URL") || Deno.env.get("VITE_CRM_WEBHOOK_URL") || null;
-      if (CRM_URL) {
-        await fetch(CRM_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, phone: phoneDigits, email, source, created_at }),
-        });
-      }
-    } catch (err) {
-      const msg = (err as Error)?.message || "crm_error";
-      console.warn("CRM webhook failed:", msg);
-    }
+    // Insert lead safely
+    await db.from("leads").insert([
+      { name, phone, email, message, source, created_at }
+    ]);
 
-    // Redacted log
-    console.info("Lead inserted:", { source, phonePrefix: phoneDigits.substring(0, 2), hasEmail: !!email, timestamp: created_at });
+    // Safe logging (no PII)
+    console.log("✅ Lead inserted", {
+      source,
+      timestamp: created_at,
+      phonePrefix: phone.substring(0, 2),
+    });
 
-    return new Response(JSON.stringify({ success: true }), { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+
   } catch (err) {
-    const msg = (err as Error)?.message || "error";
-    console.error("submit-lead error:", msg);
-    return new Response(JSON.stringify({ success: false, error: "Server error" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    console.error("❌ Error in submit-lead:", (err as any)?.message || err);
+    return new Response(JSON.stringify({ success: false, error: "Server error" }), { status: 500 });
   }
 });
