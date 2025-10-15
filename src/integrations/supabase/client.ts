@@ -23,7 +23,8 @@ export const supabase = {
   functions: {
     async invoke(_name: string, { body }: { body: any }) {
       try {
-        const response = await fetch('/api/submit-form', {
+        // Route to Lovable Cloud function by name, posting JSON
+        const response = await fetch(`/api/${_name}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),

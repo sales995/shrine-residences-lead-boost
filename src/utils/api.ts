@@ -116,7 +116,8 @@ export async function fetchWithRetry(
 
 export async function submitForm(formData: any): Promise<any> {
   try {
-    const response = await fetchWithRetry('/api/submit-form', {
+    // Post JSON to the canonical submit-lead endpoint
+    const response = await fetchWithRetry('/api/submit-lead', {
       method: 'POST',
       body: JSON.stringify(formData),
     });
