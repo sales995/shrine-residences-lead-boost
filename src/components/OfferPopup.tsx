@@ -49,19 +49,17 @@ export const OfferPopup = () => {
     }
     setIsSubmitting(true);
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { data, error } = await supabase.functions.invoke('submit-lead', {
-        body: {
-          name: formData.name.trim(),
-          phone: formData.phone.trim(),
-          email: formData.email.trim() || null,
-          message: null,
-          source: 'popup',
-        },
+      const { cloudInvoke } = await import("@/utils/cloud");
+      const data = await cloudInvoke('submit-lead', {
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim() || null,
+        message: null,
+        source: 'popup',
       });
-      if (error) {
-        const msg = (error as any)?.message || '';
-        const status = (error as any)?.status;
+      if ((data as any)?.error) {
+        const msg = (data as any)?.error || '';
+        const status = (data as any)?.status;
         if (status === 429 || msg.toLowerCase().includes('too many')) {
           toast({ title: 'Slow down', description: 'Too many submissions. Please try again later.', variant: 'destructive' });
           return;
@@ -70,7 +68,7 @@ export const OfferPopup = () => {
           toast({ title: 'Verification failed', description: 'Please complete the CAPTCHA and try again.', variant: 'destructive' });
           return;
         }
-        throw error as any;
+        throw new Error(msg);
       }
 
       if ((data as any)?.duplicate) {

@@ -52,21 +52,18 @@ const LeadFormSection = () => {
     
     setIsSubmitting(true);
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { data, error } = await supabase
-        .functions.invoke('submit-lead', {
-          body: {
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            phone: formData.phone.trim(),
-            message: formData.message.trim() || null,
-            source: 'contact-form',
-          },
-        });
+      const { cloudInvoke } = await import("@/utils/cloud");
+      const data = await cloudInvoke('submit-lead', {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        message: formData.message.trim() || null,
+        source: 'contact-form',
+      });
 
-      if (error) {
-        const msg = (error as any)?.message || '';
-        const status = (error as any)?.status;
+      if ((data as any)?.error) {
+        const msg = (data as any)?.error || '';
+        const status = (data as any)?.status;
         if (status === 429 || msg.toLowerCase().includes('too many')) {
           toast({
             title: 'Slow down',
@@ -85,7 +82,7 @@ const LeadFormSection = () => {
           setIsSubmitting(false);
           return;
         }
-        throw error as any;
+        throw new Error(msg);
       }
 
       if ((data as any)?.duplicate) {

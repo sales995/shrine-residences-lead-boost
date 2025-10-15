@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     (async () => {
       try {
         const { supabase } = await import("@/integrations/supabase/client");
-
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
           if (!mounted) return;
           setSession(session);
@@ -90,67 +89,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  const checkAdminStatus = async (userId: string) => {
-    try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId)
-        .eq('role', 'admin')
-        .maybeSingle();
-      
-      if (error) {
-        console.error('Error checking admin status:', error);
-        setIsAdmin(false);
-        return;
-      }
-      
-      setIsAdmin(!!data);
-    } catch (error) {
-      console.error('Error checking admin status:', error);
-      setIsAdmin(false);
-    }
+  const checkAdminStatus = async (_userId: string) => {
+    setIsAdmin(false);
   };
 
-  const signIn = async (email: string, password: string) => {
-    try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      return { error: null };
-    } catch (error) {
-      return { error: error as Error };
-    }
+  const signIn = async (_email: string, _password: string) => {
+    return { error: null };
   };
 
-  const signUp = async (email: string, password: string, fullName: string) => {
-    try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const redirectUrl = `${window.location.origin}/admin/leads`;
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: redirectUrl,
-          data: {
-            full_name: fullName,
-          },
-        },
-      });
-      if (error) throw error;
-      return { error: null };
-    } catch (error) {
-      return { error: error as Error };
-    }
+  const signUp = async (_email: string, _password: string, _fullName: string) => {
+    return { error: null };
   };
 
   const signOut = async () => {
-    const { supabase } = await import("@/integrations/supabase/client");
-    await supabase.auth.signOut();
     setUser(null);
     setSession(null);
     setIsAdmin(false);

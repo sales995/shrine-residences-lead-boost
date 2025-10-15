@@ -50,54 +50,36 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
     setIsSubmitting(true);
 
     try {
-      // Dynamic import to avoid SSR issues
-      const { supabase } = await import("@/integrations/supabase/client");
-      
-      const { data: existingLead } = await supabase
-        .from("leads")
-        .select("phone")
-        .eq("phone", formData.phone)
-        .maybeSingle();
+      const { cloudInvoke } = await import("@/utils/cloud");
 
-      if (existingLead) {
-        toast({
-          title: "Already Registered",
-          description: "We already have your details. Downloading brochure now...",
-        });
-      }
+      const data = await cloudInvoke('submit-lead', {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || null,
+        message: 'Brochure & Floor Plan Download Request',
+        source: 'brochure_download',
+      });
 
-      if (!existingLead) {
-        const { data, error } = await supabase.functions.invoke('submit-lead', {
-          body: {
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email || null,
-            message: 'Brochure & Floor Plan Download Request',
-            source: 'brochure_download',
-          },
-        });
-
-        if (error) {
-          const msg = (error as any)?.message || '';
-          const status = (error as any)?.status;
-          if (status === 429 || msg.toLowerCase().includes('too many')) {
-            toast({ title: 'Slow down', description: 'Too many submissions. Please try again later.', variant: 'destructive' });
-            setIsSubmitting(false);
-            return;
-          }
-          if (msg.toLowerCase().includes('captcha')) {
-            toast({ title: 'Verification failed', description: 'Please complete the CAPTCHA and try again.', variant: 'destructive' });
-            setIsSubmitting(false);
-            return;
-          }
-          throw error as any;
+      if ((data as any)?.error) {
+        const msg = (data as any)?.error || '';
+        const status = (data as any)?.status;
+        if (status === 429 || msg.toLowerCase().includes('too many')) {
+          toast({ title: 'Slow down', description: 'Too many submissions. Please try again later.', variant: 'destructive' });
+          setIsSubmitting(false);
+          return;
         }
-
-        toast({
-          title: "Success!",
-          description: "Thank you! Downloading your brochure now...",
-        });
+        if (msg.toLowerCase().includes('captcha')) {
+          toast({ title: 'Verification failed', description: 'Please complete the CAPTCHA and try again.', variant: 'destructive' });
+          setIsSubmitting(false);
+          return;
+        }
+        throw new Error(msg);
       }
+
+      toast({
+        title: "Success!",
+        description: "Thank you! Downloading your brochure now...",
+      });
 
       // Trigger download
       const link = document.createElement('a');

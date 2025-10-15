@@ -41,21 +41,18 @@ const HeroSection = () => {
     
     setIsSubmitting(true);
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { data, error } = await supabase
-        .functions.invoke('submit-lead', {
-          body: {
-            name: formData.name.trim(),
-            phone: formData.phone.trim(),
-            email: formData.email.trim() || null,
-            message: null,
-            source: 'hero',
-          },
-        });
+      const { cloudInvoke } = await import("@/utils/cloud");
+      const data = await cloudInvoke('submit-lead', {
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim() || null,
+        message: null,
+        source: 'hero',
+      });
 
-      if (error) {
-        const msg = (error as any)?.message || '';
-        const status = (error as any)?.status;
+      if ((data as any)?.error) {
+        const msg = (data as any)?.error || '';
+        const status = (data as any)?.status;
         if (status === 429 || msg.toLowerCase().includes('too many')) {
           toast({
             title: 'Slow down',
@@ -72,7 +69,7 @@ const HeroSection = () => {
           });
           return;
         }
-        throw error;
+        throw new Error(msg);
       }
 
       if ((data as any)?.duplicate) {
