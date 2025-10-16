@@ -88,7 +88,7 @@ const HeroSection = () => {
           title: 'Already Registered',
           description: 'This phone number has already been registered. Our team will contact you soon!',
         });
-        setFormData({ name: '', phone: '', email: '' });
+        setFormData({ name: '', phone: '', email: '', hp: '' });
         return;
       }
 
@@ -97,7 +97,7 @@ const HeroSection = () => {
         description: `Thank you ${formData.name}! We'll send you the latest price list and exclusive offers within 15 minutes.`,
       });
       
-      setFormData({ name: "", phone: "", email: "" });
+      setFormData({ name: "", phone: "", email: "", hp: "" });
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({

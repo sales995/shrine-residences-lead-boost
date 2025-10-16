@@ -95,7 +95,7 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
       trackBrochureDownload(formData.phone);
 
       // Reset form and close dialog
-      setFormData({ name: "", phone: "", email: "" });
+      setFormData({ name: "", phone: "", email: "", hp: "" });
       onOpenChange(false);
     } catch (error) {
       console.error("Error submitting form:", error);

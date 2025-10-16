@@ -76,7 +76,7 @@ export const OfferPopup = () => {
       if ((data as any)?.duplicate) {
         toast({ title: 'Already Registered', description: 'This phone number has already been registered. Our team will contact you soon!' });
         setIsOpen(false);
-        setFormData({ name: '', phone: '', email: '' });
+        setFormData({ name: '', phone: '', email: '', hp: '' });
         return;
       }
       toast({
@@ -87,7 +87,8 @@ export const OfferPopup = () => {
       setFormData({
         name: "",
         phone: "",
-        email: ""
+        email: "",
+        hp: ""
       });
     } catch (error) {
       console.error('Error submitting form:', error);
