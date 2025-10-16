@@ -23,14 +23,15 @@ export const supabase = {
   functions: {
     async invoke(_name: string, { body }: { body: any }) {
       try {
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-        const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-        
-        if (!supabaseUrl || !supabaseKey) {
-          throw new Error('Supabase configuration missing');
-        }
+        // Prefer env, but fall back to known project constants to avoid runtime config issues
+        const PROJECT_ID = 'dywmajqqvsmbatwadqop';
+        const FALLBACK_URL = `https://${PROJECT_ID}.supabase.co`;
+        const FALLBACK_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5d21hanFxdnNtYmF0d2FkcW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxOTkxNjYsImV4cCI6MjA3NDc3NTE2Nn0.cOXX2J9NUmNWNvDR_OnoTXuN_kywx-EXd6NP3nFu6Zc';
 
-        // Call the actual Supabase edge function
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || FALLBACK_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || FALLBACK_KEY;
+
+        // Call the backend function directly at the Functions URL
         const response = await fetch(`${supabaseUrl}/functions/v1/${_name}`, {
           method: 'POST',
           headers: {
@@ -41,13 +42,14 @@ export const supabase = {
           body: JSON.stringify(body),
         });
 
+        const contentType = response.headers.get('content-type') || '';
+        const data = contentType.includes('application/json') ? await response.json() : await response.text();
+
         if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Edge function error:', errorText);
-          throw new Error(`Function call failed: ${response.status}`);
+          console.error('Edge function error:', data);
+          return { data: null, error: new Error(typeof data === 'string' ? data : (data?.error || 'Function call failed')) };
         }
 
-        const data = await response.json();
         return { data, error: null };
       } catch (error) {
         console.error('Function invoke error:', error);
