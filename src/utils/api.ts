@@ -116,25 +116,14 @@ export async function fetchWithRetry(
 
 export async function submitForm(formData: any): Promise<any> {
   try {
-    // Use Supabase client to invoke the edge function
-    const { supabase } = await import("@/integrations/supabase/client");
-    const { data, error } = await supabase.functions.invoke('submit-lead', {
-      body: formData,
-    });
-
-    if (error) {
-      throw new APIError(
-        error.message || 'Submission failed',
-        0,
-        'Edge Function Error'
-      );
-    }
-
+    // Use direct function invoke via full URL to avoid local proxy issues
+    const { cloudInvoke } = await import('./cloud');
+    const data = await cloudInvoke('submit-lead', formData);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof APIError) {
       throw error;
     }
-    throw new APIError('Network error occurred', 0, 'Network Error');
+    throw new APIError(error?.message || 'Submission failed', 0, 'Edge Function Error');
   }
 }
