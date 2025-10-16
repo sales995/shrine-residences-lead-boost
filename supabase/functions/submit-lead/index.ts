@@ -1,10 +1,22 @@
-import { DB } from 'cloud';
-import { serve } from 'cloud-functions';
+import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const corsHeaders: HeadersInit = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
 
 serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
   try {
     if (req.method !== 'POST') {
-      return new Response(JSON.stringify({ success: false, error: 'Invalid method' }), { status: 405 });
+      return new Response(
+        JSON.stringify({ success: false, error: 'Invalid method' }),
+        { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
     }
 
     const { name, phone, email, message, source } = await req.json();
@@ -24,105 +36,183 @@ serve(async (req) => {
                req.headers.get('cf-connecting-ip') || 
                'unknown';
 
-    // Check for duplicate phone number in leads table
-    const duplicatePhone = await DB.selectFrom('leads')
-      .where('phone', '=', phone.trim())
-      .execute();
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? Deno.env.get('SUPABASE_ANON_KEY');
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Missing Supabase env: SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY/ANON_KEY');
+      return new Response(
+        JSON.stringify({ success: false, error: 'Server not configured' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
 
-    if (duplicatePhone.length > 0) {
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Check for duplicate phone number in leads table
+    const { data: duplicatePhone, error: dupErr } = await supabase
+      .from('leads')
+      .select('id')
+      .eq('phone', phone.trim())
+      .limit(1);
+    if (dupErr) {
+      console.error('Duplicate phone check failed:', dupErr.message);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Server error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
+
+    if (duplicatePhone && duplicatePhone.length > 0) {
       console.log('Duplicate phone submission blocked', { 
         timestamp: new Date().toISOString(),
         source: 'submit-lead'
       });
-      return new Response(JSON.stringify({ 
-        success: false, 
-        duplicate: true,
-        error: 'This phone number has already been registered.' 
-      }), { status: 400 });
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          duplicate: true,
+          error: 'This phone number has already been registered.' 
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
     }
 
     // Phone-based rate limiting: max 3 submissions per hour
-    const phoneRateLimit = await DB.selectFrom('submission_rate_limit')
-      .where('identifier', '=', `phone:${phone.trim()}`)
-      .and('last_submission_at', '>', new Date(Date.now() - 3600 * 1000).toISOString())
-      .execute();
+    const oneHourAgoIso = new Date(Date.now() - 3600 * 1000).toISOString();
+    const { data: phoneRateLimit, error: phoneRateErr } = await supabase
+      .from('submission_rate_limit')
+      .select('id, submission_count, last_submission_at')
+      .eq('identifier', `phone:${phone.trim()}`)
+      .gt('last_submission_at', oneHourAgoIso)
+      .order('last_submission_at', { ascending: false })
+      .limit(1);
+    if (phoneRateErr) {
+      console.error('Phone rate limit check failed:', phoneRateErr.message);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Server error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
 
-    if (phoneRateLimit.length > 0 && phoneRateLimit[0].submission_count >= 3) {
+    if (phoneRateLimit && phoneRateLimit.length > 0 && (phoneRateLimit[0].submission_count ?? 0) >= 3) {
       console.warn('Rate limit exceeded', {
         type: 'phone',
         timestamp: new Date().toISOString(),
         source: 'submit-lead'
       });
-      return new Response(JSON.stringify({ 
-        success: false, 
-        error: 'Too many submissions. Please try again later.' 
-      }), { status: 429 });
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: 'Too many submissions. Please try again later.' 
+        }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
     }
 
     // IP-based rate limiting: max 10 submissions per hour
-    const ipRateLimit = await DB.selectFrom('submission_rate_limit')
-      .where('identifier', '=', `ip:${ip}`)
-      .and('last_submission_at', '>', new Date(Date.now() - 3600 * 1000).toISOString())
-      .execute();
+    const { data: ipRateLimit, error: ipRateErr } = await supabase
+      .from('submission_rate_limit')
+      .select('id, submission_count, last_submission_at')
+      .eq('identifier', `ip:${ip}`)
+      .gt('last_submission_at', oneHourAgoIso)
+      .order('last_submission_at', { ascending: false })
+      .limit(1);
+    if (ipRateErr) {
+      console.error('IP rate limit check failed:', ipRateErr.message);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Server error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
 
-    if (ipRateLimit.length > 0 && ipRateLimit[0].submission_count >= 10) {
+    if (ipRateLimit && ipRateLimit.length > 0 && (ipRateLimit[0].submission_count ?? 0) >= 10) {
       console.warn('Rate limit exceeded', {
         type: 'ip',
         timestamp: new Date().toISOString(),
         source: 'submit-lead'
       });
-      return new Response(JSON.stringify({ 
-        success: false, 
-        error: 'Too many submissions. Please try again later.' 
-      }), { status: 429 });
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: 'Too many submissions. Please try again later.' 
+        }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
     }
 
     // Update rate limit counters
-    if (phoneRateLimit.length > 0) {
-      await DB.updateTable('submission_rate_limit')
-        .where('id', '=', phoneRateLimit[0].id)
-        .set({
-          submission_count: phoneRateLimit[0].submission_count + 1,
-          last_submission_at: new Date().toISOString()
+    if (phoneRateLimit && phoneRateLimit.length > 0) {
+      const current = phoneRateLimit[0];
+      const { error: updPhoneErr } = await supabase
+        .from('submission_rate_limit')
+        .update({
+          submission_count: (current.submission_count ?? 0) + 1,
+          last_submission_at: new Date().toISOString(),
         })
-        .execute();
+        .eq('id', current.id);
+      if (updPhoneErr) {
+        console.error('Failed to update phone rate limit:', updPhoneErr.message);
+      }
     } else {
-      await DB.insert('submission_rate_limit', {
-        identifier: `phone:${phone.trim()}`,
-        submission_count: 1,
-        first_submission_at: new Date().toISOString(),
-        last_submission_at: new Date().toISOString(),
-        created_at: new Date().toISOString()
-      });
+      const { error: insPhoneErr } = await supabase
+        .from('submission_rate_limit')
+        .insert({
+          identifier: `phone:${phone.trim()}`,
+          submission_count: 1,
+          first_submission_at: new Date().toISOString(),
+          last_submission_at: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+        });
+      if (insPhoneErr) {
+        console.error('Failed to insert phone rate limit:', insPhoneErr.message);
+      }
     }
 
-    if (ipRateLimit.length > 0) {
-      await DB.updateTable('submission_rate_limit')
-        .where('id', '=', ipRateLimit[0].id)
-        .set({
-          submission_count: ipRateLimit[0].submission_count + 1,
-          last_submission_at: new Date().toISOString()
+    if (ipRateLimit && ipRateLimit.length > 0) {
+      const current = ipRateLimit[0];
+      const { error: updIpErr } = await supabase
+        .from('submission_rate_limit')
+        .update({
+          submission_count: (current.submission_count ?? 0) + 1,
+          last_submission_at: new Date().toISOString(),
         })
-        .execute();
+        .eq('id', current.id);
+      if (updIpErr) {
+        console.error('Failed to update IP rate limit:', updIpErr.message);
+      }
     } else {
-      await DB.insert('submission_rate_limit', {
-        identifier: `ip:${ip}`,
-        submission_count: 1,
-        first_submission_at: new Date().toISOString(),
-        last_submission_at: new Date().toISOString(),
-        created_at: new Date().toISOString()
-      });
+      const { error: insIpErr } = await supabase
+        .from('submission_rate_limit')
+        .insert({
+          identifier: `ip:${ip}`,
+          submission_count: 1,
+          first_submission_at: new Date().toISOString(),
+          last_submission_at: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+        });
+      if (insIpErr) {
+        console.error('Failed to insert IP rate limit:', insIpErr.message);
+      }
     }
 
     // Insert new lead securely
-    await DB.insert('leads', {
-      name: name.trim(),
-      phone: phone.trim(),
-      email: email?.trim() || null,
-      message: message?.trim() || null,
-      source: source?.trim() || 'website',
-      created_at: new Date().toISOString(),
-    });
+    const { error: insertLeadErr } = await supabase
+      .from('leads')
+      .insert({
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email?.trim() || null,
+        message: message?.trim() || null,
+        source: (source?.trim() || 'website'),
+        created_at: new Date().toISOString(),
+      });
+    if (insertLeadErr) {
+      console.error('Insert lead failed:', insertLeadErr.message);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Server error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
 
     // Log only non-sensitive metadata (no PII)
     console.log("Lead stored successfully", {
@@ -132,10 +222,16 @@ serve(async (req) => {
       timestamp: new Date().toISOString()
     });
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return new Response(
+      JSON.stringify({ success: true }),
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+    );
 
   } catch (err) {
     console.error("Lead submission error:", (err as any)?.message || err);
-    return new Response(JSON.stringify({ success: false, error: 'Server error' }), { status: 500 });
+    return new Response(
+      JSON.stringify({ success: false, error: 'Server error' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+    );
   }
 });
