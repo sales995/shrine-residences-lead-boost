@@ -39,10 +39,11 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
       return;
     }
 
-    if (!/^[6-9][0-9]{9}$/.test(formData.phone)) {
+    const { INDIAN_PHONE_REGEX, PHONE_ERROR_MESSAGE } = await import("@/utils/validation");
+    if (!INDIAN_PHONE_REGEX.test(formData.phone)) {
       toast({
         title: "Invalid Phone Number",
-        description: "Please enter a valid 10-digit Indian phone number",
+        description: PHONE_ERROR_MESSAGE,
         variant: "destructive",
       });
       return;

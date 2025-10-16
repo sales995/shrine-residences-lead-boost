@@ -30,11 +30,11 @@ const HeroSection = () => {
     if (!formData.name || !formData.phone) return;
     
     // Validate Indian phone number format (10 digits starting with 6-9)
-    const phoneRegex = /^[6-9][0-9]{9}$/;
-    if (!phoneRegex.test(formData.phone.trim())) {
+    const { INDIAN_PHONE_REGEX, PHONE_ERROR_MESSAGE } = await import("@/utils/validation");
+    if (!INDIAN_PHONE_REGEX.test(formData.phone.trim())) {
       toast({
         title: "Invalid Phone Number",
-        description: "Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.",
+        description: PHONE_ERROR_MESSAGE,
         variant: "destructive"
       });
       return;

@@ -27,7 +27,8 @@ serve(async (req) => {
     }
 
     // Validate Indian phone number format
-    if (!/^[6-9]\d{9}$/.test(phone)) {
+    // Using the same regex as client-side: /^[6-9][0-9]{9}$/
+    if (!/^[6-9][0-9]{9}$/.test(phone)) {
       return new Response(JSON.stringify({ success: false, error: 'Invalid phone number' }), { status: 400 });
     }
 
