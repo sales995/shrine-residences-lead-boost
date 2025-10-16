@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance: Font display optimization */
+@font-face {
+  font-display: swap;
+}
+
 /* Shriram Residences Design System - All colors MUST be HSL */
 
 @layer base {
