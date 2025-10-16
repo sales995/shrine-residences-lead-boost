@@ -116,13 +116,21 @@ export async function fetchWithRetry(
 
 export async function submitForm(formData: any): Promise<any> {
   try {
-    // Post JSON to the canonical submit-lead endpoint
-    const response = await fetchWithRetry('/api/submit-lead', {
-      method: 'POST',
-      body: JSON.stringify(formData),
+    // Use Supabase client to invoke the edge function
+    const { supabase } = await import("@/integrations/supabase/client");
+    const { data, error } = await supabase.functions.invoke('submit-lead', {
+      body: formData,
     });
 
-    return await response.json();
+    if (error) {
+      throw new APIError(
+        error.message || 'Submission failed',
+        0,
+        'Edge Function Error'
+      );
+    }
+
+    return data;
   } catch (error) {
     if (error instanceof APIError) {
       throw error;
