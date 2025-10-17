@@ -72,8 +72,8 @@ const Index = () => {
     <>
       <SEOHead 
         path="/" 
-        title="Shriram Park 63 | 3 BHK Flats on GST Road, Perungalathur, Chennai"
-        description="Discover premium 3 BHK flats at Shriram Park 63, Perungalathur – a 57-acre integrated township by Shriram Properties on GST Main Road, Chennai. RERA approved, modern amenities, and excellent connectivity."
+        title="Shriram Properties Park 63 – Premium 3 BHK Apartments in Chennai"
+        description="Discover Shriram Properties Park 63 in Chennai — premium 3 BHK apartments with world-class amenities, seamless connectivity, and strong investment potential. Schedule your visit today!"
         additionalSchema={faqSchema}
       />
       

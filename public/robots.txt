@@ -1,7 +1,8 @@
 User-agent: *
+Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
 Disallow: /auth
 
-Sitemap: https://www.shriramproperties-park63.in/sitemap.xml
+Sitemap: https://shriramproperties-park63.in/sitemap.xml

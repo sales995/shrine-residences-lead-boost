@@ -5,8 +5,11 @@
 @tailwind utilities;
 
 /* Performance: Font display optimization */
-@font-face {
-  font-display: swap;
+@layer base {
+  @font-face {
+    font-display: swap;
+    font-family: 'Inter';
+  }
 }
 
 /* Shriram Residences Design System - All colors MUST be HSL */

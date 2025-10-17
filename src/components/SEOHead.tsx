@@ -9,12 +9,12 @@ type Props = {
   additionalSchema?: any;
 };
 
-const SITE_URL = "https://www.shriramproperties-park63.in";
+const SITE_URL = "https://shriramproperties-park63.in";
 const DEFAULT_IMAGE = "/assets/og-image.jpg";
 
 export default function SEOHead({
-  title = "Shriram Park 63 | 3 BHK Flats on GST Road, Perungalathur, Chennai",
-  description = "Premium 3 BHK flats at Shriram Park 63, Perungalathur – 57-acre township by Shriram Properties on GST Road, Chennai. RERA approved with modern amenities.",
+  title = "Shriram Properties Park 63 – Premium 3 BHK Apartments in Chennai",
+  description = "Discover Shriram Properties Park 63 in Chennai — premium 3 BHK apartments with world-class amenities, seamless connectivity, and strong investment potential. Schedule your visit today!",
   path = "/",
   image = DEFAULT_IMAGE,
   additionalSchema = null,
@@ -32,6 +32,26 @@ export default function SEOHead({
       "https://www.facebook.com/shriramproperties",
       "https://www.linkedin.com/company/shriramproperties"
     ]
+  };
+
+  const apartmentComplex = {
+    "@context": "https://schema.org",
+    "@type": "ApartmentComplex",
+    "name": "Shriram Properties Park 63",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Chennai",
+      "addressRegion": "Tamil Nadu",
+      "addressCountry": "India"
+    },
+    "url": SITE_URL,
+    "image": `${SITE_URL}/assets/og-image.jpg`,
+    "description": "Premium 3 BHK apartments near Perungalathur, Chennai with top-tier lifestyle amenities.",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock"
+    }
   };
 
   const localBusiness = {
@@ -137,6 +157,7 @@ export default function SEOHead({
       <meta name="twitter:image" content={`${SITE_URL}${image}`} />
 
       <script type="application/ld+json">{JSON.stringify(organization)}</script>
+      <script type="application/ld+json">{JSON.stringify(apartmentComplex)}</script>
       <script type="application/ld+json">{JSON.stringify(localBusiness)}</script>
       <script type="application/ld+json">{JSON.stringify(realEstateProject)}</script>
       <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
