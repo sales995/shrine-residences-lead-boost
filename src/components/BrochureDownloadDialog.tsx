@@ -137,11 +137,24 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
       setFormData({ name: "", phone: "", email: "", hp: "" });
       onOpenChange(false);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error('Error submitting form:', error);
+      const msg = String((error as any)?.message || error || '').toLowerCase();
+      if (/duplicate|already/.test(msg)) {
+        toast({ title: 'Already Registered', description: 'This phone number has already been registered. Our team will contact you soon!' });
+        const link = document.createElement('a');
+        link.href = '/shriram-park63-brochure.pdf';
+        link.download = 'Shriram-Park63-Brochure-FloorPlan.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setFormData({ name: '', phone: '', email: '', hp: '' });
+        onOpenChange(false);
+        return;
+      }
       toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);

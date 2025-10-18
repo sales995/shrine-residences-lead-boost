@@ -19,18 +19,28 @@ export async function cloudInvoke(functionName: string, body: any): Promise<any>
     });
 
     const contentType = response.headers.get('content-type') || '';
-    const payload = contentType.includes('application/json')
+    const raw = contentType.includes('application/json')
       ? await response.json()
       : await response.text();
 
+    const payload = typeof raw === 'object' && raw !== null ? raw : { message: String(raw) };
+
+    const result = {
+      ok: response.ok,
+      status: response.status,
+      ...payload,
+    } as any;
+
     if (!response.ok) {
-      console.error(`Edge function ${functionName} HTTP ${response.status}:`, payload);
-      throw new Error(typeof payload === 'string' ? payload : (payload?.error || 'Submission failed'));
+      // Do not throw on non-2xx. Return structured error so callers can branch on status/flags.
+      console.warn(`Edge function ${functionName} HTTP ${response.status}:`, payload);
+      return result;
     }
 
-    return payload;
+    return result;
   } catch (error) {
     console.error(`Failed to invoke ${functionName}:`, error);
+    // Throw only for network/parse errors
     throw error;
   }
 }

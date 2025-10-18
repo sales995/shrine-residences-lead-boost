@@ -99,10 +99,17 @@ export const OfferPopup = () => {
       });
     } catch (error) {
       console.error('Error submitting form:', error);
+      const msg = String((error as any)?.message || error || '').toLowerCase();
+      if (/duplicate|already/.test(msg)) {
+        toast({ title: 'Already Registered', description: 'This phone number has already been registered. Our team will contact you soon!' });
+        setIsOpen(false);
+        setFormData({ name: '', phone: '', email: '', hp: '' });
+        return;
+      }
       toast({
-        title: "Error",
-        description: "Failed to submit form. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to submit form. Please try again.',
+        variant: 'destructive'
       });
     } finally {
       setIsSubmitting(false);
