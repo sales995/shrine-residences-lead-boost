@@ -34,10 +34,12 @@ export const OptimizedImage = ({
         width={width}
         height={height}
         loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "low"}
+        decoding={priority ? "sync" : "async"}
         onLoad={() => setIsLoaded(true)}
-        onError={() => setIsLoaded(true)} // Show image even if there's an error
+        onError={() => setIsLoaded(true)}
         className={`w-full h-full transition-opacity duration-300 ${
-          isLoaded ? "opacity-100" : "opacity-100"
+          isLoaded ? "opacity-100" : "opacity-0"
         } ${objectFit === "cover" ? "object-cover" : objectFit === "contain" ? "object-contain" : "object-fill"}`}
         style={{
           width: width ? `${width}px` : '100%',

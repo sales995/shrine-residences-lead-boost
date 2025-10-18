@@ -9,12 +9,26 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://shriramproperties-park63.in" />
     
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-T3RSWKQV');</script>
+    <!-- Preload critical hero image -->
+    <link rel="preload" as="image" href="/assets/hero-bg-optimized.webp" fetchpriority="high" />
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+    
+    <!-- Google Tag Manager - Deferred -->
+    <script>
+      window.addEventListener('load', function() {
+        requestIdleCallback(function() {
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-T3RSWKQV');
+        });
+      });
+    </script>
     <!-- End Google Tag Manager -->
     
     <link rel="icon" href="/favicon.ico" />
@@ -58,30 +72,44 @@
     <!-- Preload critical hero image removed to avoid asset path issues during build -->
     
     <!-- Google tag (gtag.js) - Deferred for performance -->
-    <script defer src="https://www.googletagmanager.com/gtag/js?id=AW-17626733867"></script>
-    <script defer>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-17626733867');
+    <script>
+      window.addEventListener('load', function() {
+        requestIdleCallback(function() {
+          var script = document.createElement('script');
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17626733867';
+          script.async = true;
+          document.head.appendChild(script);
+          
+          script.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17626733867');
+          };
+        });
+      });
     </script>
     
     <!-- Meta Pixel Code - Deferred for performance -->
-    <script defer>
-      (function(f,b,e,v,n,t,s){
-        if(f.fbq) return; n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments) };
-        if(!f._fbq) f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
-        n.queue=[]; t=b.createElement(e); t.async=!0; t.src=v; s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-      (function(){
-        var PIXEL_ID = 'YOUR_PIXEL_ID_HERE';
-        if (PIXEL_ID && PIXEL_ID !== 'YOUR_PIXEL_ID_HERE') {
-          fbq('init', PIXEL_ID);
-          fbq('track', 'PageView');
-        } else {
-          console.warn('[Meta Pixel] Skipped init: missing Pixel ID');
-        }
-      })();
+    <script>
+      window.addEventListener('load', function() {
+        requestIdleCallback(function() {
+          (function(f,b,e,v,n,t,s){
+            if(f.fbq) return; n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments) };
+            if(!f._fbq) f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+            n.queue=[]; t=b.createElement(e); t.async=!0; t.src=v; s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+          })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+          (function(){
+            var PIXEL_ID = 'YOUR_PIXEL_ID_HERE';
+            if (PIXEL_ID && PIXEL_ID !== 'YOUR_PIXEL_ID_HERE') {
+              fbq('init', PIXEL_ID);
+              fbq('track', 'PageView');
+            } else {
+              console.warn('[Meta Pixel] Skipped init: missing Pixel ID');
+            }
+          })();
+        });
+      });
     </script>
     <!-- Meta Pixel disabled until a valid PIXEL ID is provided -->
   </head>
@@ -156,27 +184,29 @@
     <script type="module" src="/src/main.tsx"></script>
     
     <!-- Form Finder Debug Script - Deferred for performance -->
-    <script defer>
-      (function(){
-        const forms = document.querySelectorAll('form');
-        console.group('[Form Finder]');
-        if (!forms.length) { console.warn('No <form> found'); return; }
-        forms.forEach((f, i) => {
-          const info = {
-            index: i,
-            id: f.id || '(no id)',
-            classes: f.className || '(no classes)',
-            action: f.getAttribute('action') || '(no action)',
-            inputs: Array.from(f.querySelectorAll('input, textarea, select')).map(el => ({
-              type: el.type || el.tagName,
-              name: el.name || '(no name)',
-              id: el.id || '(no id)'
-            }))
-          };
-          console.log(info);
+    <script>
+      window.addEventListener('load', function() {
+        requestIdleCallback(function() {
+          const forms = document.querySelectorAll('form');
+          console.group('[Form Finder]');
+          if (!forms.length) { console.warn('No <form> found'); return; }
+          forms.forEach((f, i) => {
+            const info = {
+              index: i,
+              id: f.id || '(no id)',
+              classes: f.className || '(no classes)',
+              action: f.getAttribute('action') || '(no action)',
+              inputs: Array.from(f.querySelectorAll('input, textarea, select')).map(el => ({
+                type: el.type || el.tagName,
+                name: el.name || '(no name)',
+                id: el.id || '(no id)'
+              }))
+            };
+            console.log(info);
+          });
+          console.groupEnd();
         });
-        console.groupEnd();
-      })();
+      });
     </script>
   </body>
 </html>

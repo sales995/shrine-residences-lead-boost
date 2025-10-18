@@ -123,10 +123,11 @@ const HeroSection = () => {
       {/* Optimized Background Image with Preload */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/assets/building-aerial-1.jpg"
+          src="/assets/hero-bg-optimized.webp"
           alt="Shriram Park 63 premium residential towers aerial view"
           className="w-full h-full object-cover"
           loading="eager"
+          fetchPriority="high"
           width={1920}
           height={1080}
         />
