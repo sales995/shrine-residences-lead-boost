@@ -93,6 +93,16 @@ const LeadFormSection = () => {
           setIsSubmitting(false);
           return;
         }
+        // Handle duplicates even when returned as an error (e.g., HTTP 409)
+        if (status === 409 || /duplicate|already/.test(msg.toLowerCase())) {
+          toast({
+            title: 'Already Registered',
+            description: 'This phone number has already been registered. Our team will contact you soon!',
+          });
+          setIsSubmitting(false);
+          setFormData({ name: '', email: '', phone: '', message: '', hp: '' });
+          return;
+        }
         throw new Error(msg);
       }
 

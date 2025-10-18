@@ -70,6 +70,13 @@ export const OfferPopup = () => {
           toast({ title: 'Verification failed', description: 'Please complete the CAPTCHA and try again.', variant: 'destructive' });
           return;
         }
+        // Handle duplicates even if returned as error (e.g., 409)
+        if (status === 409 || /duplicate|already/.test(msg.toLowerCase())) {
+          toast({ title: 'Already Registered', description: 'This phone number has already been registered. Our team will contact you soon!' });
+          setIsOpen(false);
+          setFormData({ name: '', phone: '', email: '', hp: '' });
+          return;
+        }
         throw new Error(msg);
       }
 

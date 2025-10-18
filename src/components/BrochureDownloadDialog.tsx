@@ -76,6 +76,24 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
           setIsSubmitting(false);
           return;
         }
+        // Handle duplicate submissions even if returned as error (e.g., 409)
+        if (status === 409 || /duplicate|already/.test(msg.toLowerCase())) {
+          toast({
+            title: 'Already Registered',
+            description: 'This phone number has already been registered. Our team will contact you soon!',
+          });
+          // Still allow download for duplicate users
+          const link = document.createElement('a');
+          link.href = '/shriram-park63-brochure.pdf';
+          link.download = 'Shriram-Park63-Brochure-FloorPlan.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setFormData({ name: "", phone: "", email: "", hp: "" });
+          onOpenChange(false);
+          setIsSubmitting(false);
+          return;
+        }
         throw new Error(msg);
       }
 
