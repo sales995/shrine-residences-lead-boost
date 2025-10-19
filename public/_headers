@@ -1,4 +1,17 @@
-# Hero image - critical LCP resource with 1 week cache
+# Responsive hero images - critical LCP resources with 1 week cache
+/assets/hero-small.webp
+  Cache-Control: public, max-age=604800, immutable
+  Content-Encoding: br
+
+/assets/hero-medium.webp
+  Cache-Control: public, max-age=604800, immutable
+  Content-Encoding: br
+
+/assets/hero-large.webp
+  Cache-Control: public, max-age=604800, immutable
+  Content-Encoding: br
+
+# Legacy hero image - critical LCP resource with 1 week cache
 /assets/hero-bg-optimized.webp
   Cache-Control: public, max-age=604800, immutable
   Content-Encoding: br

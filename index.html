@@ -9,8 +9,10 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://shriramproperties-park63.in" />
     
-    <!-- Preload critical hero image with high priority -->
-    <link rel="preload" as="image" href="/assets/hero-bg-optimized.webp" type="image/webp" fetchpriority="high" importance="high" imagesrcset="/assets/hero-bg-optimized.webp" imagesizes="100vw" />
+    <!-- Preload responsive hero images for LCP optimization -->
+    <link rel="preload" as="image" href="/assets/hero-small.webp" fetchpriority="high" type="image/webp" media="(max-width: 600px)" imagesrcset="/assets/hero-small.webp 480w" imagesizes="100vw" />
+    <link rel="preload" as="image" href="/assets/hero-medium.webp" fetchpriority="high" type="image/webp" media="(min-width: 601px) and (max-width: 1200px)" imagesrcset="/assets/hero-medium.webp 1080w" imagesizes="100vw" />
+    <link rel="preload" as="image" href="/assets/hero-large.webp" fetchpriority="high" type="image/webp" media="(min-width: 1201px)" imagesrcset="/assets/hero-large.webp 1920w" imagesizes="100vw" />
     
     <!-- Preload critical fonts with display=swap for better LCP -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

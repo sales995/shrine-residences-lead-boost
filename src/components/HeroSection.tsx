@@ -138,17 +138,22 @@ const HeroSection = () => {
       ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
     >
-      {/* Optimized Background Image with Preload */}
+      {/* Responsive Optimized Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/assets/hero-bg-optimized.webp"
-          alt="Shriram Park 63 premium residential towers aerial view"
-          className="w-full h-full object-cover"
-          loading="eager"
-          fetchPriority="high"
-          width={1920}
-          height={1080}
-        />
+        <picture>
+          <source srcSet="/assets/hero-small.webp" media="(max-width: 600px)" />
+          <source srcSet="/assets/hero-medium.webp" media="(max-width: 1200px)" />
+          <img
+            src="/assets/hero-large.webp"
+            alt="Shriram Park 63 premium residential towers aerial view"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            width={1920}
+            height={1080}
+          />
+        </picture>
         <div 
           className="absolute inset-0"
           style={{ background: 'var(--gradient-hero)' }}
