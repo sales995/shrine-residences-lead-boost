@@ -183,6 +183,45 @@
     <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
     
+    <!-- Hero LQIP swap after LCP -->
+    <script>
+    (function(){
+      function swapHero() {
+        const img = document.getElementById('hero-img');
+        if(!img) return;
+        const w = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        let src = img.dataset.srcLarge || img.getAttribute('data-src-large');
+        if(w <= 599) src = img.dataset.srcSmall || img.getAttribute('data-src-small');
+        else if(w <= 1199) src = img.dataset.srcMedium || img.getAttribute('data-src-medium');
+        const high = new Image();
+        high.onload = function(){ img.src = src; };
+        high.src = src;
+      }
+      try {
+        const obs = new PerformanceObserver(function(list){
+          const entries = list.getEntries();
+          if(entries && entries.length){ 
+            swapHero();
+            console.log('LCP entry:', entries[entries.length-1]);
+            obs.disconnect();
+          }
+        });
+        obs.observe({ type: 'largest-contentful-paint', buffered: true });
+        window.addEventListener('load', function(){ setTimeout(function(){ swapHero(); }, 1200); });
+      } catch(e) {
+        window.addEventListener('load', function(){ setTimeout(function(){ swapHero(); }, 1200); });
+      }
+    })();
+    </script>
+
+    <!-- LCP Debug Logging -->
+    <script>
+    new PerformanceObserver(function(l){
+      const entries = l.getEntries();
+      entries.forEach(function(e){ console.log('DEBUG LCP:', e.startTime, e.size, e.element ? e.element.tagName : 'n/a'); });
+    }).observe({type:'largest-contentful-paint', buffered:true});
+    </script>
+    
     <!-- Progressive Popup Reveal for LCP Optimization -->
     <script>
     (function(){

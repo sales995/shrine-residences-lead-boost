@@ -138,14 +138,17 @@ const HeroSection = () => {
       ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
     >
-      {/* Responsive Optimized Background Image */}
+      {/* Responsive Optimized Background Image with LQIP */}
       <div className="absolute inset-0 z-0">
-        <picture id="hero-picture">
+        <picture id="hero-picture" aria-hidden="false">
           <source srcSet="/assets/hero-small.webp" media="(max-width: 599px)" />
           <source srcSet="/assets/hero-medium.webp" media="(min-width: 600px) and (max-width: 1199px)" />
           <img
             id="hero-img"
-            src="/assets/hero-large.webp"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='720'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='20'/%3E%3C/filter%3E%3Cimage preserveAspectRatio='none' filter='url(%23b)' x='0' y='0' height='100%25' width='100%25' href='data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAoAAUAmJQBOgB4AC/4AUP4AP1AAAAAA'/%3E%3C/svg%3E"
+            data-src-small="/assets/hero-small.webp"
+            data-src-medium="/assets/hero-medium.webp"
+            data-src-large="/assets/hero-large.webp"
             alt="Shriram Park 63 premium residential towers aerial view"
             width="1080"
             height="720"
