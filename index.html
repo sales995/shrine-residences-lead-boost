@@ -9,10 +9,8 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://shriramproperties-park63.in" />
     
-    <!-- Preload responsive hero images for LCP optimization -->
-    <link rel="preload" as="image" href="/assets/hero-small.webp" fetchpriority="high" type="image/webp" media="(max-width: 600px)" imagesrcset="/assets/hero-small.webp 480w" imagesizes="100vw" />
-    <link rel="preload" as="image" href="/assets/hero-medium.webp" fetchpriority="high" type="image/webp" media="(min-width: 601px) and (max-width: 1200px)" imagesrcset="/assets/hero-medium.webp 1080w" imagesizes="100vw" />
-    <link rel="preload" as="image" href="/assets/hero-large.webp" fetchpriority="high" type="image/webp" media="(min-width: 1201px)" imagesrcset="/assets/hero-large.webp 1920w" imagesizes="100vw" />
+    <!-- Preload responsive hero image for LCP optimization -->
+    <link rel="preload" as="image" href="/assets/hero-large.webp" imagesrcset="/assets/hero-small.webp 480w, /assets/hero-medium.webp 1080w, /assets/hero-large.webp 1920w" fetchpriority="high" type="image/webp" />
     
     <!-- Preload critical fonts with display=swap for better LCP -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -184,6 +182,31 @@
     
     <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Progressive Popup Reveal for LCP Optimization -->
+    <script>
+    (function(){
+      let revealed = false;
+      function revealPopup(){
+        if(revealed) return; revealed = true;
+        const overlays = document.querySelectorAll('.popup-overlay');
+        overlays.forEach(function(o){ if(o) o.classList.add('visible'); });
+      }
+      try {
+        const obs = new PerformanceObserver(function(list){
+          const entries = list.getEntries();
+          if(entries && entries.length){
+            revealPopup();
+            obs.disconnect();
+          }
+        });
+        obs.observe({ type: 'largest-contentful-paint', buffered: true });
+        window.addEventListener('load', function(){ setTimeout(revealPopup, 700); });
+      } catch(e) {
+        window.addEventListener('load', function(){ setTimeout(revealPopup, 700); });
+      }
+    })();
+    </script>
     
     <!-- Form Finder Debug Script - Deferred for performance -->
     <script>

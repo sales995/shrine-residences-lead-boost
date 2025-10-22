@@ -232,6 +232,18 @@
   .slide-in-right.visible {
     @apply opacity-100 translate-x-0;
   }
+
+  /* Progressive Popup Reveal - Hidden until LCP recorded */
+  .popup-overlay {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .popup-overlay.visible {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 /* Additional Animations and Utilities */

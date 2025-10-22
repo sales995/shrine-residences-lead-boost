@@ -140,18 +140,20 @@ const HeroSection = () => {
     >
       {/* Responsive Optimized Background Image */}
       <div className="absolute inset-0 z-0">
-        <picture>
-          <source srcSet="/assets/hero-small.webp" media="(max-width: 600px)" />
-          <source srcSet="/assets/hero-medium.webp" media="(max-width: 1200px)" />
+        <picture id="hero-picture">
+          <source srcSet="/assets/hero-small.webp" media="(max-width: 599px)" />
+          <source srcSet="/assets/hero-medium.webp" media="(min-width: 600px) and (max-width: 1199px)" />
           <img
+            id="hero-img"
             src="/assets/hero-large.webp"
             alt="Shriram Park 63 premium residential towers aerial view"
+            width="1080"
+            height="720"
             className="w-full h-full object-cover"
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            width={1920}
-            height={1080}
+            style={{ display: 'block', width: '100%', height: '100%' }}
           />
         </picture>
         <div 

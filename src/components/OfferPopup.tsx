@@ -122,7 +122,7 @@ export const OfferPopup = () => {
     }
   };
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg">
+      <DialogContent className="popup-overlay w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">
             🎁 Get Additional Offers
