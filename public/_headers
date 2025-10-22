@@ -1,15 +1,12 @@
-# Responsive hero images - critical LCP resources with 1 week cache + Brotli
+# Responsive hero images - critical LCP resources with 1 week cache
 /assets/hero-small.webp
-  Cache-Control: public, max-age=604800, immutable
-  Content-Encoding: br
+  Cache-Control: public, max-age=604800
 
 /assets/hero-medium.webp
-  Cache-Control: public, max-age=604800, immutable
-  Content-Encoding: br
+  Cache-Control: public, max-age=604800
 
 /assets/hero-large.webp
-  Cache-Control: public, max-age=604800, immutable
-  Content-Encoding: br
+  Cache-Control: public, max-age=604800
 
 # Cache all static assets for 1 year with Brotli compression
 /assets/*

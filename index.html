@@ -12,6 +12,19 @@
     <!-- Preload responsive hero image for LCP optimization -->
     <link rel="preload" as="image" href="/assets/hero-large.webp" imagesrcset="/assets/hero-small.webp 480w, /assets/hero-medium.webp 1080w, /assets/hero-large.webp 1920w" fetchpriority="high" type="image/webp" />
     
+    <!-- Inline Critical CSS for Hero & Header (LCP optimization) -->
+    <style>
+      :root{--primary:186 65% 45%;--accent:43 90% 55%;--background:220 17% 99%;--foreground:218 67% 13%;--gradient-hero:linear-gradient(135deg,rgba(30,70,80,0.85),rgba(40,85,95,0.80));}
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:Inter,system-ui,-apple-system,sans-serif;background:hsl(var(--background));color:hsl(var(--foreground));line-height:1.5;}
+      .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}
+      #hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:4rem;}
+      #hero picture{position:absolute;inset:0;z-index:0;}
+      #hero img{width:100%;height:100%;object-fit:cover;display:block;}
+      .btn-hero-primary{background:hsl(var(--accent));color:white;padding:1rem 2rem;border-radius:0.5rem;font-weight:700;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);transition:all 0.3s;}
+      .btn-hero-secondary{background:hsl(var(--primary));color:white;padding:1rem 2rem;border-radius:0.5rem;font-weight:600;transition:all 0.3s;}
+    </style>
+    
     <!-- Preload critical fonts with display=swap for better LCP -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
