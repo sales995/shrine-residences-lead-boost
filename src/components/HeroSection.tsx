@@ -182,7 +182,7 @@ const HeroSection = () => {
           {/* Left: Main Content */}
           <div className={`text-white fade-in ${inView ? "visible" : ""}`}>
             {/* Heading - main title */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight">
+            <h1 className="text-[40px] sm:text-[44px] md:text-[48px] lg:text-[56px] font-bold mb-4 md:mb-6 leading-tight">
               Shriram Park 63 – 3 BHK Flats on GST Road, Perungalathur, Chennai
             </h1>
             
