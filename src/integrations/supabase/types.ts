@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      available_units: {
+        Row: {
+          id: string
+          units_remaining: number
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          units_remaining?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          units_remaining?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       lead_access_log: {
         Row: {
           action: string
@@ -148,10 +166,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      cleanup_old_rate_limits: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      cleanup_old_rate_limits: { Args: never; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { useAvailableUnits } from "@/hooks/useAvailableUnits";
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -11,9 +12,8 @@ export const OfferPopup = () => {
     hp: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+  const { unitsRemaining, isLoading } = useAvailableUnits();
   useEffect(() => {
     // Check if popup was already shown in this session
     const hasShownPopup = sessionStorage.getItem('offerPopupShown');
@@ -125,7 +125,7 @@ export const OfferPopup = () => {
       <DialogContent className="popup-overlay w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">
-            🔥 Only 40 Units Left!
+            🔥 Only {isLoading ? '40' : unitsRemaining} Units Left!
           </DialogTitle>
           <DialogDescription className="text-center text-muted-foreground pt-2">
             Register now to secure your dream home with exclusive GST waiver & 90% bank loan approval.
