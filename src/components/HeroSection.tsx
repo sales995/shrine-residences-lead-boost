@@ -169,7 +169,7 @@ const HeroSection = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <h2 className="text-white font-bold text-sm md:text-lg lg:text-xl text-center px-2">
-              🔥 Exclusive Offer Ending Soon: GST Waiver & 90% Bank Loan Approved
+              🔥 Only 40 Units Available: Hurry! GST Waiver & 90% Bank Loan Approved
             </h2>
             <CountdownTimer />
           </div>

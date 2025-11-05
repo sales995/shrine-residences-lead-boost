@@ -125,10 +125,10 @@ export const OfferPopup = () => {
       <DialogContent className="popup-overlay w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">
-            🎁 Get Additional Offers
+            🔥 Only 40 Units Left!
           </DialogTitle>
           <DialogDescription className="text-center text-muted-foreground pt-2">
-            Register below to unlock exclusive benefits.
+            Register now to secure your dream home with exclusive GST waiver & 90% bank loan approval.
           </DialogDescription>
         </DialogHeader>
         
