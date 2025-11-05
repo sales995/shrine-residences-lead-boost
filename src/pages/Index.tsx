@@ -13,6 +13,7 @@ import StickyCTABar from "@/components/StickyCTABar";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import NetworkStatus from "@/components/NetworkStatus";
 import { OfferPopup } from "@/components/OfferPopup";
+import { StickyUrgencyBanner } from "@/components/StickyUrgencyBanner";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SEOHead from "@/components/SEOHead";
 import FAQBlock from "@/components/FAQBlock";
@@ -102,6 +103,9 @@ const Index = () => {
         
         {/* Sticky Bottom CTA Bar */}
         <StickyCTABar />
+        
+        {/* Sticky Urgency Banner */}
+        <StickyUrgencyBanner />
         
         {/* Network Status Indicator */}
         <NetworkStatus />
