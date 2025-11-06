@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useAvailableUnits } from "@/hooks/useAvailableUnits";
+import { useAvailableUnits } from "@/contexts/UnitsContext";
 export const OfferPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -124,11 +124,14 @@ export const OfferPopup = () => {
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="popup-overlay w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center">
-            🔥 Only {isLoading ? '40' : unitsRemaining} Units Left!
+          <DialogTitle className="text-xl md:text-2xl font-bold text-primary">
+            🎯 SHRIRAM BULL RUN - LIMITED PERIOD OFFER
           </DialogTitle>
-          <DialogDescription className="text-center text-muted-foreground pt-2">
-            Register now to secure your dream home with exclusive GST waiver & 90% bank loan approval.
+          <DialogDescription className="text-base md:text-lg space-y-2">
+            <div className="font-bold text-accent text-lg">SAVINGS UP TO ₹12L*</div>
+            <div className="text-foreground">Chennai's Largest 3 BED Homes (1725 Sq.ft.)</div>
+            <div className="text-accent font-bold">Starting at ₹1.49 CR Onwards</div>
+            <div className="text-destructive font-bold animate-pulse">⚠️ Only {isLoading ? '40' : unitsRemaining} Units Available!</div>
           </DialogDescription>
         </DialogHeader>
         

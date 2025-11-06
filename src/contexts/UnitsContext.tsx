@@ -1,7 +1,14 @@
-import { useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export const useAvailableUnits = () => {
+interface UnitsContextType {
+  unitsRemaining: number;
+  isLoading: boolean;
+}
+
+const UnitsContext = createContext<UnitsContextType | undefined>(undefined);
+
+export const UnitsProvider = ({ children }: { children: ReactNode }) => {
   const [unitsRemaining, setUnitsRemaining] = useState<number>(40);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +30,7 @@ export const useAvailableUnits = () => {
 
     fetchUnits();
 
-    // Subscribe to real-time changes
+    // Subscribe to real-time changes (single subscription for entire app)
     const channel = supabase
       .channel('available-units-changes')
       .on(
@@ -46,5 +53,17 @@ export const useAvailableUnits = () => {
     };
   }, []);
 
-  return { unitsRemaining, isLoading };
+  return (
+    <UnitsContext.Provider value={{ unitsRemaining, isLoading }}>
+      {children}
+    </UnitsContext.Provider>
+  );
+};
+
+export const useAvailableUnits = () => {
+  const context = useContext(UnitsContext);
+  if (context === undefined) {
+    throw new Error("useAvailableUnits must be used within a UnitsProvider");
+  }
+  return context;
 };

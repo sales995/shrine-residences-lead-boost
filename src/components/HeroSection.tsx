@@ -6,7 +6,7 @@ import { useState } from "react";
 import CountdownTimer from "./CountdownTimer";
 import RERABadge from "./RERABadge";
 import { useToast } from "@/hooks/use-toast";
-import { useAvailableUnits } from "@/hooks/useAvailableUnits";
+import { useAvailableUnits } from "@/contexts/UnitsContext";
 
 const HeroSection = () => {
   const { unitsRemaining, isLoading } = useAvailableUnits();

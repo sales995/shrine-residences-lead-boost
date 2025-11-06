@@ -1,4 +1,4 @@
-import { useAvailableUnits } from "@/hooks/useAvailableUnits";
+import { useAvailableUnits } from "@/contexts/UnitsContext";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, X } from "lucide-react";
 import { useState } from "react";
@@ -29,12 +29,12 @@ export const StickyUrgencyBanner = () => {
               />
               <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                 <span className="text-white font-bold text-sm md:text-lg">
-                  ⚠️ Only <span className="text-xl md:text-2xl animate-pulse">
+                  🔥 Bull Run Offer: Only <span className="text-xl md:text-2xl animate-pulse">
                     {isLoading ? '40' : unitsRemaining}
                   </span> Units Left!
                 </span>
                 <span className="text-white/90 text-xs md:text-sm hidden sm:inline">
-                  Don't miss out on this exclusive opportunity
+                  Save up to ₹12L* - Fully Furnished
                 </span>
               </div>
             </div>

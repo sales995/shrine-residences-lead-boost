@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { UnitsProvider } from "@/contexts/UnitsContext";
 import App from "./App.tsx";
 import "./index.css";
 
@@ -16,9 +17,11 @@ const app = (
   <React.StrictMode>
     <HelmetProvider>
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <UnitsProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </UnitsProvider>
       </AuthProvider>
     </HelmetProvider>
   </React.StrictMode>
