@@ -52,14 +52,6 @@ const Footer = () => {
                 </div>
               </li>
               <li className="flex items-start gap-2">
-                <Mail className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-                <div>
-                  <a href="mailto:info@shrirampark63.com" className="text-gray-300 hover:text-secondary transition-colors">
-                    info@shrirampark63.com
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
                 <div className="text-gray-300">
                   GST Road, Perungalathur,<br />Chennai, Tamil Nadu

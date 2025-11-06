@@ -24,7 +24,8 @@ export const OfferPopup = () => {
         setTimeout(() => {
           setIsOpen(true);
           sessionStorage.setItem('offerPopupShown', 'true');
-        }, 5000);
+          console.log('Offer popup triggered');
+        }, 2000);
       };
       
       if (document.readyState === 'complete') {
