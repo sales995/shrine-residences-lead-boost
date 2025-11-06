@@ -1,16 +1,9 @@
-// Tracking utility functions for Google Analytics, GTM, and Meta Pixel
+// Tracking utility functions for Google Analytics and GTM
 
 // Google Analytics event tracking
 export const trackGAEvent = (eventName: string, eventParams?: Record<string, any>) => {
   if (typeof window !== 'undefined' && (window as any).gtag) {
     (window as any).gtag('event', eventName, eventParams);
-  }
-};
-
-// Meta Pixel event tracking
-export const trackFBEvent = (eventName: string, eventParams?: Record<string, any>) => {
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq('track', eventName, eventParams);
   }
 };
 
@@ -27,7 +20,6 @@ export const trackGTMEvent = (event: string, eventData?: Record<string, any>) =>
 // Combined tracking for all platforms
 export const trackEvent = (eventName: string, eventData?: Record<string, any>) => {
   trackGAEvent(eventName, eventData);
-  trackFBEvent(eventName, eventData);
   trackGTMEvent(eventName, eventData);
 };
 
@@ -38,9 +30,6 @@ export const trackLeadSubmission = (source: string, phone: string) => {
     event_label: source,
     value: phone,
   });
-  
-  // Meta Pixel specific conversion event
-  trackFBEvent('Lead', { content_name: source });
 };
 
 export const trackBrochureDownload = (phone: string) => {
@@ -49,9 +38,6 @@ export const trackBrochureDownload = (phone: string) => {
     event_label: 'Brochure & Floor Plan',
     value: phone,
   });
-  
-  // Meta Pixel specific conversion event
-  trackFBEvent('Lead', { content_name: 'Brochure Download' });
 };
 
 export const trackWhatsAppClick = (source: string) => {
@@ -59,8 +45,6 @@ export const trackWhatsAppClick = (source: string) => {
     event_category: 'Contact',
     event_label: source,
   });
-  
-  trackFBEvent('Contact', { content_name: source });
 };
 
 export const trackPhoneClick = () => {
@@ -68,8 +52,6 @@ export const trackPhoneClick = () => {
     event_category: 'Contact',
     event_label: 'Phone Call',
   });
-  
-  trackFBEvent('Contact', { content_name: 'Phone Call' });
 };
 
 export const trackSiteVisitRequest = () => {
@@ -77,6 +59,4 @@ export const trackSiteVisitRequest = () => {
     event_category: 'Engagement',
     event_label: 'Site Visit',
   });
-  
-  trackFBEvent('Schedule', { content_name: 'Site Visit' });
 };

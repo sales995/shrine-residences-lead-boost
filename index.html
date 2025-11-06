@@ -98,28 +98,7 @@
       });
     </script>
     
-    <!-- Meta Pixel Code - Deferred for performance -->
-    <script>
-      window.addEventListener('load', function() {
-        requestIdleCallback(function() {
-          (function(f,b,e,v,n,t,s){
-            if(f.fbq) return; n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments) };
-            if(!f._fbq) f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
-            n.queue=[]; t=b.createElement(e); t.async=!0; t.src=v; s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-          })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-          (function(){
-            var PIXEL_ID = 'YOUR_PIXEL_ID_HERE';
-            if (PIXEL_ID && PIXEL_ID !== 'YOUR_PIXEL_ID_HERE') {
-              fbq('init', PIXEL_ID);
-              fbq('track', 'PageView');
-            } else {
-              console.warn('[Meta Pixel] Skipped init: missing Pixel ID');
-            }
-          })();
-        });
-      });
-    </script>
-    <!-- Meta Pixel disabled until a valid PIXEL ID is provided -->
+    <!-- Meta Pixel Code removed for performance - was not configured -->
     <meta property="og:title" content="Shriram Properties Park 63 – Premium 3 BHK Apartments in Chennai">
   <meta name="twitter:title" content="Shriram Properties Park 63 – Premium 3 BHK Apartments in Chennai">
   <meta property="og:description" content="Discover Shriram Properties Park 63 in Chennai — premium 3 BHK apartments with world-class amenities, seamless connectivity, and strong investment potential. Schedule your visit today!">
@@ -133,12 +112,6 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
-    <!-- Meta Pixel (noscript) -->
-    <noscript>
-      <img height="1" width="1" style="display:none"
-           src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/>
-    </noscript>
-    <!-- End Meta Pixel (noscript) -->
     <header id="seo-header" class="sr-only">
       <h1>Shriram Park 63 – 3 BHK Flats on GST Road, Perungalathur, Chennai</h1>
     </header>
@@ -215,7 +188,6 @@
           const entries = list.getEntries();
           if(entries && entries.length){ 
             swapHero();
-            console.log('LCP entry:', entries[entries.length-1]);
             obs.disconnect();
           }
         });
@@ -227,13 +199,6 @@
     })();
     </script>
 
-    <!-- LCP Debug Logging -->
-    <script>
-    new PerformanceObserver(function(l){
-      const entries = l.getEntries();
-      entries.forEach(function(e){ console.log('DEBUG LCP:', e.startTime, e.size, e.element ? e.element.tagName : 'n/a'); });
-    }).observe({type:'largest-contentful-paint', buffered:true});
-    </script>
     
     <!-- Progressive Popup Reveal for LCP Optimization -->
     <script>
@@ -260,30 +225,5 @@
     })();
     </script>
     
-    <!-- Form Finder Debug Script - Deferred for performance -->
-    <script>
-      window.addEventListener('load', function() {
-        requestIdleCallback(function() {
-          const forms = document.querySelectorAll('form');
-          console.group('[Form Finder]');
-          if (!forms.length) { console.warn('No <form> found'); return; }
-          forms.forEach((f, i) => {
-            const info = {
-              index: i,
-              id: f.id || '(no id)',
-              classes: f.className || '(no classes)',
-              action: f.getAttribute('action') || '(no action)',
-              inputs: Array.from(f.querySelectorAll('input, textarea, select')).map(el => ({
-                type: el.type || el.tagName,
-                name: el.name || '(no name)',
-                id: el.id || '(no id)'
-              }))
-            };
-            console.log(info);
-          });
-          console.groupEnd();
-        });
-      });
-    </script>
   </body>
 </html>
