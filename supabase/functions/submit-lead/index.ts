@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { Resend } from "https://esm.sh/resend@4.0.0";
 
 const corsHeaders: HeadersInit = {
   "Access-Control-Allow-Origin": "*",
@@ -222,6 +223,37 @@ serve(async (req) => {
       source: source || 'website',
       timestamp: new Date().toISOString()
     });
+
+    // Send email notification to sales team (non-blocking)
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    if (resendApiKey) {
+      try {
+        const resend = new Resend(resendApiKey);
+        const emailHtml = `
+          <h2>🎯 New Lead Registration</h2>
+          <p><strong>Source:</strong> ${source || 'website'}</p>
+          <hr/>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Email:</strong> ${email || 'Not provided'}</p>
+          <p><strong>Message:</strong> ${message || 'No message'}</p>
+          <hr/>
+          <p><small>Submitted at: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</small></p>
+        `;
+
+        await resend.emails.send({
+          from: 'Shriram Park 63 Leads <onboarding@resend.dev>',
+          to: ['sales@5landhomes.com', 'prathippan@5landhomes.com', 'boopathy@5landhomes.com'],
+          subject: `New Lead: ${name} - ${phone}`,
+          html: emailHtml,
+        });
+
+        console.log('Email notification sent successfully');
+      } catch (emailErr) {
+        console.error('Failed to send email notification:', (emailErr as any)?.message);
+        // Don't fail the request if email fails
+      }
+    }
 
     return new Response(
       JSON.stringify({ success: true }),
