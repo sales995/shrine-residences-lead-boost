@@ -15,26 +15,46 @@ export const OfferPopup = () => {
   const { toast } = useToast();
   const { unitsRemaining, isLoading } = useAvailableUnits();
   useEffect(() => {
-    // Check if popup was already shown in this session
-    const hasShownPopup = sessionStorage.getItem('offerPopupShown');
-    
-    if (!hasShownPopup) {
-      // Show popup after content is interactive (no blocking delay)
-      const showPopup = () => {
-        requestIdleCallback(() => {
-          setIsOpen(true);
-          sessionStorage.setItem('offerPopupShown', 'true');
-        }, { timeout: 3000 });
-      };
-      
-      // Wait for DOM ready, then use idle callback for non-blocking reveal
-      if (document.readyState === 'complete') {
-        showPopup();
+    const KEY = 'offerPopupShown_v2';
+    const hasShown = sessionStorage.getItem(KEY);
+    if (hasShown) return;
+
+    const idle = (cb: () => void) => {
+      const ric = (window as any).requestIdleCallback as ((cb: () => void, opts?: { timeout?: number }) => number) | undefined;
+      if (typeof ric === 'function') {
+        ric(cb, { timeout: 2000 });
       } else {
-        window.addEventListener('load', showPopup);
-        return () => window.removeEventListener('load', showPopup);
+        // Fallback: next tick to avoid blocking paint
+        setTimeout(cb, 0);
       }
+    };
+
+    const openPopup = () => {
+      idle(() => {
+        setIsOpen(true);
+        sessionStorage.setItem(KEY, 'true');
+      });
+    };
+
+    // Prefer DOMContentLoaded (fires earlier than load) or if already interactive/complete
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      openPopup();
+    } else {
+      document.addEventListener('DOMContentLoaded', openPopup, { once: true } as AddEventListenerOptions);
     }
+
+    // Exit-intent fallback (first-time only)
+    const onExit = (e: MouseEvent) => {
+      if (!sessionStorage.getItem(KEY) && e.clientY <= 0) {
+        openPopup();
+      }
+    };
+    window.addEventListener('mouseout', onExit, { once: true } as AddEventListenerOptions);
+
+    return () => {
+      document.removeEventListener('DOMContentLoaded', openPopup as EventListener);
+      window.removeEventListener('mouseout', onExit as EventListener);
+    };
   }, []);
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 10);

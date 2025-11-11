@@ -190,30 +190,6 @@
     </script>
 
     
-    <!-- Progressive Popup Reveal for LCP Optimization -->
-    <script>
-    (function(){
-      let revealed = false;
-      function revealPopup(){
-        if(revealed) return; revealed = true;
-        const overlays = document.querySelectorAll('.popup-overlay');
-        overlays.forEach(function(o){ if(o) o.classList.add('visible'); });
-      }
-      try {
-        const obs = new PerformanceObserver(function(list){
-          const entries = list.getEntries();
-          if(entries && entries.length){
-            revealPopup();
-            obs.disconnect();
-          }
-        });
-        obs.observe({ type: 'largest-contentful-paint', buffered: true });
-        window.addEventListener('load', revealPopup);
-      } catch(e) {
-        window.addEventListener('load', revealPopup);
-      }
-    })();
-    </script>
     
   </body>
 </html>
