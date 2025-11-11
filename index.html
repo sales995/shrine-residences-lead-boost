@@ -79,23 +79,13 @@
     
     <!-- Preload critical hero image removed to avoid asset path issues during build -->
     
-    <!-- Google tag (gtag.js) - Deferred for performance -->
+    <!-- Google tag (gtag.js) - Async & non-blocking -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17626733867"></script>
     <script>
-      window.addEventListener('load', function() {
-        requestIdleCallback(function() {
-          var script = document.createElement('script');
-          script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17626733867';
-          script.async = true;
-          document.head.appendChild(script);
-          
-          script.onload = function() {
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-17626733867');
-          };
-        });
-      });
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17626733867');
     </script>
     
     <!-- Meta Pixel Code removed for performance - was not configured -->
@@ -218,9 +208,9 @@
           }
         });
         obs.observe({ type: 'largest-contentful-paint', buffered: true });
-        window.addEventListener('load', function(){ setTimeout(revealPopup, 700); });
+        window.addEventListener('load', revealPopup);
       } catch(e) {
-        window.addEventListener('load', function(){ setTimeout(revealPopup, 700); });
+        window.addEventListener('load', revealPopup);
       }
     })();
     </script>

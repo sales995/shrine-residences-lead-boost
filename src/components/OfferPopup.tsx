@@ -19,15 +19,15 @@ export const OfferPopup = () => {
     const hasShownPopup = sessionStorage.getItem('offerPopupShown');
     
     if (!hasShownPopup) {
-      // Wait for window load to avoid blocking initial render
+      // Show popup after content is interactive (no blocking delay)
       const showPopup = () => {
-        setTimeout(() => {
+        requestIdleCallback(() => {
           setIsOpen(true);
           sessionStorage.setItem('offerPopupShown', 'true');
-          console.log('Offer popup triggered');
-        }, 2000);
+        }, { timeout: 3000 });
       };
       
+      // Wait for DOM ready, then use idle callback for non-blocking reveal
       if (document.readyState === 'complete') {
         showPopup();
       } else {
