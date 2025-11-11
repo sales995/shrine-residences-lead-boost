@@ -126,13 +126,14 @@ export const OfferPopup = () => {
       <DialogContent className="popup-overlay w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-xl md:text-2xl font-bold text-primary">
-            🎯 SHRIRAM BULL RUN - LIMITED PERIOD OFFER
+            Get Price Sheet & Floor Plan for Ready 3 BHK Homes
           </DialogTitle>
           <DialogDescription className="text-base md:text-lg space-y-2">
-            <div className="font-bold text-accent text-lg">SAVINGS UP TO ₹12L*</div>
-            <div className="text-foreground">Chennai's Largest 3 BED Homes (1725 Sq.ft.)</div>
-            <div className="text-accent font-bold">Starting at ₹1.49 CR Onwards</div>
-            <div className="text-destructive font-bold animate-pulse">⚠️ Only {isLoading ? '40' : unitsRemaining} Units Available!</div>
+            <div className="font-bold text-accent text-lg">Final {isLoading ? '40' : unitsRemaining} Units | ₹ 1.46 Cr Onwards</div>
+            <div className="text-foreground font-semibold">No GST | Possession in Days</div>
+            <div className="text-sm text-muted-foreground mt-3">
+              📲 You'll receive the details instantly on WhatsApp.
+            </div>
           </DialogDescription>
         </DialogHeader>
         
@@ -178,7 +179,7 @@ export const OfferPopup = () => {
             disabled={isSubmitting} 
             className="w-full h-11 font-semibold"
           >
-            {isSubmitting ? "Submitting..." : "Get Offer"}
+            {isSubmitting ? "Submitting..." : "Get Price Sheet Now"}
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">

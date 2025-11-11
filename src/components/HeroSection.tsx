@@ -170,7 +170,7 @@ const HeroSection = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <h2 className="text-white font-bold text-sm md:text-lg lg:text-xl text-center px-2">
-              🔥 BULL RUN OFFER: Only {isLoading ? '40' : unitsRemaining} Units Left - Save Up To ₹12L*
+              🔥 Final {isLoading ? '40' : unitsRemaining} Ready-to-Move Units | OC Received | No GST | Possession in Days
             </h2>
             <CountdownTimer />
           </div>
@@ -184,25 +184,25 @@ const HeroSection = () => {
           <div className={`text-white fade-in ${inView ? "visible" : ""}`}>
             {/* Heading - main title */}
             <h1 className="text-[40px] sm:text-[44px] md:text-[48px] lg:text-[56px] font-bold mb-4 md:mb-6 leading-tight">
-              Shriram Park 63 – 3 BHK Flats on GST Road, Perungalathur, Chennai
+              Move Into Your 3 BHK Home at Shriram Park 63 – Ready, Beautiful & Limited!
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl mb-4 md:mb-6 text-accent font-bold">
-              Premium 3 BHK Apartments (1725-1970 Sq.ft) – Limited Ready-to-Move Inventory
+              Live in a complete community on GST Road, Perungalathur — schools, metro & city comforts minutes away.
             </p>
 
             <ul className="space-y-2 md:space-y-4 mb-6 md:mb-8">
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
-                <span className="text-sm sm:text-base md:text-lg">57-Acre Premium Township with 40+ Modern Amenities</span>
+                <span className="text-sm sm:text-base md:text-lg">Last 40 Ready-to-Move 3 BHK Homes</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
-                <span className="text-sm sm:text-base md:text-lg">Overlooking 1350-Acre Vandalur Forest Reserve</span>
+                <span className="text-sm sm:text-base md:text-lg">Prices from ₹ 1.46 Cr | OC Received | No GST</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
-                <span className="text-sm sm:text-base md:text-lg">Prime Location on GST Road, Perungalathur</span>
+                <span className="text-sm sm:text-base md:text-lg">Families Already Living Here – Complete Township</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
@@ -223,10 +223,10 @@ const HeroSection = () => {
               <Button
                 onClick={() => document.getElementById('lead-form-hero')?.scrollIntoView({ behavior: 'smooth' })}
                 className="btn-hero-secondary text-base md:text-lg w-full sm:w-auto"
-                aria-label="Download Shriram Park 63 price list and floor plans"
+                aria-label="Get floor plan and price sheet for Shriram Park 63"
               >
                 <Download className="mr-2 w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
-                Get Price List
+                Get Price Sheet Now
               </Button>
             </div>
 
@@ -241,9 +241,9 @@ const HeroSection = () => {
             <div id="lead-form-hero" className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8">
               <header className="mb-4 md:mb-6 text-center">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
-                  Download Latest Price & Exclusive Offer
+                  Get Floor Plan & Price Sheet Now
                 </h2>
-                <p className="text-sm md:text-base text-gray-600">Fill the form below to get instant access</p>
+                <p className="text-sm md:text-base text-gray-600">📲 Instant WhatsApp Response | Builder Direct Offer | Possession in Days</p>
               </header>
 
               <form onSubmit={handleFormSubmit} className="space-y-3 md:space-y-4">
@@ -287,9 +287,9 @@ const HeroSection = () => {
                   type="submit" 
                   disabled={isSubmitting}
                   className="w-full btn-hero-primary text-lg md:text-xl py-5 md:py-7"
-                  aria-label="Submit form to download Shriram Park 63 price list"
+                  aria-label="Submit form to get Shriram Park 63 price sheet"
                 >
-                  {isSubmitting ? "Submitting..." : "Download Price List Now"}
+                  {isSubmitting ? "Submitting..." : "Get Price Sheet Now"}
                 </Button>
 
                 <p className="text-xs text-center text-gray-500 mt-3 md:mt-4">

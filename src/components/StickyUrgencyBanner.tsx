@@ -29,12 +29,12 @@ export const StickyUrgencyBanner = () => {
               />
               <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                 <span className="text-white font-bold text-sm md:text-lg">
-                  🔥 Bull Run Offer: Only <span className="text-xl md:text-2xl animate-pulse">
+                  🔥 Ready Homes: Only <span className="text-xl md:text-2xl animate-pulse">
                     {isLoading ? '40' : unitsRemaining}
                   </span> Units Left!
                 </span>
                 <span className="text-white/90 text-xs md:text-sm hidden sm:inline">
-                  Save up to ₹12L* - Fully Furnished
+                  ₹1.46 Cr* | No GST | OC Received
                 </span>
               </div>
             </div>
