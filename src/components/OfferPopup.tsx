@@ -19,41 +19,22 @@ export const OfferPopup = () => {
     const hasShown = sessionStorage.getItem(KEY);
     if (hasShown) return;
 
-    const idle = (cb: () => void) => {
-      const ric = (window as any).requestIdleCallback as ((cb: () => void, opts?: { timeout?: number }) => number) | undefined;
-      if (typeof ric === 'function') {
-        ric(cb, { timeout: 2000 });
-      } else {
-        // Fallback: next tick to avoid blocking paint
-        setTimeout(cb, 0);
-      }
-    };
-
     const openPopup = () => {
-      idle(() => {
+      requestAnimationFrame(() => {
         setIsOpen(true);
         sessionStorage.setItem(KEY, 'true');
       });
     };
 
-    // Prefer DOMContentLoaded (fires earlier than load) or if already interactive/complete
+    // Open immediately when DOM is ready
     if (document.readyState === 'interactive' || document.readyState === 'complete') {
       openPopup();
     } else {
-      document.addEventListener('DOMContentLoaded', openPopup, { once: true } as AddEventListenerOptions);
+      document.addEventListener('DOMContentLoaded', openPopup, { once: true });
     }
 
-    // Exit-intent fallback (first-time only)
-    const onExit = (e: MouseEvent) => {
-      if (!sessionStorage.getItem(KEY) && e.clientY <= 0) {
-        openPopup();
-      }
-    };
-    window.addEventListener('mouseout', onExit, { once: true } as AddEventListenerOptions);
-
     return () => {
-      document.removeEventListener('DOMContentLoaded', openPopup as EventListener);
-      window.removeEventListener('mouseout', onExit as EventListener);
+      document.removeEventListener('DOMContentLoaded', openPopup);
     };
   }, []);
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +124,7 @@ export const OfferPopup = () => {
     }
   };
   return <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="popup-overlay w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg">
+      <DialogContent className={`${isOpen ? 'visible' : ''} w-[90%] max-w-md p-6 bg-background border border-border rounded-lg shadow-lg`}>
         <DialogHeader>
           <DialogTitle className="text-xl md:text-2xl font-bold text-primary">
             Get Price Sheet & Floor Plan for Ready 3 BHK Homes

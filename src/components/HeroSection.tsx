@@ -155,7 +155,6 @@ const HeroSection = () => {
             height="720"
             className="w-full h-full object-cover"
             loading="eager"
-            fetchPriority="high"
             decoding="async"
             style={{ display: 'block', width: '100%', height: '100%' }}
           />
