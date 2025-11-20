@@ -18,10 +18,16 @@ export default defineConfig(({ mode }) => {
           return;
         }
         let body = '';
-        req.on('data', (chunk) => { body += chunk; });
+        req.on('data', (chunk) => {
+          body += chunk;
+        });
         req.on('end', () => {
-          let parsed: any = {};
-          try { parsed = JSON.parse(body || '{}'); } catch {}
+          let parsed: Record<string, unknown> = {};
+          try {
+            parsed = JSON.parse(body || '{}') as Record<string, unknown>;
+          } catch (error) {
+            parsed = {};
+          }
           const now = new Date().toISOString();
           // Simulate LOVABLE DB insert by validating payload shape
           const payload = {
