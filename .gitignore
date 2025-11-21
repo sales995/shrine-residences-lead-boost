@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Lovable generated Tailwind metadata
+src/tailwind.config.lov.json
+.lov.tailwind.config.cjs
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
