@@ -10,6 +10,19 @@ import { useAvailableUnits } from "@/contexts/UnitsContext";
 
 const HeroSection = () => {
   const { unitsRemaining, isLoading } = useAvailableUnits();
+  const getInventoryStatus = () => {
+    if (isLoading || unitsRemaining === null || Number.isNaN(unitsRemaining)) {
+      return "Limited ready homes available";
+    }
+    if (unitsRemaining <= 0) {
+      return "Ready homes almost sold out";
+    }
+    if (unitsRemaining === 1) {
+      return "Only 1 ready home available";
+    }
+    return `Only ${unitsRemaining} ready homes available`;
+  };
+  const inventoryStatus = getInventoryStatus();
   
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -167,10 +180,10 @@ const HeroSection = () => {
       {/* Urgency Strip with Countdown */}
       <div className="absolute top-20 left-0 right-0 z-20 bg-accent py-2 md:py-4" style={{ zIndex: 20 }}>
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
-            <h2 className="text-white font-bold text-sm md:text-lg lg:text-xl text-center px-2">
-              🔥 Final {isLoading ? '40' : unitsRemaining} Ready-to-Move Units | OC Received | No GST | Possession in Days
-            </h2>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+              <h2 className="text-white font-bold text-sm md:text-lg lg:text-xl text-center px-2">
+                🔥 {inventoryStatus} | ₹ 1.49 Cr* Festive Price Lock | OC Received | Possession in Days
+              </h2>
             <CountdownTimer />
           </div>
         </div>
@@ -190,14 +203,14 @@ const HeroSection = () => {
               Live in a complete community on GST Road, Perungalathur — schools, metro & city comforts minutes away.
             </p>
 
-            <ul className="space-y-2 md:space-y-4 mb-6 md:mb-8">
+              <ul className="space-y-2 md:space-y-4 mb-6 md:mb-8">
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
-                <span className="text-sm sm:text-base md:text-lg">Last 40 Ready-to-Move 3 BHK Homes</span>
+                  <span className="text-sm sm:text-base md:text-lg">{inventoryStatus}</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
-                <span className="text-sm sm:text-base md:text-lg">Prices from ₹ 1.46 Cr | OC Received | No GST</span>
+                  <span className="text-sm sm:text-base md:text-lg">₹ 1.49 Cr* All-Inclusive Price | OC Received | No GST</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-accent rounded-full" aria-hidden="true"></div>
