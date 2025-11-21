@@ -14,6 +14,19 @@ export const OfferPopup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const { unitsRemaining, isLoading } = useAvailableUnits();
+  const getPopupInventoryMessage = () => {
+    if (isLoading || unitsRemaining === null || Number.isNaN(unitsRemaining)) {
+      return "Limited ready homes";
+    }
+    if (unitsRemaining <= 0) {
+      return "Ready homes almost sold out";
+    }
+    if (unitsRemaining === 1) {
+      return "Only 1 ready home available";
+    }
+    return `Only ${unitsRemaining} ready homes available`;
+  };
+  const popupInventoryMessage = getPopupInventoryMessage();
   useEffect(() => {
     const KEY = 'offerPopupShown_v2';
     const hasShown = sessionStorage.getItem(KEY);
@@ -129,9 +142,9 @@ export const OfferPopup = () => {
           <DialogTitle className="text-xl md:text-2xl font-bold text-primary">
             Get Price Sheet & Floor Plan for Ready 3 BHK Homes
           </DialogTitle>
-          <DialogDescription className="text-base md:text-lg space-y-2">
-            <div className="font-bold text-accent text-lg">Final {isLoading ? '40' : unitsRemaining} Units | ₹ 1.46 Cr Onwards</div>
-            <div className="text-foreground font-semibold">No GST | Possession in Days</div>
+            <DialogDescription className="text-base md:text-lg space-y-2">
+              <div className="font-bold text-accent text-lg">{popupInventoryMessage} | ₹ 1.49 Cr* All-Inclusive</div>
+              <div className="text-foreground font-semibold">No GST | OC Received | Possession in Days</div>
             <div className="text-sm text-muted-foreground mt-3">
               📲 You'll receive the details instantly on WhatsApp.
             </div>

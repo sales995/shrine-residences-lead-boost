@@ -5,6 +5,19 @@ import { useState } from "react";
 
 export const StickyUrgencyBanner = () => {
   const { unitsRemaining, isLoading } = useAvailableUnits();
+  const getBannerMessage = () => {
+    if (isLoading || unitsRemaining === null || Number.isNaN(unitsRemaining)) {
+      return "Ready homes in limited inventory";
+    }
+    if (unitsRemaining <= 0) {
+      return "Ready homes almost sold out";
+    }
+    if (unitsRemaining === 1) {
+      return "Only 1 ready home available";
+    }
+    return `Only ${unitsRemaining} ready homes available`;
+  };
+  const bannerMessage = getBannerMessage();
   const [isVisible, setIsVisible] = useState(true);
 
   const handleRegisterClick = () => {
@@ -27,15 +40,13 @@ export const StickyUrgencyBanner = () => {
                 className="w-6 h-6 md:w-7 md:h-7 text-white animate-pulse" 
                 aria-hidden="true"
               />
-              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                <span className="text-white font-bold text-sm md:text-lg">
-                  🔥 Ready Homes: Only <span className="text-xl md:text-2xl animate-pulse">
-                    {isLoading ? '40' : unitsRemaining}
-                  </span> Units Left!
-                </span>
-                <span className="text-white/90 text-xs md:text-sm hidden sm:inline">
-                  ₹1.46 Cr* | No GST | OC Received
-                </span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span className="text-white font-bold text-sm md:text-lg">
+                    🔥 {bannerMessage}
+                  </span>
+                  <span className="text-white/90 text-xs md:text-sm hidden sm:inline">
+                    ₹ 1.49 Cr* | No GST | OC Received | Possession in Days
+                  </span>
               </div>
             </div>
 

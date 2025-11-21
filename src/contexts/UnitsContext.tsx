@@ -2,14 +2,14 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { supabase } from "@/integrations/supabase/client";
 
 interface UnitsContextType {
-  unitsRemaining: number;
+  unitsRemaining: number | null;
   isLoading: boolean;
 }
 
 const UnitsContext = createContext<UnitsContextType | undefined>(undefined);
 
 export const UnitsProvider = ({ children }: { children: ReactNode }) => {
-  const [unitsRemaining, setUnitsRemaining] = useState<number>(40);
+  const [unitsRemaining, setUnitsRemaining] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const UnitsProvider = ({ children }: { children: ReactNode }) => {
         .limit(1)
         .single();
 
-      if (data && !error) {
+      if (data && !error && typeof data.units_remaining === "number") {
         setUnitsRemaining(data.units_remaining);
       }
       setIsLoading(false);
@@ -42,7 +42,10 @@ export const UnitsProvider = ({ children }: { children: ReactNode }) => {
         },
         (payload) => {
           if (payload.new && 'units_remaining' in payload.new) {
-            setUnitsRemaining((payload.new as any).units_remaining);
+            const nextValue = (payload.new as { units_remaining?: number }).units_remaining;
+            if (typeof nextValue === "number") {
+              setUnitsRemaining(nextValue);
+            }
           }
         }
       )

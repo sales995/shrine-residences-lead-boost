@@ -27,21 +27,21 @@ const highlights = [
     title: "RERA Approved",
     description: "TN/01/Building/0072/2018 - Fully compliant project"
   },
-  {
-    icon: Users,
-    title: "1000+ Happy Families",
-    description: "Join a thriving community of satisfied residents"
-  },
-  {
-    icon: Activity,
-    title: "Ready-to-Move Homes",
-    description: "Fully furnished options available for immediate occupation"
-  },
-  {
-    icon: Sparkles,
-    title: "3 BED Homes at ₹1.48 CR*",
-    description: "Competitive pricing with bank loan approval support"
-  }
+    {
+      icon: Users,
+      title: "1000+ Happy Families",
+      description: "Join a thriving community of satisfied residents"
+    },
+    {
+      icon: Activity,
+      title: "Ready-to-Move Homes",
+      description: "Fully furnished options available for immediate occupation"
+    },
+    {
+      icon: Sparkles,
+      title: "3 BED Homes at ₹1.49 CR*",
+      description: "Competitive pricing with bank loan approval support"
+    }
 ];
 
 const FeaturesSection = () => {
