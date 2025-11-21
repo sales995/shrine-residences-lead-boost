@@ -117,25 +117,25 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
         return;
       }
 
-      toast({
-        title: "Success!",
-        description: "Thank you! Downloading your brochure now...",
-      });
+        toast({
+          title: "Success!",
+          description: "Thank you! Downloading your brochure now...",
+        });
 
-      // Trigger download
-      const link = document.createElement('a');
-      link.href = '/shriram-park63-brochure.pdf';
-      link.download = 'Shriram-Park63-Brochure-FloorPlan.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = '/shriram-park63-brochure.pdf';
+        link.download = 'Shriram-Park63-Brochure-FloorPlan.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-      // Track conversion
-      trackBrochureDownload(formData.phone);
+        // Track conversion once download begins
+        trackBrochureDownload(formData.phone);
 
-      // Reset form and close dialog
-      setFormData({ name: "", phone: "", email: "", hp: "" });
-      onOpenChange(false);
+        // Reset form and close dialog
+        setFormData({ name: "", phone: "", email: "", hp: "" });
+        onOpenChange(false);
     } catch (error) {
       console.error('Error submitting form:', error);
       const msg = String((error as any)?.message || error || '').toLowerCase();
