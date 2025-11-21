@@ -71,3 +71,17 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Google Tag Manager (optional)
+
+Client-side tracking is disabled by default for performance and privacy. To enable Google Tag Manager:
+
+1. Create a `.env` (or `.env.production`) file at the project root.
+2. Set the container ID and opt-in flag:
+   ```
+   VITE_GTM_ID=GTM-XXXXXXX
+   VITE_ENABLE_GTM=true
+   ```
+3. Restart the dev server or rebuild the site.
+
+When enabled, the app injects GTM after the React bundle loads and exposes the usual `dataLayer` so existing conversion helpers (e.g., `trackBrochureDownload`) continue to work. Leave `VITE_ENABLE_GTM` unset or `false` to ship without GTM.

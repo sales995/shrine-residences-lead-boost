@@ -5,6 +5,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackSiteVisitRequest } from "@/utils/tracking";
 
 interface SiteVisitDialogProps {
   open: boolean;
@@ -34,13 +35,16 @@ const SiteVisitDialog = ({ open, onOpenChange }: SiteVisitDialogProps) => {
 
     const formattedDate = format(selectedDate, "EEEE, MMMM do, yyyy");
     const message = `Hi! I would like to schedule a site visit to Shriram Park 63 Perungalathur on ${formattedDate} at ${selectedTime}. Please confirm the appointment.`;
-    
+
+    // Track the event before opening WhatsApp
+    trackSiteVisitRequest();
+
     // Open WhatsApp with the message
     window.open(
       `https://wa.me/919655355525?text=${encodeURIComponent(message)}`,
       "_blank"
     );
-    
+
     // Reset and close
     setSelectedDate(undefined);
     setSelectedTime("");

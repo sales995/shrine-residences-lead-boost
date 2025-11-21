@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { UnitsProvider } from "@/contexts/UnitsContext";
 import App from "./App.tsx";
+import { initGTM } from "@/utils/tracking";
 import "./index.css";
 
 const rootElement = document.getElementById("root");
@@ -29,3 +30,5 @@ const app = (
 
 // Render app (CSR only)
 createRoot(rootElement).render(app);
+
+initGTM();
