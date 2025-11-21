@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Download } from "lucide-react";
-import { trackBrochureDownload } from "@/utils/tracking";
 
 interface BrochureDownloadDialogProps {
   open: boolean;
@@ -129,9 +128,6 @@ const BrochureDownloadDialog = ({ open, onOpenChange }: BrochureDownloadDialogPr
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
-      // Track conversion
-      trackBrochureDownload(formData.phone);
 
       // Reset form and close dialog
       setFormData({ name: "", phone: "", email: "", hp: "" });
